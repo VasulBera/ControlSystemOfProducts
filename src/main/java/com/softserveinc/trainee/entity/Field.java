@@ -1,5 +1,9 @@
 package com.softserveinc.trainee.entity;
 
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.apache.commons.lang3.builder.ToStringBuilder;
+
 import javax.persistence.*;
 import java.io.Serializable;
 
@@ -51,5 +55,42 @@ public class Field implements Serializable{
 
     public void setLength(int length) {
         this.length = length;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        Field other = (Field)obj;
+        return new EqualsBuilder().append(getId(), other.getId())
+                            .append(getLength(), other.getLength())
+                            .append(getName(), other.getName())
+                            .append(getType(), other.getType())
+                            .isEquals();
+    }
+
+    @Override
+    public int hashCode() {
+        return new HashCodeBuilder().append(getId())
+                                    .append(getLength())
+                                    .append(getName())
+                                    .append(getType())
+                                    .toHashCode();
+    }
+
+    @Override
+    public String toString() {
+        return new ToStringBuilder(this).append(getId())
+                                        .append(getType())
+                                        .append(getName())
+                                        .append(getLength())
+                                        .toString();
     }
 }

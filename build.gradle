@@ -23,7 +23,7 @@ gretty {
 }
 
 ext{
-    jacocoVersion = "0.7.7.201606060606"
+    jacocoVersion = "0.7.6.201602180812"
     springVersion = "4.3.0.RELEASE"
     CXFApacheVersion = "3.1.6"
 }
@@ -38,6 +38,9 @@ dependencies {
     compile gradleApi()
 
     testCompile group: 'junit', name: 'junit', version: '4.11'
+    compile group: 'org.mockito', name: 'mockito-all', version: '1.10.19'
+
+    compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.4'
 
     compile group: 'org.hibernate', name: 'hibernate-entitymanager', version: '5.0.0.Final'
     compile group: 'org.hibernate', name: 'hibernate-core', version: '5.0.0.Final'
@@ -58,7 +61,6 @@ dependencies {
     compile group: 'org.apache.cxf', name: 'cxf-rt-frontend-jaxrs', version: '3.1.6'
 
     compile group: 'org.codehaus.jackson', name: 'jackson-jaxrs', version: '1.9.13'
-
 }
 
 task createDB (type: com.softserveinc.trainee.gradle.tasks.SqlRunner)
@@ -69,9 +71,13 @@ task createDB (type: com.softserveinc.trainee.gradle.tasks.SqlRunner)
 
 jacocoTestReport {
     reports {
+        xml.enabled = true
+        html.enabled = true
         html.enabled = true
     }
 }*/
+
+
 
 
 

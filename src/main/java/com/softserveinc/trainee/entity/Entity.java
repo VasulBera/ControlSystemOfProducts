@@ -1,5 +1,9 @@
 package com.softserveinc.trainee.entity;
 
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.apache.commons.lang3.builder.ToStringBuilder;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.List;
@@ -57,12 +61,39 @@ public class Entity implements Serializable{
 
     @Override
     public String toString() {
-        return "Entity{" +
-                "id=" + id +
-                ", SchemaName='" + SchemaName + '\'' +
-                ", TableName='" + TableName + '\'' +
-                ", fieldList=" + fieldList +
-                '}';
+        return new ToStringBuilder(this).append(getId())
+                                        .append(getSchemaName())
+                                        .append(getTableName())
+                                        .append(getFieldList())
+                                        .toString();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        Entity other = (Entity)obj;
+        return new EqualsBuilder().append(getId(), other.getId())
+                    .append(getSchemaName(), other.getSchemaName())
+                    .append(getTableName(), other.getTableName())
+                    .append(getFieldList(), other.getFieldList())
+                    .isEquals();
+    }
+
+    @Override
+    public int hashCode() {
+        return new HashCodeBuilder().append(getId())
+                                    .append(getSchemaName())
+                                    .append(getTableName())
+                                    .append(getFieldList())
+                                    .toHashCode();
     }
 }
 
