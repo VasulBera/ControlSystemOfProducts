@@ -1,0 +1,6 @@
+repositories {
+    jcenter()
+}
+dependencies {
+    compile group: 'com.hynnet', name: 'sqljdbc4-chs', version: '4.0.2206.100'
+}
