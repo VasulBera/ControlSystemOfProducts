@@ -1,0 +1,56 @@
+group 'ControlSystemOfProducts'
+version '1.0'
+
+apply plugin: 'java'
+apply plugin: 'war'
+apply plugin: 'jacoco'
+
+ext{
+    jacocoVersion = "0.7.6.201602180812"
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile group: 'org.mockito', name: 'mockito-all', version: '1.10.19'
+
+    compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.4'
+
+    compile group: 'org.hibernate', name: 'hibernate-entitymanager', version: '5.0.0.Final'
+    compile group: 'org.hibernate', name: 'hibernate-core', version: '5.0.0.Final'
+    compile group: 'org.hibernate', name: 'hibernate-validator', version: '5.1.3.Final'
+    compile group: 'org.hibernate.javax.persistence', name: 'hibernate-jpa-2.1-api', version: '1.0.0.Final'
+    compile group: 'com.hynnet', name: 'sqljdbc4-chs', version: '4.0.2206.100'
+
+    compile group: 'org.springframework', name: 'spring-core', version: '4.3.0.RELEASE'
+    compile group: 'org.springframework', name: 'spring-beans', version: '4.3.0.RELEASE'
+    compile group: 'org.springframework', name: 'spring-context', version: '4.3.0.RELEASE'
+    compile group: 'org.springframework', name: 'spring-web', version: '4.3.0.RELEASE'
+    compile group: 'org.springframework', name: 'spring-orm', version: '4.3.0.RELEASE'
+    compile group: 'javax.persistence', name: 'persistence-api', version: '1.0.2'
+
+    compile group: 'org.apache.cxf', name: 'cxf-rt-frontend-jaxws', version: '3.1.6'
+    compile group: 'org.apache.cxf', name: 'cxf-rt-transports-http', version: '3.1.6'
+    compile group: 'org.apache.cxf', name: 'cxf-rt-transports-http-jetty', version: '3.1.6'
+    compile group: 'org.apache.cxf', name: 'cxf-rt-frontend-jaxrs', version: '3.1.6'
+
+    compile group: 'org.codehaus.jackson', name: 'jackson-jaxrs', version: '1.9.13'
+}
+
+jacoco {
+    toolVersion = jacocoVersion
+}
+
+jacocoTestReport {
+    reports {
+        xml.enabled = true
+    }
+}
+
+
+
+
+
+

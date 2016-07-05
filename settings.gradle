@@ -1,0 +1,5 @@
+rootProject.name = 'ProductManagment'
+
+include "service"
+include "test"
+
