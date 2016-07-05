@@ -5,6 +5,5 @@ USE Customer
  name VARCHAR(45) NOT NULL,
  type VARCHAR(45) NOT NULL,
  length int NOT NULL,
- entity_id int,
- FOREIGN KEY (entity_id) REFERENCES entities(id)
+ entity_id int NOT NULL
 )

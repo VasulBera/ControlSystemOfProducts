@@ -62,12 +62,19 @@ public class SqlRunner extends DefaultTask{
         try(Connection connection = DriverManager.getConnection(MS_SQL_SERVER_ADDRES + "user=" + username + ";password=" + password)){
             System.out.println("created connection to DB ...");
             Statement st = connection.createStatement();
-            File directory = new File(PATH_TO_STORED_PROCEDURE);
-            File[] sqlFiles = directory.listFiles();
-            for (File f : sqlFiles) {
-                System.out.println("running file " + f.getName());
-                st.execute(readFile(f));
-             }
+            File mainDirectory = new File(PATH_TO_STORED_PROCEDURE);
+            File[] directories = mainDirectory.listFiles();
+            for(File directory: directories){
+                if(directory.isDirectory()){
+                    for(File file: directory.listFiles()){
+                        System.out.println("running file " + file.getName());
+                        st.execute(readFile(file));
+                    }
+                }else {
+                    System.out.println("running file " + directory.getName());
+                    st.execute(readFile(directory));
+                }
+            }
         } catch (SQLException e) {
             throw new GradleException("Coundn't execute sql");
         }
