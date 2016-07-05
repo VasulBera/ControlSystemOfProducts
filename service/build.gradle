@@ -45,10 +45,13 @@ jacoco {
 
 jacocoTestReport {
     reports {
-        xml.enabled = true
+        csv.enabled = true
     }
 }
+task codeCoverageCheks(type: com.softserveinc.trainee.gradle.tasks.CodeCoverage)
 
+tasks.codeCoverageCheks.dependsOn(jacocoTestReport)
+tasks.jacocoTestReport.dependsOn(test)
 
 
 

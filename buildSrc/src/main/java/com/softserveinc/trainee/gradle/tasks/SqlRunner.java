@@ -2,6 +2,7 @@
 package com.softserveinc.trainee.gradle.tasks;
 
 import org.gradle.api.DefaultTask;
+import org.gradle.api.GradleException;
 import org.gradle.api.tasks.TaskAction;
 
 import java.io.*;
@@ -28,7 +29,7 @@ public class SqlRunner extends DefaultTask{
                 stringBuilder.append(line);
             }
         }catch (IOException e) {
-            e.printStackTrace();
+            throw new GradleException("Coundn't read sql file");
         }
         return stringBuilder.toString();
     }
@@ -38,7 +39,7 @@ public class SqlRunner extends DefaultTask{
         try(InputStream inputStream = new FileInputStream(PATH_TO_DATABASE_PROPERTIES)){
             properties.load(inputStream);
         } catch (IOException e) {
-            e.printStackTrace();
+            throw new GradleException("Coundn't get username from database.properties");
         }
         return properties.getProperty(USERNAME_KEY_PROPERTIES);
     }
@@ -48,7 +49,7 @@ public class SqlRunner extends DefaultTask{
         try(InputStream inputStream = new FileInputStream(PATH_TO_DATABASE_PROPERTIES)){
             properties.load(inputStream);
         } catch (IOException e) {
-            e.printStackTrace();
+            throw new GradleException("Coundn't get password from database.properties");
         }
         return properties.getProperty(PASSWORD_KEY_PROPERTIES);
     }
@@ -68,7 +69,7 @@ public class SqlRunner extends DefaultTask{
                 st.execute(readFile(f));
              }
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new GradleException("Coundn't execute sql");
         }
     }
 
