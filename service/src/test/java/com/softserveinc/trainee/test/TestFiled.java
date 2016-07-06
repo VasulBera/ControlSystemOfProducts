@@ -13,7 +13,7 @@ public class TestFiled {
     @BeforeClass
     public static void initializeField(){
         field = new Field();
-        field.setId(1);
+        field.setId("QUANTITY");
         field.setName("Quantity");
         field.setType("Integer");
         field.setLength(45);
@@ -21,7 +21,7 @@ public class TestFiled {
 
     @Test
     public void testGetId(){
-        Integer expected = 1;
+        String expected = "QUANTITY";
         Assert.assertEquals(field.getId(), expected);
     }
 
@@ -39,8 +39,8 @@ public class TestFiled {
 
     @Test
     public void testSetId(){
-        Integer expected = 2;
-        field.setId(2);
+        String expected = "QUANTITYINTR";
+        field.setId("QUANTITYINTR");
         Assert.assertEquals(field.getId(), expected);
     }
 

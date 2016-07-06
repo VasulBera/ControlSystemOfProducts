@@ -17,7 +17,7 @@ public class TestEntity {
     @BeforeClass
     public static void initializeField(){
         entity = new Entity();
-        entity.setId(1);
+        entity.setId("CUSTOM");
         entity.setSchemaName("Customer");
         entity.setTableName("entities");
         Field field = new Field();
@@ -30,8 +30,8 @@ public class TestEntity {
 
     @Test
     public void testGetId(){
-        Integer expected = 1;
-        Integer actually = entity.getId();
+        String expected = "CUSTOM";
+        String actually = entity.getId();
         Assert.assertEquals(actually, expected);
     }
 
@@ -51,9 +51,9 @@ public class TestEntity {
 
     @Test
     public void testSetId(){
-        entity.setId(2);
-        Integer expected = 2;
-        Integer actually = entity.getId();
+        entity.setId("CUSTOMPRO");
+        String expected = "CUSTOMPRO";
+        String actually = entity.getId();
         Assert.assertEquals(actually, expected);
     }
 

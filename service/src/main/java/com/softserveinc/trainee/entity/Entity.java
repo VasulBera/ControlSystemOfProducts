@@ -13,9 +13,8 @@ import java.util.List;
 public class Entity implements Serializable{
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private Integer id;
+    private String id;
 
     @Column(name = "schema_name", nullable = false)
     private String SchemaName;
@@ -27,11 +26,11 @@ public class Entity implements Serializable{
     @JoinColumn(name = "entity_id")
     private List<Field> fieldList;
 
-    public Integer getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(String id) {
         this.id = id;
     }
 

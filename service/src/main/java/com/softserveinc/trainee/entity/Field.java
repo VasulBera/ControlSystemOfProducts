@@ -12,9 +12,8 @@ import java.io.Serializable;
 public class Field implements Serializable{
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private Integer id;
+    private String id;
 
     @Column(name = "name", nullable = false)
     private String name;
@@ -25,11 +24,11 @@ public class Field implements Serializable{
     @Column(name = "length", nullable = true)
     private int length;
 
-    public Integer getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(String id) {
         this.id = id;
     }
 

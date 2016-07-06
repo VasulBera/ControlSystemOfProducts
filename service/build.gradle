@@ -50,8 +50,49 @@ jacocoTestReport {
 }
 task codeCoverageCheks(type: com.softserveinc.trainee.gradle.tasks.CodeCoverage)
 
-tasks.codeCoverageCheks.dependsOn(jacocoTestReport)
+task copyWar{
+    Properties properties = new Properties();
+    InputStream inputStream = new FileInputStream("tomcat.properties");
+    properties.load(inputStream);
+    String pathToTomcat = properties.getProperty("pathToTomcat");
+    String pathToWar = file('.').toString() + "/build/libs/service-1.0.war";
+    copy{
+        from pathToWar
+        into pathToTomcat + '/webapps'
+        rename ('service-1.0.war', 'service.war')
+    }
+
+}
+
+task startTomcat(type: Exec) {
+    Properties properties = new Properties();
+    InputStream inputStream = new FileInputStream("tomcat.properties")
+    properties.load(inputStream);
+    String path = properties.getProperty("pathToTomcat");
+    workingDir = file(path + '/bin')
+    commandLine = ['cmd', '/C', 'startup.bat']
+}
+
+task stopTomcat(type: Exec) {
+    Properties properties = new Properties();
+    InputStream inputStream = new FileInputStream("tomcat.properties")
+    properties.load(inputStream);
+    String path = properties.getProperty("pathToTomcat");
+    workingDir = file(path + '/bin')
+    commandLine = ['cmd', '/C', 'shutdown.bat']
+}
+
+task createDb(type: com.softserveinc.trainee.gradle.tasks.SqlRunner)
+
 tasks.jacocoTestReport.dependsOn(test)
+tasks.codeCoverageCheks.dependsOn(jacocoTestReport)
+tasks.check.dependsOn(codeCoverageCheks)
+tasks.copyWar.dependsOn(war)
+tasks.startTomcat.dependsOn(copyWar)
+
+
+
+
 
 
 

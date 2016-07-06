@@ -76,7 +76,7 @@ public class SqlRunner extends DefaultTask{
                 }
             }
         } catch (SQLException e) {
-            throw new GradleException("Coundn't execute sql");
+            throw new GradleException("Coundn't execute sql file");
         }
     }
 

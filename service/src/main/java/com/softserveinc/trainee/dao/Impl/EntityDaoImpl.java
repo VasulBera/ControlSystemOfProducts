@@ -13,7 +13,7 @@ public class EntityDaoImpl implements EntityDao{
     @PersistenceContext
     private EntityManager entityManager;
 
-    public Entity getEntity(Integer id) {
+    public Entity getEntity(String id) {
         return entityManager.find(Entity.class, id);
     }
 }

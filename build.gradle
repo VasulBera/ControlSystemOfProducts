@@ -1,4 +1,3 @@
-
 buildscript{
     repositories{
         mavenCentral()
@@ -27,4 +26,5 @@ buildscript{
         }
     }
 }
-task createDb(type: com.softserveinc.trainee.gradle.tasks.SqlRunner)
+/*task createDb(type: com.softserveinc.trainee.gradle.tasks.SqlRunner)*/
+

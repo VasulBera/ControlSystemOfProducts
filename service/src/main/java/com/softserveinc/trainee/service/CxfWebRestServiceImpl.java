@@ -22,11 +22,7 @@ public class CxfWebRestServiceImpl {
     @GET
     @Path("{id}")
     public Response getEntity(@PathParam("id") String id) {
-        if(!id.matches(CHECK_IS_THIS_NUMBER)){
-            return Response.status(Response.Status.BAD_REQUEST).entity("Incorrect type of id").build();
-        }else {
-            Integer entityId = Integer.parseInt(id);
-            Entity entity = entityDao.getEntity(entityId);
+            Entity entity = entityDao.getEntity(id);
             if (entity == null) {
                 return Response.status(Response.Status.BAD_REQUEST).entity("Entity not found for id " + id).build();
             } else {
@@ -34,9 +30,3 @@ public class CxfWebRestServiceImpl {
             }
         }
     }
-
-    /*@GET
-    public Response getnothing(){
-        return Response.status(Response.Status.BAD_REQUEST).entity("WFT").build();
-    }*/
-}
