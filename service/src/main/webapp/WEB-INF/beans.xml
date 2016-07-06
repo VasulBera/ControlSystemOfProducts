@@ -17,6 +17,8 @@ http://cxf.apache.org/schemas/jaxrs.xsd http://www.springframework.org/schema/co
 <jaxrs:server id="Rest Container" address="/">
     <jaxrs:providers>
         <bean class="org.codehaus.jackson.jaxrs.JacksonJsonProvider" />
+        <bean class="com.softserveinc.trainee.service.ErrorHandlerInterceptor" />
+        <bean class="com.softserveinc.trainee.service.HandleClientErrorExeption"/>
     </jaxrs:providers>
     <jaxrs:serviceBeans>
         <ref bean="cxfWebRestServiceImpl" />

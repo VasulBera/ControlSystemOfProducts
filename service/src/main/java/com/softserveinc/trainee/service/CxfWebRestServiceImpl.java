@@ -20,7 +20,7 @@ public class CxfWebRestServiceImpl {
     EntityDao entityDao;
 
     @GET
-    @Path("{id}")
+    @Path("/{id}")
     public Response getEntity(@PathParam("id") String id) {
             Entity entity = entityDao.getEntity(id);
             if (entity == null) {
