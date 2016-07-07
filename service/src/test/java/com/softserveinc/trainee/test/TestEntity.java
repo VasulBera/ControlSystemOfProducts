@@ -73,6 +73,69 @@ public class TestEntity {
         Assert.assertEquals(actually, expected);
     }
 
+    @Test
+    public void testGetFieldList(){
+        Field field = new Field();
+        Field field1 = new Field();
+        List<Field> expected = new ArrayList();
+        expected.add(field);
+        expected.add(field1);
+        List<Field> actually = entity.getFieldList();
+        Assert.assertEquals(actually, expected);
+    }
+
+    /*@Test
+    public void testToString(){
+        String expected = "com.softserveinc.trainee.entity.Entity@7d6f77cc[CUSTOM,Customer,entities,[com.softserveinc.trainee.entity.Field@5aaa6d82[<null>,<null>,<null>,0], com.softserveinc.trainee.entity.Field@73a28541[<null>,<null>,<null>,0]]]";
+        System.out.println(entity);
+        String actually = entity.toString();
+        Assert.assertEquals(actually, expected);
+    }*/
+
+    @Test
+    public void testHashCode(){
+        int expected = 781176313;
+        int actually = entity.hashCode();
+        Assert.assertEquals(actually, expected);
+    }
+
+    @Test
+    public void testNullEquals(){
+        boolean expected = false;
+        boolean actually = entity.equals(null);
+        Assert.assertEquals(actually, expected);
+    }
+    @Test
+    public void testNotClassEquals(){
+        boolean expected = false;
+        boolean actually = entity.equals(new Object());
+        Assert.assertEquals(actually, expected);
+    }
+    @Test
+    public void testEquals(){
+        Entity entityEquals = new Entity();
+        entityEquals.setId("CUSTOM");
+        entityEquals.setSchemaName("Customer");
+        entityEquals.setTableName("entities");
+
+        Entity entity = new Entity();
+        entity.setId("CUSTOM");
+        entity.setSchemaName("Customer");
+        entity.setTableName("entities");
+
+        boolean expected = true;
+        boolean actually = entity.equals(entityEquals);
+        Assert.assertEquals(actually, expected);
+    }
+    @Test
+    public void testNotEquals(){
+        Entity entityEquals = new Entity();
+        entityEquals.setId("PROVIDER");
+        boolean expected = false;
+        boolean actually = entity.equals(entityEquals);
+        Assert.assertEquals(actually, expected);
+    }
+
     @AfterClass
     public static void deleteField(){
         entity = null;

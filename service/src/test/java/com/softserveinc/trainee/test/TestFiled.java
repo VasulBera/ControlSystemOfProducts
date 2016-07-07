@@ -58,6 +58,59 @@ public class TestFiled {
         Assert.assertEquals(field.getType(), expected);
     }
 
+    @Test
+    public void testHashCode(){
+        int expected = -168281999;
+        int actually = field.hashCode();
+        System.out.println(field.hashCode());
+        Assert.assertEquals(actually, expected);
+    }
+
+    @Test
+    public void testNullEquals(){
+        boolean expected = false;
+        boolean actually = field.equals(null);
+        Assert.assertEquals(actually, expected);
+    }
+    @Test
+    public void testNotClassEquals(){
+        boolean expected = false;
+        boolean actually = field.equals(new Object());
+        Assert.assertEquals(actually, expected);
+    }
+    @Test
+    public void testEquals(){
+        Field fieldEquals = new Field();
+        fieldEquals.setId("QUANTITY");
+        fieldEquals.setName("Quantity");
+        fieldEquals.setType("Integer");
+        fieldEquals.setLength(45);
+
+        Field field = new Field();
+        field.setId("QUANTITY");
+        field.setName("Quantity");
+        field.setType("Integer");
+        field.setLength(45);
+
+        boolean expected = true;
+        boolean actually = field.equals(fieldEquals);
+        Assert.assertEquals(actually, expected);
+    }
+    @Test
+    public void testNotEquals(){
+        Field fieldEquals = new Field();
+        fieldEquals.setId("QUANTITY");
+        boolean expected = false;
+        boolean actually = field.equals(fieldEquals);
+        Assert.assertEquals(actually, expected);
+    }
+    @Test
+    public void testThisEquals(){
+        boolean expected = true;
+        boolean actually = field.equals(field);
+        Assert.assertEquals(actually, expected);
+    }
+
     @AfterClass
     public static void deleteField(){
         field = null;
