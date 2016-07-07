@@ -14,19 +14,12 @@ import javax.ws.rs.core.Response;
 @Transactional
 public class CxfWebRestServiceImpl {
 
-    private static final String CHECK_IS_THIS_NUMBER = "\\d+";
-
     @Autowired
     EntityDao entityDao;
 
     @GET
     @Path("/{id}")
-    public Response getEntity(@PathParam("id") String id) {
-            Entity entity = entityDao.getEntity(id);
-            if (entity == null) {
-                return Response.status(Response.Status.BAD_REQUEST).entity("Entity not found for id " + id).build();
-            } else {
-                return Response.ok(entity).build();
-            }
+    public Entity getEntity(@PathParam("id") String id) {
+            return entityDao.getEntity(id);
         }
     }
