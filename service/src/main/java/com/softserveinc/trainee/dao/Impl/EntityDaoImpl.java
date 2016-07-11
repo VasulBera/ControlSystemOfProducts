@@ -6,6 +6,8 @@ import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
+import java.util.List;
 
 @Repository("entityDao")
 public class EntityDaoImpl implements EntityDao{
@@ -34,5 +36,11 @@ public class EntityDaoImpl implements EntityDao{
         if(entity != null){
             entityManager.remove(entity);
         }
+    }
+
+    @Override
+    public List<Entity> getAllEntity() {
+        Query query = entityManager.createQuery("SELECT e FROM Entity e");
+        return query.getResultList();
     }
 }

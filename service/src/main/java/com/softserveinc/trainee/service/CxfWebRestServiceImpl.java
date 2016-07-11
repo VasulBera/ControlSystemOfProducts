@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+import java.util.List;
 
 @Service
 @Path("/entity")
@@ -22,6 +23,11 @@ public class CxfWebRestServiceImpl {
     public Entity getEntity(@PathParam("id") String id) {
         return entityDao.getEntity(id);
     }
+
+   /* @GET
+    public List<Entity> getAllEntities(){
+        return entityDao.getAllEntity();
+    }*/
 
     @POST
     @Produces(MediaType.APPLICATION_JSON)
