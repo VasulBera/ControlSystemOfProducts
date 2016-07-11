@@ -14,10 +14,6 @@ repositories {
 }
 
 dependencies {
-    compile group: 'org.powermock', name: 'powermock-module-junit4', version: '1.6.5'
-    compile group: 'org.powermock', name: 'powermock-api-mockito', version: '1.6.5'
-    compile group: 'org.powermock', name: 'powermock-module-javaagent', version: '1.6.5'
-    compile group: 'org.powermock', name: 'powermock-module-junit4-rule-agent', version: '1.6.5'
 
     compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.4'
 
@@ -50,6 +46,9 @@ jacoco {
 jacocoTestReport {
     reports {
         csv.enabled = true
+        html.enabled = true
+        xml.enabled = true
+
     }
 }
 task codeCoverageCheks(type: com.softserveinc.trainee.gradle.tasks.CodeCoverage)

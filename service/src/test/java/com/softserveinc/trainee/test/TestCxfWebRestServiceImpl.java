@@ -3,30 +3,34 @@ package com.softserveinc.trainee.test;
 import com.softserveinc.trainee.dao.EntityDao;
 import com.softserveinc.trainee.entity.Entity;
 import com.softserveinc.trainee.service.CxfWebRestServiceImpl;
-import org.junit.AfterClass;
-import org.junit.Assert;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.*;
+import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.powermock.api.mockito.PowerMockito;
+import org.mockito.MockitoAnnotations;
+import org.mockito.runners.MockitoJUnitRunner;
 
+@RunWith(MockitoJUnitRunner.class)
 public class TestCxfWebRestServiceImpl {
 
-   private static EntityDao entityDao;
+    @Mock
+    private static EntityDao entityDao;
+
+    @InjectMocks
     private static CxfWebRestServiceImpl cxfWebRestService;
 
-    @BeforeClass
-    public static void initialize(){
-        entityDao = PowerMockito.mock(EntityDao.class);
+    @Before
+    public void initialize(){
+        MockitoAnnotations.initMocks(this);
     }
 
     @Test
     public void testGetEntity(){
         Entity entity = new Entity();
         entity.setId("ADIDAS");
-        PowerMockito.when(entityDao.getEntity("ADIDAS")).thenReturn(entity);
-        Entity actually = entityDao.getEntity("ADIDAS");
-        Mockito.verify(entityDao).getEntity("ADIDAS");
+        Mockito.when(entityDao.getEntity("ADIDAS")).thenReturn(entity);
+        Entity actually = cxfWebRestService.getEntity("ADIDAS");
         Assert.assertEquals(entity, actually);
     }
 

@@ -86,7 +86,7 @@ public class TestEntity {
 
     /*@Test
     public void testToString(){
-        String expected = "com.softserveinc.trainee.entity.Entity@7d6f77cc[CUSTOM,Customer,entities,[com.softserveinc.trainee.entity.Field@5aaa6d82[<null>,<null>,<null>,0], com.softserveinc.trainee.entity.Field@73a28541[<null>,<null>,<null>,0]]]";
+        String expected = "";
         System.out.println(entity);
         String actually = entity.toString();
         Assert.assertEquals(actually, expected);
