@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 import java.util.List;
 
 @Service
@@ -21,7 +22,11 @@ public class CxfWebRestServiceImpl {
     @GET
     @Path("/{id}")
     public Entity getEntity(@PathParam("id") String id) {
-        return entityDao.getEntity(id);
+        Entity entity = entityDao.getEntity(id);
+        if(entity == null){
+            throw new ClientErrorException(Response.Status.NOT_FOUND);
+        }
+        return entity;
     }
 
    /* @GET
