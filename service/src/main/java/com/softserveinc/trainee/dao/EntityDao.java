@@ -7,4 +7,10 @@ import com.softserveinc.trainee.entity.Entity;
  */
 public interface EntityDao {
     public Entity getEntity(String id);
+
+    public Entity addEntity(Entity entity);
+
+    public Entity updateEntity(Entity entity);
+
+    public void deleteEntity(String id);
 }

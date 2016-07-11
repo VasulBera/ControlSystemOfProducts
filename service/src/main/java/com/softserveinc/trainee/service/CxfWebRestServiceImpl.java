@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import javax.ws.rs.*;
+import javax.ws.rs.core.MediaType;
 
 @Service
 @Path("/entity")
@@ -19,6 +20,24 @@ public class CxfWebRestServiceImpl {
     @GET
     @Path("/{id}")
     public Entity getEntity(@PathParam("id") String id) {
-            return entityDao.getEntity(id);
-        }
+        return entityDao.getEntity(id);
     }
+
+    @POST
+    @Produces(MediaType.APPLICATION_JSON)
+    public Entity addEntity(Entity entity) {
+        return entityDao.addEntity(entity);
+    }
+
+    @PUT
+    @Produces("application/json")
+    public Entity updateEntity(Entity entity){
+       return entityDao.updateEntity(entity);
+    }
+
+    @DELETE
+    @Path("/{id}")
+    public void deleteEntity(@PathParam("id") String id){
+        entityDao.deleteEntity(id);
+    }
+}

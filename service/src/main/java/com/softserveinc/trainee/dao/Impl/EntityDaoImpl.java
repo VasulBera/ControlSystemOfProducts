@@ -16,4 +16,23 @@ public class EntityDaoImpl implements EntityDao{
     public Entity getEntity(String id) {
         return entityManager.find(Entity.class, id);
     }
+
+    @Override
+    public Entity addEntity(Entity entity) {
+        entityManager.persist(entity);
+        return entityManager.find(Entity.class, entity.getId());
+    }
+
+    @Override
+    public Entity updateEntity(Entity entity) {
+        return entityManager.merge(entity);
+    }
+
+    @Override
+    public void deleteEntity(String id) {
+        Entity entity = entityManager.find(Entity.class, id);
+        if(entity != null){
+            entityManager.remove(entity);
+        }
+    }
 }
