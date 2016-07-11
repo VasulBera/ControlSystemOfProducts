@@ -92,6 +92,7 @@ task deleteFile(type: Delete){
 }
 
 task createDb(type: com.softserveinc.trainee.gradle.tasks.SqlRunner)
+task fillDb(type: com.softserveinc.trainee.gradle.tasks.TestDataRunner)
 
 tasks.jacocoTestReport.dependsOn(test)
 tasks.codeCoverageCheks.dependsOn(jacocoTestReport)
