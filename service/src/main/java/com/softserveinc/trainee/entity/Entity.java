@@ -60,11 +60,11 @@ public class Entity implements Serializable{
 
     @Override
     public String toString() {
-        return new ToStringBuilder(this).append(getId())
-                                        .append(getSchemaName())
-                                        .append(getTableName())
-                                        .append(getFieldList())
-                                        .toString();
+        return "Entity{" +
+                "id='" + id + '\'' +
+                ", SchemaName='" + SchemaName + '\'' +
+                ", TableName='" + TableName + '\'' +
+                '}';
     }
 
     @Override

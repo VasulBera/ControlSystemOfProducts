@@ -68,11 +68,12 @@ public class Field implements Serializable{
             return false;
         }
         Field other = (Field)obj;
-        return new EqualsBuilder().append(getId(), other.getId())
-                            .append(getLength(), other.getLength())
-                            .append(getName(), other.getName())
-                            .append(getType(), other.getType())
-                            .isEquals();
+        return new EqualsBuilder()
+                .append(getId(), other.getId())
+                .append(getLength(), other.getLength())
+                .append(getName(), other.getName())
+                .append(getType(), other.getType())
+                .isEquals();
     }
 
     @Override

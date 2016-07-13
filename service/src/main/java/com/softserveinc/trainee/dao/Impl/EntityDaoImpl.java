@@ -31,11 +31,8 @@ public class EntityDaoImpl implements EntityDao{
     }
 
     @Override
-    public void deleteEntity(String id) {
-        Entity entity = entityManager.find(Entity.class, id);
-        if(entity != null){
+    public void deleteEntity(Entity entity) {
             entityManager.remove(entity);
-        }
     }
 
     @Override

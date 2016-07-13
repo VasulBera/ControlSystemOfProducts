@@ -14,7 +14,7 @@ public interface EntityDao {
 
     public Entity updateEntity(Entity entity);
 
-    public void deleteEntity(String id);
+    public void deleteEntity(Entity entity);
 
     public List<Entity> getAllEntity();
 }

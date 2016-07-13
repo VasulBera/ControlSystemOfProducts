@@ -20,7 +20,7 @@ http://cxf.apache.org/schemas/jaxrs.xsd http://www.springframework.org/schema/co
         <bean class="com.softserveinc.trainee.mapper.NotFoundExceptionHandler" />
         <bean class="com.softserveinc.trainee.mapper.ClientErrorExeptionHandler"/>
         <bean class="com.softserveinc.trainee.mapper.WebApplicationExceptionHandler"/>
-    </jaxrs:providers>
+      </jaxrs:providers>
     <jaxrs:serviceBeans>
         <ref bean="cxfWebRestServiceImpl" />
     </jaxrs:serviceBeans>
