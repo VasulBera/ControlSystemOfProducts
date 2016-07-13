@@ -19,7 +19,8 @@ public class Field implements Serializable{
     private String name;
 
     @Column(name = "type", nullable = false)
-    private String type;
+    @Enumerated(EnumType.STRING)
+    private FieldType type;
 
     @Column(name = "length", nullable = true)
     private int length;
@@ -40,11 +41,11 @@ public class Field implements Serializable{
         this.name = name;
     }
 
-    public String getType() {
+    public FieldType getType() {
         return type;
     }
 
-    public void setType(String type) {
+    public void setType(FieldType type) {
         this.type = type;
     }
 

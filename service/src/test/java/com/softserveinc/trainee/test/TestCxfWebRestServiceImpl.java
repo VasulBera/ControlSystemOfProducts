@@ -3,6 +3,7 @@ package com.softserveinc.trainee.test;
 import com.softserveinc.trainee.dao.EntityDao;
 import com.softserveinc.trainee.entity.Entity;
 import com.softserveinc.trainee.entity.Field;
+import com.softserveinc.trainee.entity.FieldType;
 import com.softserveinc.trainee.service.CxfWebRestServiceImpl;
 import org.junit.*;
 import org.junit.runner.RunWith;
@@ -17,7 +18,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.anyInt;
 import static org.mockito.Matchers.anyString;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -135,7 +135,7 @@ public class TestCxfWebRestServiceImpl {
         entity.setSchemaName("Customer");
 
         Field field = new Field();
-        field.setType("VARCHAR");
+        field.setType(FieldType.NVARCHAR);
         field.setLength(78);
 
         List<Field> list = new ArrayList();
@@ -171,7 +171,7 @@ public class TestCxfWebRestServiceImpl {
         entity.setSchemaName("Customer");
 
         Field field = new Field();
-        field.setType("VARCHAR");
+        field.setType(FieldType.NVARCHAR);
         field.setName("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
         field.setLength(78);
 
@@ -190,8 +190,8 @@ public class TestCxfWebRestServiceImpl {
         entity.setSchemaName("Customer");
 
         Field field = new Field();
-        field.setType("VARCHAR");
-        field.setName("/*/");
+        field.setType(FieldType.NVARCHAR);
+        field.setName("*//*//*");
         field.setLength(78);
 
         List<Field> list = new ArrayList();
@@ -209,7 +209,7 @@ public class TestCxfWebRestServiceImpl {
         entity.setSchemaName("Customer");
 
         Field field = new Field();
-        field.setType("VARCHAR");
+        field.setType(FieldType.NVARCHAR);
         field.setName("price");
         field.setLength(-1);
 
@@ -228,7 +228,7 @@ public class TestCxfWebRestServiceImpl {
         entity.setSchemaName("Customer");
 
         Field field = new Field();
-        field.setType("VARCHAR");
+        field.setType(FieldType.NVARCHAR);
         field.setName("price");
         field.setLength(1);
 
@@ -342,7 +342,7 @@ public class TestCxfWebRestServiceImpl {
 
         Field field = new Field();
         field.setId("CustomerProductPrice");
-        field.setType("VARCHAR");
+        field.setType(FieldType.NVARCHAR);
         field.setName("price");
         field.setLength(1);
 
@@ -367,7 +367,7 @@ public class TestCxfWebRestServiceImpl {
 
         Field field = new Field();
         field.setId("CustomerProductPrice");
-        field.setType("VARCHAR");
+        field.setType(FieldType.NVARCHAR);
         field.setLength(1);
 
         List<Field> list = new ArrayList();
@@ -386,8 +386,8 @@ public class TestCxfWebRestServiceImpl {
 
         Field field = new Field();
         field.setId("CustomerProductPrice");
-        field.setName("/*");
-        field.setType("VARCHAR");
+        field.setName("*//*");
+        field.setType(FieldType.NVARCHAR);
         field.setLength(1);
 
         List<Field> list = new ArrayList();
@@ -408,7 +408,7 @@ public class TestCxfWebRestServiceImpl {
         Field field = new Field();
         field.setId("CustomerProductPrice");
         field.setName("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
-        field.setType("VARCHAR");
+        field.setType(FieldType.NVARCHAR);
         field.setLength(1);
 
         List<Field> list = new ArrayList();
@@ -429,7 +429,7 @@ public class TestCxfWebRestServiceImpl {
         Field field = new Field();
         field.setId("CustomerProductPrice");
         field.setName("Price");
-        field.setType("VARCHAR");
+        field.setType(FieldType.NVARCHAR);
         field.setLength(-1);
 
         List<Field> list = new ArrayList();
