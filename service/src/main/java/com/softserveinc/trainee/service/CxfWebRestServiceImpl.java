@@ -3,6 +3,7 @@ package com.softserveinc.trainee.service;
 import com.softserveinc.trainee.dao.EntityDao;
 import com.softserveinc.trainee.entity.Entity;
 import com.softserveinc.trainee.entity.Field;
+import org.apache.cxf.jaxrs.ext.PATCH;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -68,6 +69,48 @@ public class CxfWebRestServiceImpl {
             }
         }
         return entityDao.addEntity(entity);
+    }
+
+    @PATCH
+    @Path("/{id : .+}")
+    @Produces("application/json")
+    public Entity patchEntity(@PathParam("id")String id, Entity entity){
+        Entity entityDb = entityDao.getEntity(id);
+        if (entityDb == null) {
+            throw new NotFoundException();
+        }else {
+            if(entity.getSchemaName() != null) {
+                if(entity.getSchemaName().matches(VALIDATE_REGEX)) {
+                    entityDb.setSchemaName(entity.getSchemaName());
+                }else {
+                    throw new NotFoundException();
+                }
+            }
+            if(entity.getTableName() != null) {
+                if(entity.getTableName().matches(VALIDATE_REGEX)){
+                    entityDb.setTableName(entity.getTableName());
+                } else {
+                    throw new NotFoundException();
+                }
+            }
+           /* if(entity.getFieldList() != null) {
+                for(Field field: entity.getFieldList()) {
+                    for(Field fieldDb: entityDb.getFieldList()){
+                        if(field.getId() == fieldDb.getId()){
+                            if(field.getName() == null
+                                    || field.getType() == null
+                                    || !field.getName().matches(VALIDATE_REGEX)
+                                    || field.getName().length() > MAX_LENGTH_VALUE
+                                    || field.getLength() < MIN_LENGTH_VALUE) {
+                                throw new NotFoundException();
+                            }
+                        }
+                    }
+                }
+                entityDb.setFieldList(entity.getFieldList());
+            }*/
+            return entityDao.updateEntity(entityDb);
+        }
     }
 
     @PUT

@@ -6,5 +6,5 @@ USE Customer
  name VARCHAR(128) NOT NULL,
  type VARCHAR(128) NOT NULL,
  length int NOT NULL,
- entity_id VARCHAR(256)
+ entity_id VARCHAR(384)
 )
