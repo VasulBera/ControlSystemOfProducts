@@ -13,6 +13,7 @@ import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.mockito.runners.MockitoJUnitRunner;
 
+import javax.ws.rs.ClientErrorException;
 import javax.ws.rs.NotFoundException;
 import java.util.ArrayList;
 import java.util.List;
@@ -43,7 +44,7 @@ public class TestCxfWebRestServiceImpl {
         Assert.assertEquals(expected, actually);
     }
 
-    @Test(expected = NotFoundException.class)
+    @Test(expected = ClientErrorException.class)
     public void testGetEntityIsNull(){
         Mockito.when(entityDao.getEntity(anyString())).thenReturn(null);
         cxfWebRestService.getEntity(anyString());
@@ -439,7 +440,7 @@ public class TestCxfWebRestServiceImpl {
         cxfWebRestService.updateEntity(expected);
     }
 
-    @Test(expected = NotFoundException.class)
+    @Test(expected = ClientErrorException.class)
     public void testDeleteEntityNull(){
         Mockito.when(entityDao.getEntity(anyString())).thenReturn(null);
         cxfWebRestService.deleteEntity(anyString());

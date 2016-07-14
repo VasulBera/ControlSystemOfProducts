@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 import java.util.List;
 
 @Service
@@ -31,14 +32,19 @@ public class CxfWebRestServiceImpl {
     public Entity getEntity(@PathParam("id") String id) {
         Entity entity = entityDao.getEntity(id);
         if(entity == null){
-            throw new NotFoundException();
+            throw new ClientErrorException(Response.Status.NOT_FOUND);
         }
         return entity;
     }
 
     @GET
     public List<Entity> getAllEntities(){
-        return entityDao.getAllEntity();
+        List<Entity> listEntities = entityDao.getAllEntity();
+        if(listEntities.size() == 0) {
+            throw new ClientErrorException(Response.Status.NOT_FOUND);
+        } else {
+            return listEntities;
+        }
     }
 
     @POST
@@ -157,7 +163,7 @@ public class CxfWebRestServiceImpl {
         if(entity != null){
             entityDao.deleteEntity(entity);
         }else {
-            throw new NotFoundException();
+            throw new ClientErrorException(Response.Status.NOT_FOUND);
         }
 
     }
