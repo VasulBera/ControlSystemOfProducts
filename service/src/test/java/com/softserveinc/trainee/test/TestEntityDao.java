@@ -32,7 +32,7 @@ public class TestEntityDao {
     private static EntityDaoImpl entityDao;
 
     @Before
-    public  void doSetup(){
+    public  void doSetup() {
         MockitoAnnotations.initMocks(this);
     }
 

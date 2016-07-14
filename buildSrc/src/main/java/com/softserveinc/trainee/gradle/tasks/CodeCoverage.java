@@ -10,7 +10,7 @@ import java.util.Properties;
 public class CodeCoverage extends DefaultTask{
 
     private static final String PATH_TO_TEST_REPORT_FILE = "service/build/reports/jacoco/test/jacocoTestReport.csv";
-    private static final String PATH_TO_TEST_PROPERTIES_FILE = "service/src/main/resources/test.properties";
+    private static final String PATH_TO_TEST_PROPERTIES_FILE = "service/src/test/resources/test.properties";
     private static final String CODE_COVERAGE_KEY_PROPERTIES = "percentCodeCoverage";
 
     @TaskAction
@@ -41,7 +41,8 @@ public class CodeCoverage extends DefaultTask{
         if(expectedPercentCodeCoverage > actuallyPercentCodeCoverage) {
             throw new GradleException("Code coverage failed. Expected = " + expectedPercentCodeCoverage + "%, Actually = " + actuallyPercentCodeCoverage + "%");
         }else {
-            System.out.println("Passed Code Coverage Checks");
+            System.out.println("Passed Code Coverage Checks: " + "\n" + "Expected = "  + expectedPercentCodeCoverage + "% " + "\n" +  "Actually = " + actuallyPercentCodeCoverage + "%");
+
         }
     }
 }

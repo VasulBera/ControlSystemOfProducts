@@ -59,14 +59,6 @@ public class TestField {
         Assert.assertEquals(field.getType(), expected);
     }
 
-   /* @Test
-    public void testHashCode(){
-        int expected = -168281999;
-        int actually = field.hashCode();
-        System.out.println(field.hashCode());
-        Assert.assertEquals(actually, expected);
-    }*/
-
     @Test
     public void testNullEquals(){
         boolean expected = false;

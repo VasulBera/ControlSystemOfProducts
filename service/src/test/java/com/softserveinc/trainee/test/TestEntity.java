@@ -84,14 +84,6 @@ public class TestEntity {
         Assert.assertEquals(actually, expected);
     }
 
-    /*@Test
-    public void testToString(){
-        String expected = "";
-        System.out.println(entity);
-        String actually = entity.toString();
-        Assert.assertEquals(actually, expected);
-    }*/
-
     @Test
     public void testHashCode(){
         int expected = 781176313;
