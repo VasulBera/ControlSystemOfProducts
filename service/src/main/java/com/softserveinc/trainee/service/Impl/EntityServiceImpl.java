@@ -87,15 +87,15 @@ public class EntityServiceImpl implements EntityService {
             if(enteredEntity.getFieldList() != null) {
                 for(Field enteredEntityField: enteredEntity.getFieldList()) {
                     for(Field fieldDb: entityDb.getFieldList()){
-                        if(enteredEntityField.getId().equals(fieldDb.getId())){
-                            if(enteredEntityField.getId() == null
-                                    ||enteredEntityField.getName() == null
-                                    || enteredEntityField.getType() == null
-                                    || !enteredEntityField.getName().matches(VALIDATE_REGEX)
-                                    || enteredEntityField.getName().length() > MAX_LENGTH_VALUE
-                                    || enteredEntityField.getLength() < MIN_LENGTH_VALUE) {
-                                throw new NotFoundException();
-                            } else {
+                        if(enteredEntityField.getId() == null
+                                ||enteredEntityField.getName() == null
+                                || enteredEntityField.getType() == null
+                                || !enteredEntityField.getName().matches(VALIDATE_REGEX)
+                                || enteredEntityField.getName().length() > MAX_LENGTH_VALUE
+                                || enteredEntityField.getLength() < MIN_LENGTH_VALUE) {
+                            throw new NotFoundException();
+                        } else {
+                            if(fieldDb.getId().equals(enteredEntityField.getId())){
                                 fieldDb.setId(enteredEntityField.getId());
                                 fieldDb.setName(enteredEntityField.getName());
                                 fieldDb.setLength(enteredEntityField.getLength());

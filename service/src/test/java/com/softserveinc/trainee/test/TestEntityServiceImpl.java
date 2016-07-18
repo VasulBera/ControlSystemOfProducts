@@ -23,7 +23,7 @@ import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyString;
 
 @RunWith(MockitoJUnitRunner.class)
-public class TestCxfWebRestServiceImpl {
+public class TestEntityServiceImpl {
 
     private static int LIMIT = 129;
     private static String TEST_STRING = RandomStringUtils.random(LIMIT);
@@ -495,6 +495,230 @@ public class TestCxfWebRestServiceImpl {
         Mockito.when(entityDao.updateEntity(entityDb)).thenReturn(entityDb);
         Entity actually = cxfWebRestService.updateEntity(expected);
         Assert.assertEquals(expected, actually);
+    }
+
+    @Test(expected = NotFoundException.class)
+    public void testPatchEntityEntityHasFieldIdIsNull(){
+        Entity expected = new Entity();
+        expected.setId("CustomerProduct");
+
+        Field field = new Field();
+        field.setId("CustomerProductPrice");
+        field.setName("Price");
+        field.setType(FieldType.NVARCHAR);
+        field.setLength(45);
+
+        List<Field> list = new ArrayList();
+        list.add(field);
+        expected.setFieldList(list);
+
+        Entity enteredEntity = new Entity();
+        enteredEntity.setId("CustomerProduct");
+
+        Field enteredEntityField = new Field();
+        enteredEntityField.setName("Price");
+        enteredEntityField.setType(FieldType.NVARCHAR);
+        enteredEntityField.setLength(45);
+
+        List<Field> enteredentityFieldList = new ArrayList();
+        enteredentityFieldList.add(enteredEntityField);
+        enteredEntity.setFieldList(enteredentityFieldList);
+
+        Mockito.when(entityDao.getEntity(anyString())).thenReturn(expected);
+        cxfWebRestService.patchEntity("CustomerProduct", enteredEntity);
+    }
+
+    @Test(expected = NotFoundException.class)
+    public void testPatchEntityEntityHasFieldNameIsNull(){
+        Entity expected = new Entity();
+        expected.setId("CustomerProduct");
+
+        Field field = new Field();
+        field.setId("CustomerProductPrice");
+        field.setName("Price");
+        field.setType(FieldType.NVARCHAR);
+        field.setLength(45);
+
+        List<Field> list = new ArrayList();
+        list.add(field);
+        expected.setFieldList(list);
+
+        Entity enteredEntity = new Entity();
+        enteredEntity.setId("CustomerProduct");
+
+        Field enteredEntityField = new Field();
+        enteredEntityField.setId("CustomerProductPrice");
+        enteredEntityField.setType(FieldType.NVARCHAR);
+        enteredEntityField.setLength(45);
+
+        List<Field> enteredentityFieldList = new ArrayList();
+        enteredentityFieldList.add(enteredEntityField);
+        enteredEntity.setFieldList(enteredentityFieldList);
+
+        Mockito.when(entityDao.getEntity(anyString())).thenReturn(expected);
+        cxfWebRestService.patchEntity("CustomerProduct", enteredEntity);
+    }
+
+    @Test(expected = NotFoundException.class)
+    public void testPatchEntityEntityHasFieldTypeIsNull(){
+        Entity expected = new Entity();
+        expected.setId("CustomerProduct");
+
+        Field field = new Field();
+        field.setId("CustomerProductPrice");
+        field.setName("Price");
+        field.setType(FieldType.NVARCHAR);
+        field.setLength(45);
+
+        List<Field> list = new ArrayList();
+        list.add(field);
+        expected.setFieldList(list);
+
+        Entity enteredEntity = new Entity();
+        enteredEntity.setId("CustomerProduct");
+
+        Field enteredEntityField = new Field();
+        enteredEntityField.setId("CustomerProductPrice");
+        enteredEntityField.setName("Price");
+        enteredEntityField.setLength(45);
+
+        List<Field> enteredentityFieldList = new ArrayList();
+        enteredentityFieldList.add(enteredEntityField);
+        enteredEntity.setFieldList(enteredentityFieldList);
+
+        Mockito.when(entityDao.getEntity(anyString())).thenReturn(expected);
+        cxfWebRestService.patchEntity("CustomerProduct", enteredEntity);
+    }
+
+    @Test(expected = NotFoundException.class)
+    public void testPatchEntityEntityHasFieldLengthLessThanMinValue(){
+        Entity expected = new Entity();
+        expected.setId("CustomerProduct");
+
+        Field field = new Field();
+        field.setId("CustomerProductPrice");
+        field.setName("Price");
+        field.setType(FieldType.NVARCHAR);
+        field.setLength(45);
+
+        List<Field> list = new ArrayList();
+        list.add(field);
+        expected.setFieldList(list);
+
+        Entity enteredEntity = new Entity();
+        enteredEntity.setId("CustomerProduct");
+
+        Field enteredEntityField = new Field();
+        enteredEntityField.setId("CustomerProductPrice");
+        enteredEntityField.setName("Price");
+        enteredEntityField.setType(FieldType.NVARCHAR);
+        enteredEntityField.setLength(-1);
+
+        List<Field> enteredentityFieldList = new ArrayList();
+        enteredentityFieldList.add(enteredEntityField);
+        enteredEntity.setFieldList(enteredentityFieldList);
+
+        Mockito.when(entityDao.getEntity(anyString())).thenReturn(expected);
+        cxfWebRestService.patchEntity("CustomerProduct", enteredEntity);
+    }
+
+    @Test(expected = NotFoundException.class)
+    public void testPatchEntityEntityHasFieldNameDoesnotMatchRegex(){
+        Entity expected = new Entity();
+        expected.setId("CustomerProduct");
+
+        Field field = new Field();
+        field.setId("CustomerProductPrice");
+        field.setName("Price");
+        field.setType(FieldType.NVARCHAR);
+        field.setLength(45);
+
+        List<Field> list = new ArrayList();
+        list.add(field);
+        expected.setFieldList(list);
+
+        Entity enteredEntity = new Entity();
+        enteredEntity.setId("CustomerProduct");
+
+        Field enteredEntityField = new Field();
+        enteredEntityField.setId("CustomerProductPrice");
+        enteredEntityField.setName("*");
+        enteredEntityField.setType(FieldType.NVARCHAR);
+        enteredEntityField.setLength(1);
+
+        List<Field> enteredentityFieldList = new ArrayList();
+        enteredentityFieldList.add(enteredEntityField);
+        enteredEntity.setFieldList(enteredentityFieldList);
+
+        Mockito.when(entityDao.getEntity(anyString())).thenReturn(expected);
+        cxfWebRestService.patchEntity("CustomerProduct", enteredEntity);
+    }
+
+    @Test(expected = NotFoundException.class)
+    public void testPatchEntityEntityHasFieldNameLengthMoreThanMaxValue(){
+        Entity expected = new Entity();
+        expected.setId("CustomerProduct");
+
+        Field field = new Field();
+        field.setId("CustomerProductPrice");
+        field.setName("Price");
+        field.setType(FieldType.NVARCHAR);
+        field.setLength(45);
+
+        List<Field> list = new ArrayList();
+        list.add(field);
+        expected.setFieldList(list);
+
+        Entity enteredEntity = new Entity();
+        enteredEntity.setId("CustomerProduct");
+
+        Field enteredEntityField = new Field();
+        enteredEntityField.setId("CustomerProductPrice");
+        enteredEntityField.setName(TEST_STRING);
+        enteredEntityField.setType(FieldType.NVARCHAR);
+        enteredEntityField.setLength(1);
+
+        List<Field> enteredentityFieldList = new ArrayList();
+        enteredentityFieldList.add(enteredEntityField);
+        enteredEntity.setFieldList(enteredentityFieldList);
+
+        Mockito.when(entityDao.getEntity(anyString())).thenReturn(expected);
+        cxfWebRestService.patchEntity("CustomerProduct", enteredEntity);
+    }
+
+    @Test
+    public void testPatchEntityEntityHasField(){
+        Entity expected = new Entity();
+        expected.setId("CustomerProduct");
+
+        Field field = new Field();
+        field.setId("CustomerProductPrice");
+        field.setName("Price");
+        field.setType(FieldType.NVARCHAR);
+        field.setLength(45);
+
+        List<Field> list = new ArrayList();
+        list.add(field);
+        expected.setFieldList(list);
+
+        Entity enteredEntity = new Entity();
+        enteredEntity.setId("CustomerProduct");
+
+        Field enteredEntityField = new Field();
+        enteredEntityField.setId("CustomerProductPrice");
+        enteredEntityField.setName("Price");
+        enteredEntityField.setType(FieldType.NVARCHAR);
+        enteredEntityField.setLength(1);
+
+        List<Field> enteredentityFieldList = new ArrayList();
+        enteredentityFieldList.add(enteredEntityField);
+        enteredEntity.setFieldList(enteredentityFieldList);
+
+        Mockito.when(entityDao.getEntity(anyString())).thenReturn(expected);
+        Mockito.when(entityDao.updateEntity(any(Entity.class))).thenReturn(enteredEntity);
+        Entity actually = cxfWebRestService.patchEntity("CustomerProduct", enteredEntity);
+        System.out.println(actually);
+        Assert.assertEquals(actually, enteredEntity);
     }
 
     @Test(expected = ClientErrorException.class)

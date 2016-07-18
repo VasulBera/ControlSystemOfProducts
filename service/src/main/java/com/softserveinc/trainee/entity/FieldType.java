@@ -4,7 +4,7 @@ package com.softserveinc.trainee.entity;
  * Created by vberv on 7/13/2016.
  */
 public enum FieldType {
-    BIT, INT, FLOAT, DATE, NVARCHAR(2);
+    BIT, INT, FLOAT, DATE, NVARCHAR;
     private final int value;
 
     FieldType(int value) {
