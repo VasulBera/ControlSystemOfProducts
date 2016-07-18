@@ -88,10 +88,11 @@ public class Field implements Serializable{
 
     @Override
     public String toString() {
-        return new ToStringBuilder(this).append(getId())
-                                        .append(getType())
-                                        .append(getName())
-                                        .append(getLength())
-                                        .toString();
+        return "Field{" +
+                "id='" + id + '\'' +
+                ", name='" + name + '\'' +
+                ", type=" + type +
+                ", length=" + length +
+                '}';
     }
 }

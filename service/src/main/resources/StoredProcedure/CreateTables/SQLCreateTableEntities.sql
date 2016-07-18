@@ -5,6 +5,5 @@ USE Customer
  schema_name VARCHAR(128)  NOT NULL,
  table_name VARCHAR(128)  NOT NULL
 )
- SET IDENTITY_INSERT dbo.entities ON
 
 

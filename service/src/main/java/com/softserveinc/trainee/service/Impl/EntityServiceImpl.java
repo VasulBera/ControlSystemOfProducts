@@ -1,23 +1,16 @@
-package com.softserveinc.trainee.service;
+package com.softserveinc.trainee.service.Impl;
 
 import com.softserveinc.trainee.dao.EntityDao;
 import com.softserveinc.trainee.entity.Entity;
 import com.softserveinc.trainee.entity.Field;
-import org.apache.cxf.jaxrs.ext.PATCH;
+import com.softserveinc.trainee.service.EntityService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-import javax.ws.rs.*;
-import javax.ws.rs.core.MediaType;
+import javax.ws.rs.ClientErrorException;
+import javax.ws.rs.NotFoundException;
 import javax.ws.rs.core.Response;
 import java.util.List;
 
-@Service
-@Path("/entity")
-@Consumes("application/json")
-@Produces("application/json")
-@Transactional
-public class CxfWebRestServiceImpl {
+public class EntityServiceImpl implements EntityService {
 
     @Autowired
     EntityDao entityDao;
@@ -27,9 +20,7 @@ public class CxfWebRestServiceImpl {
     private static final Integer MAX_LENGTH_VALUE = 128;
     private static final Integer MIN_LENGTH_VALUE = 0;
 
-    @GET
-    @Path("/{id : .+}")
-    public Entity getEntity(@PathParam("id") String id) {
+    public Entity getEntity(String id) {
         Entity entity = entityDao.getEntity(id);
         if(entity == null){
             throw new ClientErrorException(Response.Status.NOT_FOUND);
@@ -37,7 +28,6 @@ public class CxfWebRestServiceImpl {
         return entity;
     }
 
-    @GET
     public List<Entity> getAllEntities(){
         List<Entity> listEntities = entityDao.getAllEntity();
         if(listEntities.size() == 0) {
@@ -47,8 +37,6 @@ public class CxfWebRestServiceImpl {
         }
     }
 
-    @POST
-    @Produces(MediaType.APPLICATION_JSON)
     public Entity addEntity(Entity entity) {
         if (entity.getSchemaName() == null
                 || entity.getTableName() == null
@@ -77,50 +65,51 @@ public class CxfWebRestServiceImpl {
         return entityDao.addEntity(entity);
     }
 
-    @PATCH
-    @Path("/{id : .+}")
-    @Produces("application/json")
-    public Entity patchEntity(@PathParam("id")String id, Entity entity){
+    public Entity patchEntity(String id, Entity enteredEntity){
         Entity entityDb = entityDao.getEntity(id);
         if (entityDb == null) {
             throw new NotFoundException();
         }else {
-            if(entity.getSchemaName() != null) {
-                if(entity.getSchemaName().matches(VALIDATE_REGEX)) {
-                    entityDb.setSchemaName(entity.getSchemaName());
+            if(enteredEntity.getSchemaName() != null) {
+                if(enteredEntity.getSchemaName().matches(VALIDATE_REGEX)) {
+                    entityDb.setSchemaName(enteredEntity.getSchemaName());
                 }else {
                     throw new NotFoundException();
                 }
             }
-            if(entity.getTableName() != null) {
-                if(entity.getTableName().matches(VALIDATE_REGEX)){
-                    entityDb.setTableName(entity.getTableName());
+            if(enteredEntity.getTableName() != null) {
+                if(enteredEntity.getTableName().matches(VALIDATE_REGEX)){
+                    entityDb.setTableName(enteredEntity.getTableName());
                 } else {
                     throw new NotFoundException();
                 }
             }
-           /* if(entity.getFieldList() != null) {
-                for(Field field: entity.getFieldList()) {
+            if(enteredEntity.getFieldList() != null) {
+                for(Field enteredEntityField: enteredEntity.getFieldList()) {
                     for(Field fieldDb: entityDb.getFieldList()){
-                        if(field.getId() == fieldDb.getId()){
-                            if(field.getName() == null
-                                    || field.getType() == null
-                                    || !field.getName().matches(VALIDATE_REGEX)
-                                    || field.getName().length() > MAX_LENGTH_VALUE
-                                    || field.getLength() < MIN_LENGTH_VALUE) {
+                        if(enteredEntityField.getId().equals(fieldDb.getId())){
+                            if(enteredEntityField.getId() == null
+                                    ||enteredEntityField.getName() == null
+                                    || enteredEntityField.getType() == null
+                                    || !enteredEntityField.getName().matches(VALIDATE_REGEX)
+                                    || enteredEntityField.getName().length() > MAX_LENGTH_VALUE
+                                    || enteredEntityField.getLength() < MIN_LENGTH_VALUE) {
                                 throw new NotFoundException();
+                            } else {
+                                fieldDb.setId(enteredEntityField.getId());
+                                fieldDb.setName(enteredEntityField.getName());
+                                fieldDb.setLength(enteredEntityField.getLength());
+                                fieldDb.setType(enteredEntityField.getType());
                             }
                         }
                     }
                 }
-                entityDb.setFieldList(entity.getFieldList());
-            }*/
+
+            }
             return entityDao.updateEntity(entityDb);
         }
     }
 
-    @PUT
-    @Produces("application/json")
     public Entity updateEntity(Entity entity){
         if (entity.getId() == null
                 || entity.getSchemaName() == null
@@ -156,9 +145,7 @@ public class CxfWebRestServiceImpl {
         }
     }
 
-    @DELETE
-    @Path("/{id : .+}")
-    public void deleteEntity(@PathParam("id") String id){
+    public void deleteEntity(String id){
         Entity entity = entityDao.getEntity(id);
         if(entity != null){
             entityDao.deleteEntity(entity);

@@ -4,7 +4,7 @@ import com.softserveinc.trainee.dao.EntityDao;
 import com.softserveinc.trainee.entity.Entity;
 import com.softserveinc.trainee.entity.Field;
 import com.softserveinc.trainee.entity.FieldType;
-import com.softserveinc.trainee.service.CxfWebRestServiceImpl;
+import com.softserveinc.trainee.service.Impl.EntityServiceImpl;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.*;
 import org.junit.runner.RunWith;
@@ -32,7 +32,7 @@ public class TestCxfWebRestServiceImpl {
     private static EntityDao entityDao;
 
     @InjectMocks
-    private static CxfWebRestServiceImpl cxfWebRestService = new CxfWebRestServiceImpl();
+    private static EntityServiceImpl cxfWebRestService = new EntityServiceImpl();
 
     @Before
     public void initialize(){

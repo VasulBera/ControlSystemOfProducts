@@ -47,8 +47,6 @@ jacocoTestReport {
     reports {
         csv.enabled = true
         html.enabled = true
-        xml.enabled = true
-
     }
 }
 task codeCoverageCheks(type: com.softserveinc.trainee.gradle.tasks.CodeCoverage)
@@ -99,7 +97,8 @@ tasks.codeCoverageCheks.dependsOn(jacocoTestReport)
 tasks.check.dependsOn(codeCoverageCheks)
 tasks.deleteFile.dependsOn(build)
 tasks.copy.dependsOn(deleteFile)
-tasks.startTomcat.dependsOn(copy)
+tasks.createDb.dependsOn(copy)
+tasks.startTomcat.dependsOn(createDb)
 
 
 
