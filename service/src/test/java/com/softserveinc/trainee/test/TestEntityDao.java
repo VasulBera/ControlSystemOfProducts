@@ -1,3 +1,4 @@
+
 package com.softserveinc.trainee.test;
 
 import com.softserveinc.trainee.dao.Impl.EntityDaoImpl;
@@ -94,3 +95,4 @@ public class TestEntityDao {
     }
 
 }
+

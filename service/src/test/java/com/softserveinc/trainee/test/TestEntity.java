@@ -1,3 +1,4 @@
+
 package com.softserveinc.trainee.test;
 
 import com.softserveinc.trainee.entity.Entity;
@@ -85,13 +86,6 @@ public class TestEntity {
     }
 
     @Test
-    public void testHashCode(){
-        int expected = 781176313;
-        int actually = entity.hashCode();
-        Assert.assertEquals(actually, expected);
-    }
-
-    @Test
     public void testNullEquals(){
         boolean expected = false;
         boolean actually = entity.equals(null);
@@ -133,3 +127,4 @@ public class TestEntity {
         entity = null;
     }
 }
+

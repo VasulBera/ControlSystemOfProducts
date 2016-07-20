@@ -2,29 +2,53 @@ package com.softserveinc.trainee.entity;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
-import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.codehaus.jackson.annotate.JsonAutoDetect;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.util.List;
 
 @javax.persistence.Entity
 @Table(name = "entities")
+@JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY, getterVisibility = JsonAutoDetect.Visibility.NONE, setterVisibility = JsonAutoDetect.Visibility.NONE)
 public class Entity implements Serializable{
 
-    @Id
-    @Column(name = "id")
+    private static final String VALIDATE_REGEX = "[a-zA-Z0-9\\_]+";
+
+    @Id @Column(name = "id")
+    @NotNull @Size(min = 2 , max = 256)
+    @Pattern(regexp = VALIDATE_REGEX)
     private String id;
 
-    @Column(name = "schema_name", nullable = false)
-    private String SchemaName;
+    @Column(name = "name")
+    @NotNull @Size(min = 1 , max = 128)
+    @Pattern(regexp = VALIDATE_REGEX)
+    private String name;
 
-    @Column(name = "table_name", nullable = false)
-    private String TableName;
+    @Column(name = "schema_name")
+    @NotNull @Size(min = 1 , max = 128)
+    @Pattern(regexp = VALIDATE_REGEX)
+    private String schemaName;
+
+    @Column(name = "table_name")
+    @NotNull @Size(min = 1 , max = 128)
+    @Pattern(regexp = VALIDATE_REGEX)
+    private String tableName;
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "entity_id")
     private List<Field> fieldList;
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 
     public String getId() {
         return id;
@@ -35,19 +59,19 @@ public class Entity implements Serializable{
     }
 
     public String getSchemaName() {
-        return SchemaName;
+        return schemaName;
     }
 
     public void setSchemaName(String schemaName) {
-        SchemaName = schemaName;
+        this.schemaName = schemaName;
     }
 
     public String getTableName() {
-        return TableName;
+        return tableName;
     }
 
     public void setTableName(String tableName) {
-        TableName = tableName;
+        this.tableName = tableName;
     }
 
     public List<Field> getFieldList() {
@@ -58,14 +82,6 @@ public class Entity implements Serializable{
         this.fieldList = fieldList;
     }
 
-    @Override
-    public String toString() {
-        return "Entity{" +
-                "id='" + id + '\'' +
-                ", SchemaName='" + SchemaName + '\'' +
-                ", TableName='" + TableName + '\'' +
-                '}';
-    }
 
     @Override
     public boolean equals(Object obj) {
@@ -83,6 +99,7 @@ public class Entity implements Serializable{
                     .append(getSchemaName(), other.getSchemaName())
                     .append(getTableName(), other.getTableName())
                     .append(getFieldList(), other.getFieldList())
+                    .append(getName(), other.getName())
                     .isEquals();
     }
 
@@ -92,8 +109,10 @@ public class Entity implements Serializable{
                                     .append(getSchemaName())
                                     .append(getTableName())
                                     .append(getFieldList())
+                                    .append(getName())
                                     .toHashCode();
     }
+
 }
 
 

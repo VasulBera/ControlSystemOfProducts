@@ -2,27 +2,37 @@ package com.softserveinc.trainee.entity;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
-import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.codehaus.jackson.annotate.JsonAutoDetect;
 
 import javax.persistence.*;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 import java.io.Serializable;
 
 @javax.persistence.Entity
 @Table(name = "fields")
+@JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY, getterVisibility = JsonAutoDetect.Visibility.NONE, setterVisibility = JsonAutoDetect.Visibility.NONE)
 public class Field implements Serializable{
 
-    @Id
-    @Column(name = "id")
+    private static final String VALIDATE_REGEX = "[a-zA-Z0-9\\_]+";
+
+    @Id @Column(name = "id")
+    @NotNull @Size(min = 1, max = 384)
+    @Pattern(regexp = VALIDATE_REGEX)
     private String id;
 
-    @Column(name = "name", nullable = false)
+    @Column(name = "name")
+    @NotNull @Size(min = 1, max = 128)
+    @Pattern(regexp = VALIDATE_REGEX)
     private String name;
 
-    @Column(name = "type", nullable = false)
-    @Enumerated(EnumType.STRING)
+    @Column(name = "type")
+    @Enumerated(EnumType.STRING) @NotNull
     private FieldType type;
 
-    @Column(name = "length", nullable = true)
+    @Column(name = "length") @Min(0)
     private int length;
 
     public String getId() {
