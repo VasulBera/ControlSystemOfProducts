@@ -11,7 +11,6 @@ import javax.ws.rs.NotFoundException;
 import javax.ws.rs.core.Response;
 import java.util.List;
 
-@JsonIgnoreProperties(ignoreUnknown=true)
 public class EntityServiceImpl implements EntityService {
 
     @Autowired
