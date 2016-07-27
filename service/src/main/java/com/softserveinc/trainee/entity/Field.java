@@ -28,6 +28,11 @@ public class Field implements Serializable{
     @Pattern(regexp = VALIDATE_REGEX)
     private String name;
 
+    @Column(name = "column_name")
+    @NotNull @Size(min = 1, max = 128)
+    @Pattern(regexp = VALIDATE_REGEX)
+    private String ColumnName;
+
     @Column(name = "type")
     @Enumerated(EnumType.STRING) @NotNull
     private FieldType type;
@@ -67,6 +72,14 @@ public class Field implements Serializable{
         this.length = length;
     }
 
+    public String getColumnName() {
+        return ColumnName;
+    }
+
+    public void setColumnName(String columnName) {
+        ColumnName = columnName;
+    }
+
     @Override
     public boolean equals(Object obj) {
         if (this == obj) {
@@ -84,6 +97,7 @@ public class Field implements Serializable{
                 .append(getLength(), other.getLength())
                 .append(getName(), other.getName())
                 .append(getType(), other.getType())
+                .append(getColumnName(), other.getColumnName())
                 .isEquals();
     }
 
@@ -93,6 +107,7 @@ public class Field implements Serializable{
                                     .append(getLength())
                                     .append(getName())
                                     .append(getType())
+                                    .append(getColumnName())
                                     .toHashCode();
     }
 
@@ -101,6 +116,7 @@ public class Field implements Serializable{
         return "Field{" +
                 "id='" + id + '\'' +
                 ", name='" + name + '\'' +
+                ", ColumnName='" + ColumnName + '\'' +
                 ", type=" + type +
                 ", length=" + length +
                 '}';

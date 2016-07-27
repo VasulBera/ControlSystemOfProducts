@@ -27,7 +27,7 @@ public interface EntityService {
 
     @PATCH
     @Path("/{id : .+}")
-    public Entity patchEntity(@PathParam("id")String id, Entity entity);
+    public Entity patchEntity(@PathParam("id")String id, Entity entity) throws Throwable;
 
     @PUT
     public Entity updateEntity(Entity entity);

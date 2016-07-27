@@ -27,6 +27,12 @@ buildscript{
 
         }
     }
+
+
 }
-/*task createDb(type: com.softserveinc.trainee.gradle.tasks.SqlRunner)*/
+
+task wrapper(type: Wrapper){
+    gradleVersion = 2.14;
+}
+
 

@@ -68,7 +68,7 @@ task startTomcat(type: Exec) {
     properties.load(inputStream);
     String path = properties.getProperty("pathToTomcat");
     workingDir = file(path + '/bin')
-    commandLine = ['cmd', '/C', 'startup.bat']
+    commandLine = ['cmd', '/C', 'catalina.bat start']
 }
 
 task stopTomcat(type: Exec) {
