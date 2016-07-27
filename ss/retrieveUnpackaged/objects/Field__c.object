@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Follow</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <allowInChatterGroups>false</allowInChatterGroups>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <enableActivities>false</enableActivities>
+    <enableBulkApi>true</enableBulkApi>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>false</enableHistory>
+    <enableReports>false</enableReports>
+    <enableSearch>true</enableSearch>
+    <enableSharing>true</enableSharing>
+    <enableStreamingApi>true</enableStreamingApi>
+    <fields>
+        <fullName>Column_Name__c</fullName>
+        <externalId>false</externalId>
+        <label>Column Name</label>
+        <length>128</length>
+        <required>true</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Entity_id__c</fullName>
+        <externalId>false</externalId>
+        <label>Entity</label>
+        <referenceTo>Entity__c</referenceTo>
+        <relationshipLabel>Fields</relationshipLabel>
+        <relationshipName>Fields</relationshipName>
+        <relationshipOrder>0</relationshipOrder>
+        <reparentableMasterDetail>false</reparentableMasterDetail>
+        <trackTrending>false</trackTrending>
+        <type>MasterDetail</type>
+        <writeRequiresMasterRead>false</writeRequiresMasterRead>
+    </fields>
+    <fields>
+        <fullName>Field_Type__c</fullName>
+        <externalId>false</externalId>
+        <label>Field Type</label>
+        <picklist>
+            <picklistValues>
+                <fullName>NVARCHAR</fullName>
+                <default>true</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>INT</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>BIT</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>FLOAT</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>DATE</fullName>
+                <default>false</default>
+            </picklistValues>
+            <restrictedPicklist>true</restrictedPicklist>
+            <sorted>false</sorted>
+        </picklist>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Id__c</fullName>
+        <caseSensitive>false</caseSensitive>
+        <externalId>true</externalId>
+        <label>Id</label>
+        <length>255</length>
+        <required>true</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>true</unique>
+    </fields>
+    <fields>
+        <fullName>Length__c</fullName>
+        <externalId>false</externalId>
+        <label>Length</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Name__c</fullName>
+        <externalId>false</externalId>
+        <label>Name</label>
+        <length>128</length>
+        <required>true</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <label>Field</label>
+    <listViews>
+        <fullName>All</fullName>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+    </listViews>
+    <nameField>
+        <label>Field Name</label>
+        <type>Text</type>
+    </nameField>
+    <pluralLabel>Fields</pluralLabel>
+    <searchLayouts/>
+    <sharingModel>ControlledByParent</sharingModel>
+    <validationRules>
+        <fullName>Column_Name_regex</fullName>
+        <active>true</active>
+        <errorConditionFormula>!REGEX(Column_Name__c, &apos;^\\w+$&apos;)</errorConditionFormula>
+        <errorMessage>Field &apos;Column Name&apos; must have at list one symbol and include just leters and numbers</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>FIeld_Type_cannot_have_length</fullName>
+        <active>true</active>
+        <description>All type of picklist except NVARCHAR can&apos;t have length</description>
+        <errorConditionFormula>TEXT( Field_Type__c )  &lt;&gt; &apos;NVARCHAR&apos;
+ &amp;&amp; 
+ !ISNULL( Length__c )</errorConditionFormula>
+        <errorMessage>All type of picklist except NVARCHAR can&apos;t have length</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Field_Type_requird_not_be_null</fullName>
+        <active>true</active>
+        <errorConditionFormula>TEXT( Field_Type__c ) = &quot;&quot;</errorConditionFormula>
+        <errorMessage>Field &apos;Type__c &apos; can&apos;t be null</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Name_regex</fullName>
+        <active>true</active>
+        <errorConditionFormula>!REGEX(Name__c, &apos;^\\w+$&apos;)</errorConditionFormula>
+        <errorMessage>Field &apos;Name&apos; must have at list one symbol and include just leters and numbers</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Type_NVARCHAR_has_length</fullName>
+        <active>true</active>
+        <errorConditionFormula>TEXT( Field_Type__c ) = &apos;NVARCHAR&apos;
+ &amp;&amp; 
+( 
+Length__c  &lt;= 0
+||
+ISNULL(Length__c) 
+)</errorConditionFormula>
+        <errorMessage>Field &apos;Length&apos; can&apos;t be null if type is &apos;NVARCHAR&apos;</errorMessage>
+    </validationRules>
+</CustomObject>
