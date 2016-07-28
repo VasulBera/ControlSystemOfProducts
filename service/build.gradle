@@ -62,24 +62,6 @@ task copy(type: Copy){
         rename ('service-1.0.war', 'service.war')
 }
 
-task startTomcat(type: Exec) {
-    Properties properties = new Properties();
-    InputStream inputStream = new FileInputStream("tomcat.properties")
-    properties.load(inputStream);
-    String path = properties.getProperty("pathToTomcat");
-    workingDir = file(path + '/bin')
-    commandLine = ['cmd', '/C', 'catalina.bat start']
-}
-
-task stopTomcat(type: Exec) {
-    Properties properties = new Properties();
-    InputStream inputStream = new FileInputStream("tomcat.properties")
-    properties.load(inputStream);
-    String path = properties.getProperty("pathToTomcat");
-    workingDir = file(path + '/bin')
-    commandLine = ['cmd', '/C', 'shutdown.bat']
-}
-
 task deleteFile(type: Delete){
     Properties properties = new Properties();
     InputStream inputStream = new FileInputStream("tomcat.properties");
@@ -89,6 +71,8 @@ task deleteFile(type: Delete){
     delete pathToTomcat + '/webapps/service.war'
 }
 
+task startTomcat(type: com.softserveinc.trainee.gradle.tasks.StartTomcat)
+task stopTomcat(type: com.softserveinc.trainee.gradle.tasks.StopTomcat)
 task createDb(type: com.softserveinc.trainee.gradle.tasks.SqlRunner)
 task fillDb(type: com.softserveinc.trainee.gradle.tasks.TestDataRunner)
 
@@ -99,12 +83,3 @@ tasks.deleteFile.dependsOn(build)
 tasks.copy.dependsOn(deleteFile)
 tasks.createDb.dependsOn(copy)
 tasks.startTomcat.dependsOn(createDb)
-
-
-
-
-
-
-
-
-
