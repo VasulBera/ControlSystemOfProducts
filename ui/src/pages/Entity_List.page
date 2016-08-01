@@ -4,7 +4,7 @@
 
     <style type="text/css">
        .heads{margin-top: 2%; margin-left: 25%; margin-right: 25%; display: flex; margin-bottom: 1%; }
-       .title{font-size: 17px; width: 50%; text-align: right; padding-top:10px;}
+       .title{font-size: 17px; width: 50%; text-align: right; margin-bottom: 20px;}
        .create-botton{width: 50%; text-align: right;}
        .entity-body{margin-left: 25%; margin-right: 25%; margin-bottom: 1%; padding: 20px; font-size: 13px;}
        .create-entity{margin-left: 25%; margin-right: 25%; margin-bottom: 1%; padding: 20px;  font-size: 13px;}
@@ -46,57 +46,17 @@
         String.prototype.replaceAll = function(search, replace){
           return this.split(search).join(replace);
         }
-        
- 
-         /*  $(document).on('input','.entityNameCreate', function(){
-             var input=$(this);
-             var x = $( ".entityNameCreate" ).val();
-             var newx = x.replace(/[^a-zA-Z0-9]+/, "");
-             var isMatches = /^\w+$/.test(x);
-          }); */
-          
-       /* $(document).on('input', function() {
-
-              $('[id$=createEntity]').validate();
-
-               $('[id$=entity-name]').rules("add",{
-                    minlength: 1,
-                    regex: "^\\w+$" 
-                 });
-                 
-             $('[id$=entity-schema-name]').rules("add",{
-                minlength: 1,
-                regex: "^\\w+$" 
-             });
-             
-             $('[id$=entity-table-name]').rules("add",{
-                    minlength: 1,
-                    regex: "^\\w+$" 
-                 });       
-          
-          });
-          
-          
-          $.validator.addMethod(
-                "regex",
-                function(value, element, regexp) {
-                    var re = new RegExp(regexp);
-                    return re.test(value);
-                },
-                "Please use just leters and numbers"
-        ); */
     </script>
-    
     <div class="heads">
-         <div class="title">EntityList</div>
-         <div class="create-botton"><apex:form ><apex:commandButton action="{!show}" value="CreateEntity" reRender="fullPage" style="width: 100px; margin-right:20px;"/></apex:form></div>
+          <div class="title"></div>
+         <div class="create-botton"><apex:form ><apex:commandButton action="{!show}" value="CreateEntity" reRender="fullPage" id="CreateEntityButton" style="width: 100px; margin-right:20px;"/></apex:form></div>
     </div>
     
     <apex:outputPanel id="fullPage" >
-    
-    <apex:outputPanel id="create" rendered="{!showSection}" >
+    <apex:outputPanel id="create" rendered="{!showSection}" ><!-- {!showSection} -->
          <apex:form id="createEntity" styleClass="createEntityForm">
                     <div class="create-entity">
+                            <div class="title" style="margin-left: 18px;">Create Entity</div>
                         <div class="entity-editor">
                                  <apex:pageBlock >
                                      <apex:pageMessages id="showmsg"></apex:pageMessages> 
@@ -154,8 +114,8 @@
                     </div>
          </apex:form>   
     </apex:outputPanel>
-    
     <div class="entity-body">
+        <div class="title">Entity List</div>
         <apex:form >
             <apex:pageBlock title="Entity" id="entityTable">
             <apex:pageBlockTable value="{!entities}" var="entity">

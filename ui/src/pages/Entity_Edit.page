@@ -24,39 +24,12 @@
     </script>
     
     <div class="heads">
-         <div class="title">EntityEdit</div> 
+         <div class="title">Entity Edit</div> 
     </div>
     <apex:form >
         <div class="body">
-            <!--<div class="entity-editor">
-                <div class="entity-editor-name">
-                    <div>Entity name:</div>
-                    <div>Schema name:</div>
-                    <div>Table name:</div>
-                </div>
-                <div class="entity-editor-value">
-                    <apex:outputPanel id="entity-data">
-                        <div style="margin-bottom: 10px; font-size: 15px;">
-                            <apex:outputField value="{!entity.Name__c}" style="margin-bottom: 10px;">
-                               <apex:inlineEditSupport event="ondblclick" showOnEdit="update"/>
-                            </apex:outputField>
-                        </div>
-                        <div style="margin-bottom: 10px; font-size: 15px;">
-                            <apex:outputField value="{!entity.Schema_Name__c}" style="margin-bottom: 10px;">
-                               <apex:inlineEditSupport event="ondblclick" showOnEdit="update"/>
-                            </apex:outputField>
-                        </div>
-                        <div style="margin-bottom: 10px; font-size: 15px;">
-                            <apex:outputField value="{!entity.Table_Name__c}" style="margin-bottom: 10px;">
-                               <apex:inlineEditSupport event="ondblclick" showOnEdit="update"/>
-                            </apex:outputField>
-                        </div>
-                    </apex:outputPanel>
-                </div>
-            </div>-->
-            <div class="entity-editor"> <!-- entity-editor -->
+            <div class="entity-editor">
                                  <apex:pageBlock id="entityData">
-                                     <!--<apex:pageMessages id="showmasseg"></apex:pageMessages> -->
                                     <apex:pageBlockSection >
                                         <apex:pageBlockSectionItem > 
                                             <apex:outputPanel id="createdEntity"> 

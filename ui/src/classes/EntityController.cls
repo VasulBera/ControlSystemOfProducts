@@ -57,7 +57,11 @@ public class EntityController {
            createdFields = new List<Field__c>();
        }catch(Exception ex){
          ApexPages.addMessages(ex);  
-       } 
+       }
+        showSection = false;
+        /*PageReference page = apexpages.currentpage();
+        page.setRedirect(true);
+        return page; */
     }
     
     public void cancelSavingEntity(){
