@@ -120,8 +120,8 @@
                      </apex:column>
                   </apex:pageBlockTable>
                </apex:pageBlock>
-               <apex:commandButton action="{!save}" value="Save" reRender="fieldTable, entityData" style="width: 70px; margin-right: 20px"/>
-               <apex:commandButton action="{!cancle}" value="Cancel" reRender="fieldTable, entityData" style="width: 70px; margin-right: 20px"/>
+               <apex:commandButton action="{!save}" value="Save" style="width: 70px; margin-right: 20px"/> <!--reRender="fieldTable, entityData"-->
+               <apex:commandButton action="{!cancle}" value="Cancel" reRender="fieldTable, entityData" style="width: 70px; margin-right: 20px" immediate="true"/>
                <!-- <apex:commandButton action="{!getEntityListPage}" value="Back" immediate="true" reRender="fieldTable, entityData" style="width: 70px; margin-right: 20px"/> -->
             </div>
         </div>

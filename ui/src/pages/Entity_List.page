@@ -19,9 +19,13 @@
     
        function generateSchemaName(){
         var entityNameCreated = $( ".entityNameCreate" ).val().replace(" ", "_").replaceAll(' ', '_').replaceAll(/[^a-zA-Z0-9//_]+/, '').toUpperCase();
-                if($( ".entitySchemaNameCreate" ).val() == "" && $( ".entityNameCreate" ).val() != ""){
-                $( ".entitySchemaNameCreate" ).val(entityNameCreated);
-                $( ".entityTableNameCreate" ).val("TABLE_" + entityNameCreated);
+                if(entityNameCreated  != ""){
+                    if($( ".entitySchemaNameCreate" ).val() == ''){
+                           $( ".entitySchemaNameCreate" ).val(entityNameCreated);
+                    }
+                    if($( ".entityTableNameCreate" ).val() == ''){
+                        $( ".entityTableNameCreate" ).val("TABLE_" + entityNameCreated);
+                    }
             }
         };
         
@@ -93,20 +97,20 @@
     <apex:outputPanel id="create" rendered="{!showSection}" >
          <apex:form id="createEntity" styleClass="createEntityForm">
                     <div class="create-entity">
-                        <div class="entity-editor"> <!-- entity-editor -->
+                        <div class="entity-editor">
                                  <apex:pageBlock >
                                      <apex:pageMessages id="showmsg"></apex:pageMessages> 
                                     <apex:pageBlockSection >
                                         <apex:pageBlockSectionItem > 
                                             <apex:outputPanel id="createdEntity"> 
-                                                <div class="entity-editor-name"> <!-- entity-editor-name -->
+                                                <div class="entity-editor-name">
                                                     <div>Entity name:</div>
                                                     <div>Schema name:</div>
                                                     <div>Table name:</div>
                                                 </div>
-                                                <div class="entity-editor-value"> <!-- entity-editor-value -->
-                                                    <div style="margin-bottom: 8px;"><apex:inputField value="{!createdEntity.Name__c}" styleClass="entityNameCreate" id="entity-name" required="true" onchange="replaceWhitespace(this)"/></div>
-                                                    <div style="margin-bottom: 8px;"><apex:inputField value="{!createdEntity.Schema_Name__c}" onclick="generateSchemaName()" styleClass="entitySchemaNameCreate" id="entity-schema-name" onchange="replaceWhitespace(this)"/></div>
+                                                <div class="entity-editor-value">
+                                                    <div style="margin-bottom: 8px;"><apex:inputField value="{!createdEntity.Name__c}" styleClass="entityNameCreate" id="entity-name" onchange="replaceWhitespace(this), generateSchemaName()"/></div>
+                                                    <div style="margin-bottom: 8px;"><apex:inputField value="{!createdEntity.Schema_Name__c}" onclick="" styleClass="entitySchemaNameCreate" id="entity-schema-name" onchange="replaceWhitespace(this)"/></div>
                                                     <div style="margin-bottom: 0px;"><apex:inputField value="{!createdEntity.Table_Name__c}" styleClass="entityTableNameCreate" id="entity-table-name" onchange="replaceWhitespace(this)"/></div>
                                                 </div>
                                             </apex:outputPanel>
@@ -116,7 +120,7 @@
                         </div>
                          <apex:pageBlock title="Fields" id="fieldTable">
                              <apex:pageBlockButtons location="top">
-                                <apex:commandButton action="{!createField}" value="create" reRender="fieldTable" style="margin-left: 85%; width: 70px;"/>
+                                <apex:commandButton action="{!createField}" value="create" reRender="fieldTable" style="margin-left: 85%; width: 70px;" immediate="true"/>
                             </apex:pageBlockButtons>
                           <apex:pageBlockTable value="{!createdFields}" var="f">
                           
@@ -145,8 +149,8 @@
                           </apex:pageBlockTable>
                          </apex:pageBlock>
                          
-                        <apex:commandButton action="{!saveEntity}" value="save" reRender="createEntity, entityTable" style="width: 70px; margin-right: 20px"/>
-                        <apex:commandButton action="{!cancelSavingEntity}" value="Cancel" reRender="createEntity" style="width: 70px; margin-right: 20px" styleClass="cancel"/>
+                        <apex:commandButton action="{!saveEntity}" value="save"  style="width: 70px; margin-right: 20px"/><!--reRender="createEntity, entityTable"-->
+                        <apex:commandButton action="{!cancelSavingEntity}" value="Cancel" reRender="createEntity" style="width: 70px; margin-right: 20px" styleClass="cancel" immediate="true"/>
                     </div>
          </apex:form>   
     </apex:outputPanel>
