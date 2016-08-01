@@ -30,9 +30,11 @@ buildscript{
 
 
 }
+ant.importBuild 'build.xml'
 
 task wrapper(type: Wrapper){
     gradleVersion = 2.14;
 }
-
+task pool (dependsOn: retrieveUnpackaged)
+task push (dependsOn: deployUnpackaged)
 

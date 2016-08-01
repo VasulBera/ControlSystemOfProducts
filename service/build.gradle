@@ -53,7 +53,7 @@ task codeCoverageCheks(type: com.softserveinc.trainee.gradle.tasks.CodeCoverage)
 
 task copy(type: Copy){
     Properties properties = new Properties();
-    InputStream inputStream = new FileInputStream("tomcat.properties");
+    InputStream inputStream = new FileInputStream("build.properties");
     properties.load(inputStream);
     String pathToTomcat = properties.getProperty("pathToTomcat");
     String pathToWar = file('.').toString() + "/build/libs/service-1.0.war";
@@ -64,7 +64,7 @@ task copy(type: Copy){
 
 task deleteFile(type: Delete){
     Properties properties = new Properties();
-    InputStream inputStream = new FileInputStream("tomcat.properties");
+    InputStream inputStream = new FileInputStream("build.properties");
     properties.load(inputStream);
     String pathToTomcat = properties.getProperty("pathToTomcat");
     delete pathToTomcat + '/webapps/service'
