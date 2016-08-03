@@ -53,17 +53,15 @@ public class EntityController {
                     createdFields.get(i).Entity_id__c = createdEntity.Id;
                }
            insert createdFields;
-        System.debug('before');
            createdEntity = new Entity__c();
            createdFields = new List<Field__c>();
-        System.debug('after');
        }catch(Exception ex){
          ApexPages.addMessages(ex);
-           System.debug(ex);
        }
-        /*PageReference page = apexpages.currentpage();
+        /*showSection = false;
+        PageReference page = apexpages.currentpage();
         page.setRedirect(true);
-        return page;*/
+        return page; */
     }
     
     public void cancelSavingEntity(){
