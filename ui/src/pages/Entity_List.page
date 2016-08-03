@@ -59,7 +59,7 @@
                             <div class="title" style="margin-left: 18px;">Create Entity</div>
                         <div class="entity-editor">
                                  <apex:pageBlock >
-                                     <apex:pageMessages id="showmsg"></apex:pageMessages> 
+                                     <apex:pageMessages id="msg"></apex:pageMessages> 
                                     <apex:pageBlockSection >
                                         <apex:pageBlockSectionItem > 
                                             <apex:outputPanel id="createdEntity"> 
@@ -109,7 +109,7 @@
                           </apex:pageBlockTable>
                          </apex:pageBlock>
                          
-                        <apex:commandButton action="{!saveEntity}" value="save"  style="width: 70px; margin-right: 20px"/><!--reRender="createEntity, entityTable"-->
+                        <apex:commandButton action="{!saveEntity}" value="save" style="width: 70px; margin-right: 20px"/><!--reRender="createEntity, entityTable"-->
                         <apex:commandButton action="{!cancelSavingEntity}" value="Cancel" reRender="createEntity" style="width: 70px; margin-right: 20px" styleClass="cancel" immediate="true"/>
                     </div>
          </apex:form>   

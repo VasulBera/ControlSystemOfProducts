@@ -18,9 +18,6 @@ public class EntityController {
        createdFields = new List<Field__c>();
        showSection = false;
        fakeId = 1;
-       Remote_Connection__c rc = Remote_Connection__c.getInstance('Static_IP');
-       String ip = rc.Public_IP__c;
-       System.debug(rc.Public_IP__c);
     }
     
     public void deleteEntity(){
@@ -56,15 +53,17 @@ public class EntityController {
                     createdFields.get(i).Entity_id__c = createdEntity.Id;
                }
            insert createdFields;
+        System.debug('before');
            createdEntity = new Entity__c();
            createdFields = new List<Field__c>();
+        System.debug('after');
        }catch(Exception ex){
-         ApexPages.addMessages(ex);  
+         ApexPages.addMessages(ex);
+           System.debug(ex);
        }
-        showSection = false;
         /*PageReference page = apexpages.currentpage();
         page.setRedirect(true);
-        return page; */
+        return page;*/
     }
     
     public void cancelSavingEntity(){
