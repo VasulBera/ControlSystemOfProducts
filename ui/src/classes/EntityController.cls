@@ -17,7 +17,10 @@ public class EntityController {
        createdEntity = new Entity__c();
        createdFields = new List<Field__c>();
        showSection = false;
-       fakeId = 1; 
+       fakeId = 1;
+       Remote_Connection__c rc = Remote_Connection__c.getInstance('Static_IP');
+       String ip = rc.Public_IP__c;
+       System.debug(rc.Public_IP__c);
     }
     
     public void deleteEntity(){
