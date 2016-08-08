@@ -105,13 +105,30 @@
 	</target>
 
 	<!-- Retrieve the information of all items of a particular metadata type -->
-    <target name="listMetadata">
+    <!-- <target name="listMetadata">
       <sf:listMetadata username="${sf.username}" password="${sf.password}" sessionId="${sf.sessionId}" serverurl="${sf.serverurl}" metadataType="${sf.metadataType}"/>
+    </target> -->
+    
+    <target name="listMetadata">
+      <mkdir dir="listMetadata"/>
+      <sf:listMetadata
+        username="${sf.username}"
+        password="${sf.password}"
+        sessionId="${sf.sessionId}"
+        serverurl="${sf.serverurl}"
+        metadataType="CustomObject"
+        resultFilePath="listMetadata/list.log"/>
     </target>
 
 	<!-- Retrieve the information on all supported metadata type -->
     <target name="describeMetadata">
-      <sf:describeMetadata username="${sf.username}" password="${sf.password}" sessionId="${sf.sessionId}" serverurl="${sf.serverurl}"/>
+      <mkdir dir="describeMetadata"/>
+      <sf:describeMetadata
+        username="${sf.username}"
+        password="${sf.password}"
+        sessionId="${sf.sessionId}"
+        serverurl="${sf.serverurl}"
+        resultFilePath="describeMetadata/describe.log"/>
     </target>
     
 </project>

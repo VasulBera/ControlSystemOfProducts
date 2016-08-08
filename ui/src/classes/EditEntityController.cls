@@ -15,19 +15,28 @@ public class EditEntityController {
     
     public void createField(){
         Field__c field = new Field__c(Entity_id__c = entity.Id, Id__c = String.valueOf(fakeId++), Field_Type__c = 'NVARCHAR');
+        System.debug('entity.Id__c ->' + entity.Id__c);
+        System.debug('entity.Id ->' + entity.Id);
         fields.add(field);
     }
     
     public void save(){
+        List<Field__c> updatedFields = new List<Field__c>();
+        List<Field__c> insertedFields = new List<Field__c>();
         try{
             update entity;
             for(Integer i = 0; i < fields.size(); i++){
                 if(fields.get(i).Id == null){
                   fields.get(i).Id__c = (entity.Id__c + fields.get(i).Name__c).toUpperCase();
-                  insert fields.get(i);   
+                  /*insert fields.get(i);*/
+                  insertedFields.add(fields.get(i));  
+                }else{
+                  updatedFields.add(fields.get(i));
                 }
             }
-            update fields;
+            /*update fields;*/
+            insert insertedFields;
+            update updatedFields;
         }catch(Exception ex){
             ApexPages.addMessages(ex);  
         }

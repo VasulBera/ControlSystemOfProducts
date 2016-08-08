@@ -19,7 +19,7 @@ public class Entity implements Serializable{
     private static final String VALIDATE_REGEX = "[a-zA-Z0-9\\_]+";
 
     @Id @Column(name = "id")
-    @NotNull @Size(min = 2 , max = 256)
+    @NotNull @Size(min = 2 , max = 255)
     @Pattern(regexp = VALIDATE_REGEX)
     private String id;
 
@@ -34,7 +34,7 @@ public class Entity implements Serializable{
     private String schemaName;
 
     @Column(name = "table_name")
-    @NotNull @Size(min = 1 , max = 128)
+    @NotNull @Size(min = 1 , max = 127)
     @Pattern(regexp = VALIDATE_REGEX)
     private String tableName;
 

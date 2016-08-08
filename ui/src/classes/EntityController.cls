@@ -49,7 +49,7 @@ public class EntityController {
            insert createdEntity;
            entities.add(createdEntity); 
                for(Integer i = 0; i < createdFields.size(); i++){
-                    createdFields.get(i).id__c = (entityId + createdFields.get(i).Column_Name__c).toUpperCase();
+                    /*createdFields.get(i).id__c = (createdEntity.Id__c + createdFields.get(i).Column_Name__c).toUpperCase();*/
                     createdFields.get(i).Entity_id__c = createdEntity.Id;
                }
            insert createdFields;

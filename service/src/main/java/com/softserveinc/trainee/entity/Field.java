@@ -38,7 +38,7 @@ public class Field implements Serializable{
     private FieldType type;
 
     @Column(name = "length") @Min(0)
-    private int length;
+    private Integer length;
 
     public String getId() {
         return id;
@@ -64,11 +64,11 @@ public class Field implements Serializable{
         this.type = type;
     }
 
-    public int getLength() {
+    public Integer getLength() {
         return length;
     }
 
-    public void setLength(int length) {
+    public void setLength(Integer length) {
         this.length = length;
     }
 

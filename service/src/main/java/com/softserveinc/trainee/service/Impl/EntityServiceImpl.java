@@ -17,7 +17,7 @@ public class EntityServiceImpl implements EntityService {
     @Autowired
     EntityDao entityDao;
 
-    private static final String REPLACE_REGEX = "[^a-zA-Z0-9]";
+    private static final String REPLACE_REGEX = "[^a-zA-Z0-9\\_]";
 
     public Entity getEntity(String id) {
         Entity entity = entityDao.getEntity(id);
@@ -37,7 +37,9 @@ public class EntityServiceImpl implements EntityService {
     }
 
     public Entity addEntity(Entity entity) {
-        entity.setId((entity.getSchemaName() + entity.getTableName()).replaceAll(REPLACE_REGEX, "").toUpperCase());
+        if(entity.getId() == null) {
+            entity.setId((entity.getSchemaName() + entity.getTableName()).replaceAll(REPLACE_REGEX, "").toUpperCase());
+        }
         if(entity.getFieldList() != null) {
             for(Field field: entity.getFieldList()){
                 field.setId((entity.getId() + field.getName()).replaceAll(REPLACE_REGEX, "").toUpperCase());
@@ -51,24 +53,28 @@ public class EntityServiceImpl implements EntityService {
         if (entity == null) {
             throw new NotFoundException();
         }
+        if(enteredEntity.getName() != null){
+            entity.setName(enteredEntity.getName());
+        }
         if(enteredEntity.getSchemaName() != null){
             entity.setSchemaName(enteredEntity.getSchemaName());
         }
         if(enteredEntity.getTableName() != null){
             entity.setTableName(enteredEntity.getTableName());
         }
-        if(enteredEntity.getFieldList() != null){
-            for(Field enteredEntityField: enteredEntity.getFieldList()) {
-                for(Field fieldDb: entity.getFieldList()){
-                        if(fieldDb.getId().equals(enteredEntityField.getId())){
-                            fieldDb.setId(enteredEntityField.getId());
-                            fieldDb.setName(enteredEntityField.getName());
-                            fieldDb.setLength(enteredEntityField.getLength());
-                            fieldDb.setType(enteredEntityField.getType());
-                        }
+        if(enteredEntity.getFieldList() != null) {
+            for (Field enteredEntityField : enteredEntity.getFieldList()) {
+                for (Field fieldDb : entity.getFieldList()) {
+                    if (fieldDb.getId().equals(enteredEntityField.getId())) {
+                        fieldDb.setId(enteredEntityField.getId());
+                        fieldDb.setColumnName(enteredEntityField.getColumnName());
+                        fieldDb.setName(enteredEntityField.getName());
+                        fieldDb.setLength(enteredEntityField.getLength());
+                        fieldDb.setType(enteredEntityField.getType());
                     }
                 }
             }
+        }
         return entityDao.updateEntity(entity);
     }
 

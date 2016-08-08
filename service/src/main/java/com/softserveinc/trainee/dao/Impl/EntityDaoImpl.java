@@ -27,7 +27,12 @@ public class EntityDaoImpl implements EntityDao{
 
     @Override
     public Entity updateEntity(Entity entity) {
-        return entityManager.merge(entity);
+        Entity persistEntity = entityManager.find(Entity.class, entity.getId());
+        if(persistEntity != null){
+            entityManager.remove(persistEntity);
+        }
+        entityManager.persist(entity);
+        return entity;
     }
 
     @Override
