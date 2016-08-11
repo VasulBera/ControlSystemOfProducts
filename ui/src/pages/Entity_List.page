@@ -1,11 +1,11 @@
-<apex:page sidebar="false" controller="EntityController"> <!-- showHeader="false" sidebar="false" -->
+<apex:page sidebar="false" controller="EntityController">
 <apex:includeScript value="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js" />
 <apex:includeScript value="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.15.0/jquery.validate.js" />
 
     <style type="text/css">
        .heads{margin-top: 2%; margin-left: 25%; margin-right: 25%; display: flex; margin-bottom: 1%; }
-       .title{font-size: 17px; width: 50%; text-align: right; margin-bottom: 20px;}
-       .create-botton{width: 50%; text-align: right;}
+       .title{font-size: 17px; text-align: center; margin-bottom: 20px;}
+       .create-botton{width: 100%; text-align: right;}
        .entity-body{margin-left: 25%; margin-right: 25%; margin-bottom: 1%; padding: 20px; font-size: 13px;}
        .create-entity{margin-left: 25%; margin-right: 25%; margin-bottom: 1%; padding: 20px;  font-size: 13px;}
        .entity-editor{width: 100%; display: block;}
@@ -16,6 +16,32 @@
     </style>
     
     <script type="text/javascript">
+    
+    $( document ).ready( function(){
+       makeInputsDisable();
+    })
+    
+    function makeInputsDisable(){
+       var isExists = $($($('.list')[0]).find('.dataRow')[0]).find('[id$=field-type]').is(":visible");
+        if(isExists){
+            var lineArray = $($('.list')[0]).find('.dataRow');
+            for(var i = 0; i < lineArray.length; i++){
+                var typeValue = $($($('.list')[0]).find('.dataRow')[i]).find('[id$=field-type] option:selected').val();
+                var lengthElement = $($($('.list')[0]).find('.dataRow')[i]).find('[id$=field-length]');
+                console.log(typeValue );
+                if(typeValue == 'NVARCHAR'){
+                    console.log('is nvar');    
+                    lengthElement.prop('disabled', false);
+                }else{
+                    console.log('must be mute');
+                    debugger;
+                    lengthElement.prop('disabled', true);
+                    debugger;
+                }
+            }
+        }
+
+    }
     
        function generateSchemaName(){
         var entityNameCreated = $( ".entityNameCreate" ).val().replace(" ", "_").replaceAll(' ', '_').replaceAll(/[^a-zA-Z0-9//_]+/, '').toUpperCase();
@@ -39,6 +65,16 @@
 
         };
         
+        function makeButtondisable(element){
+            var value = element.value;
+            var lengthElement = $($(element).closest('.dataRow')).find('[id$=field-length]');
+            if(value == 'NVARCHAR'){
+                lengthElement.prop('disabled', false);
+            }else{
+                lengthElement.prop('disabled', true);
+            }
+        }
+
         function replaceWhitespace(element){
             element.value = element.value.replaceAll(' ', '_');
         }
@@ -47,19 +83,21 @@
           return this.split(search).join(replace);
         }
     </script>
+    
+    
     <div class="heads">
           <div class="title"></div>
          <div class="create-botton"><apex:form ><apex:commandButton action="{!show}" value="CreateEntity" reRender="fullPage" id="CreateEntityButton" style="width: 100px; margin-right:20px;"/></apex:form></div>
     </div>
-    
-    <apex:outputPanel id="fullPage" >
-    <apex:outputPanel id="create" rendered="{!showSection}" ><!-- {!showSection} -->
+  <apex:outputPanel id="fullPage" >
+      
+      <apex:outputPanel id="create" rendered="{!showSection}" >
          <apex:form id="createEntity" styleClass="createEntityForm">
                     <div class="create-entity">
                             <div class="title" style="margin-left: 18px;">Create Entity</div>
                         <div class="entity-editor">
                                  <apex:pageBlock >
-                                     <apex:pageMessages id="msg"></apex:pageMessages> 
+                                     <apex:pageMessages id="msg" escape="false"></apex:pageMessages> 
                                     <apex:pageBlockSection >
                                         <apex:pageBlockSectionItem > 
                                             <apex:outputPanel id="createdEntity"> 
@@ -69,29 +107,30 @@
                                                     <div>Table name:</div>
                                                 </div>
                                                 <div class="entity-editor-value">
-                                                    <div style="margin-bottom: 8px;"><apex:inputField value="{!createdEntity.Name__c}" styleClass="entityNameCreate" id="entity-name" onchange="replaceWhitespace(this), generateSchemaName()"/></div>
-                                                    <div style="margin-bottom: 8px;"><apex:inputField value="{!createdEntity.Schema_Name__c}" onclick="" styleClass="entitySchemaNameCreate" id="entity-schema-name" onchange="replaceWhitespace(this)"/></div>
-                                                    <div style="margin-bottom: 0px;"><apex:inputField value="{!createdEntity.Table_Name__c}" styleClass="entityTableNameCreate" id="entity-table-name" onchange="replaceWhitespace(this)"/></div>
+                                                   <div style="margin-bottom: 8px;"><apex:inputField value="{!createdEntity.Name__c}" styleClass="entityNameCreate" id="entity-name" onchange="replaceWhitespace(this), generateSchemaName()"/></div>
+                                                   <div style="margin-bottom: 8px;"><apex:inputField value="{!createdEntity.Schema_Name__c}" onclick="" styleClass="entitySchemaNameCreate" id="entity-schema-name" onchange="replaceWhitespace(this)"/></div>
+                                                   <div style="margin-bottom: 0px;"><apex:inputField value="{!createdEntity.Table_Name__c}" styleClass="entityTableNameCreate" id="entity-table-name" onchange="replaceWhitespace(this)"/></div>
                                                 </div>
                                             </apex:outputPanel>
                                          </apex:pageBlockSectionItem>
                                     </apex:pageBlockSection>
                                 </apex:pageBlock>
                         </div>
-                        <!--
-                         <apex:pageBlock title="Fields" id="fieldTable">
+                        <apex:outputPanel id="fieldTable">
+                        <apex:pageBlock title="Fields">
                              <apex:pageBlockButtons location="top">
-                                <apex:commandButton action="{!createField}" value="create" reRender="fieldTable" style="margin-left: 85%; width: 70px;" immediate="true"/>
+                                <apex:actionStatus id="afterPressCreateButton" onstop="makeInputsDisable()"/>
+                                <apex:commandButton action="{!createField}" value="Create" onclick="makeInputsDisable()" reRender="fieldTable" style="margin-left: 85%; width: 70px;" immediate="true" status="afterPressCreateButton"/>
                             </apex:pageBlockButtons>
-                          <apex:pageBlockTable value="{!createdFields}" var="f">
+                                <apex:pageBlockTable value="{!createdFields}" var="f">
                           
                              <apex:column headerValue="Action">
-                                  <apex:commandLink value="Delete" action="{!deleteField}" reRender="fieldTable" style="font-weight: bold; color: #006699">
-                                       <apex:param name="fieldId" value="{!f.Id__c}" assignTo="{!fieldId}"/>
+                                  <apex:commandLink value="Delete" action="{!deleteField}" reRender="fieldTable" style="font-weight: bold; color: #006699" immediate="true"> <!-- -->
+                                       <apex:param name="fieldId" value="{!f.Id__c}" assignTo="{!fieldId}"/> 
                                   </apex:commandLink>
                              </apex:column>
                           
-                             <apex:column headerValue="Name">
+                             <apex:column headerValue="Field Name">
                                 <apex:inputField value="{!f.Name__c}" id="fieldNameCreated" onchange="replaceWhitespace(this)"/>
                              </apex:column>
 
@@ -99,22 +138,28 @@
                                 <apex:inputField value="{!f.Column_Name__c}" id="fieldColumnNameCreated" onclick="generateColumnName(this)" onchange="replaceWhitespace(this)"/>
                              </apex:column>
                              
-                             <apex:column headerValue="Field type">
-                                <apex:inputField value="{!f.Field_Type__c}"/>
+                             <apex:column headerValue="Field type" id="field-type">
+                                <apex:inputField value="{!f.Field_Type__c}" onchange="makeButtondisable(this)"/>
                              </apex:column>
                              
                              <apex:column headerValue="Length">
-                                <apex:inputField value="{!f.Length__c}"/>
+                                <apex:inputField value="{!f.Length__c}" id="field-length"/>
                              </apex:column>
                              
                           </apex:pageBlockTable>
+
                          </apex:pageBlock>
-                         -->
-                        <apex:commandButton action="{!saveEntity}" value="save" style="width: 70px; margin-right: 20px"/><!--reRender="createEntity, entityTable"-->
+                         </apex:outputPanel>
+                        <apex:commandButton action="{!saveEntity}" value="Save" style="width: 70px; margin-right: 20px"/>
                         <apex:commandButton action="{!cancelSavingEntity}" value="Cancel" reRender="createEntity" style="width: 70px; margin-right: 20px" styleClass="cancel" immediate="true"/>
                     </div>
          </apex:form>   
     </apex:outputPanel>
+      
+      
+      
+      
+      
     <div class="entity-body">
         <div class="title">Entity List</div>
         <apex:form >
@@ -122,19 +167,18 @@
             <apex:pageBlockTable value="{!entities}" var="entity">
                 <apex:column headerValue="Action">
                     <apex:commandLink action="{!deleteEntity}" value="Delete" style="font-weight: bold; color: #006699" reRender="entityTable">
-                        <apex:param name="entityId" value="{!entity.Id}" assignTo="{!entityId}"/>
+                        <apex:param name="entityId" value="{!entity.id}" assignTo="{!entityId}"/>
                     </apex:commandlink>
                 </apex:column>
                 <apex:column headerValue="Name">
-                    <apex:commandLink action="{!getEntityEditPage}" value="{!entity.Name__c}" style="font-weight: bold; color: #006699">
+                    <apex:commandLink action="{!getEntityEditPage}" value="{!entity.name}" style="font-weight: bold; color: #006699">
                         <apex:param name="entityId" value="{!entity.Id}" assignTo="{!entityId}"/>
                     </apex:commandlink>
                 </apex:column>
-                <apex:column value="{!entity.Schema_Name__c}"/>
-                <apex:column value="{!entity.Table_Name__c}"/>
+                <apex:column headerValue="Schema name">{!entity.schemaName}</apex:column>
+                <apex:column headerValue="Table name">{!entity.tableName}</apex:column>
             </apex:pageBlockTable>
             </apex:pageBlock>
-            <!-- <apex:commandButton action="{!getGoogle}" value="Google"/> -->
         </apex:form>
     </div>
   </apex:outputPanel>

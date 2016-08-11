@@ -22,19 +22,15 @@ public class HttpService {
         Remote_Connection__c rc = Remote_Connection__c.getInstance('Static_IP');
         String ip = rc.Public_IP__c;
         String url = 'http://' + ip + ':8080/service/rest/entity';
-        
         HttpRequest request = new HttpRequest();
         request.setEndpoint(url);
         request.setMethod('PUT');
         request.setHeader('content-type', 'application/json');
         request.setBody(data);
-        System.debug('data -> ' + data);
-		System.debug('request -> ' + request.toString());
         Http http = new Http();
         HttpResponse response = new HttpResponse();
         response = http.send(request);
-        System.debug('responce -> ' + response.toString());
-    }
+   }
     
     @future(callout=true)
     public static void deleteData(String id){
@@ -68,5 +64,49 @@ public class HttpService {
         Http http = new Http();
         HttpResponse response = new HttpResponse();
         response = http.send(request);
+    }
+    public static List<Entity> getAllEntities(){
+        Remote_Connection__c rc = Remote_Connection__c.getInstance('Static_IP');
+        String ip = rc.Public_IP__c;
+        String url = 'http://' + ip + ':8080/service/rest/entity';
+        
+        HttpRequest request = new HttpRequest();
+        request.setEndpoint(url);
+        request.setMethod('GET');
+        request.setHeader('content-type', 'application/json');
+       
+        Http http = new Http();
+        HttpResponse response = new HttpResponse();
+        response = http.send(request);
+        String data = response.getBody();
+        if(!String.isEmpty(data)){
+        	List<Entity> entities = (List<Entity>)JSON.deserialize(data, List<Entity>.class);
+            return entities;
+        }else{
+            return new List<Entity>();
+        }
+      
+    }
+    public static Entity getEntity(String id){
+        Remote_Connection__c rc = Remote_Connection__c.getInstance('Static_IP');
+        String ip = rc.Public_IP__c;
+        String url = 'http://' + ip + ':8080/service/rest/entity/' + id;
+        System.debug('url ' + url);
+        HttpRequest request = new HttpRequest();
+        request.setEndpoint(url);
+        request.setMethod('GET');
+        request.setHeader('content-type', 'application/json');
+       
+        Http http = new Http();
+        HttpResponse response = new HttpResponse();
+        response = http.send(request);
+        String data = response.getBody();
+        if(!String.isEmpty(data)){
+            data = '[' + data + ']';
+        	List<Entity> entity = (List<Entity>)JSON.deserialize(data, List<Entity>.class);
+            return entity.get(0);
+        }else{
+            return null;
+        }
     }
 }

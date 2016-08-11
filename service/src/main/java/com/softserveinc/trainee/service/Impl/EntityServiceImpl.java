@@ -82,6 +82,13 @@ public class EntityServiceImpl implements EntityService {
         if (entity.getId() == null){
             entity.setId((entity.getSchemaName() + entity.getTableName()).replaceAll(REPLACE_REGEX, "").toUpperCase());
         }
+        if(entity.getFieldList() != null) {
+            for(Field field: entity.getFieldList()){
+                if(field.getId() == null) {
+                    field.setId((entity.getId() + field.getColumnName()).replaceAll(REPLACE_REGEX, "").toUpperCase());
+                }
+            }
+        }
         return entityDao.updateEntity(entity);
     }
 

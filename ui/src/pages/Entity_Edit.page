@@ -1,4 +1,6 @@
 <apex:page sidebar="false" controller="EditEntityController"> <!-- showHeader="false" sidebar="false" -->
+<apex:includeScript value="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js" />
+<apex:includeScript value="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.15.0/jquery.validate.js" />
   <style type="text/css"> 
        .heads{margin-top: 2%; margin-left: 20%; margin-right: 20%; display: flex; margin-bottom: 1%;}
        .title{font-size: 17px;margin-left: 44%;}
@@ -9,10 +11,42 @@
        .entity-editor-value{width: 50%; display: inline-table;}
        .field-editor{margin-top:20px; width: 100%;font-size: 13px;}
        body .bPageBlock .pbBody .dataCol{width: 100%;}
+       body .pbBody table.list tr.headerRow th { width: 170px;}
     </style>
     
     <script>
-                
+    
+        $( document ).ready( function(){
+            makeInputsDisable();
+        })
+        
+         function makeInputsDisable(){
+           var isExists = $($($('.list')[0]).find('.dataRow')[0]).find('[id$=field-type]').is(":visible");
+            if(isExists){
+                var lineArray = $($('.list')[0]).find('.dataRow');
+                for(var i = 0; i < lineArray.length; i++){
+                    var typeValue = $($($('.list')[0]).find('.dataRow')[i]).find('[id$=field-type] option:selected').val();
+                    var lengthElement = $($($('.list')[0]).find('.dataRow')[i]).find('[id$=field-length]');
+                    if(typeValue == 'NVARCHAR'){
+                        lengthElement.prop('disabled', false);
+                    }else{
+                        lengthElement.prop('disabled', true);
+                    }
+                }
+            }
+    
+        }
+        
+        function makeButtondisable(element){
+            var value = element.value;
+            var lengthElement = $($(element).closest('.dataRow')).find('[id$=field-length]');
+            if(value == 'NVARCHAR'){
+                lengthElement.prop('disabled', false);
+            }else{
+                lengthElement.prop('disabled', true);
+            }
+        }
+                    
         function replaceWhitespace(element){
             element.value = element.value.replaceAll(' ', '_');
         }
@@ -48,44 +82,41 @@
                                     </apex:pageBlockSection>
                                 </apex:pageBlock>
                         </div>
+                        
             <div class="field-editor">
                 <apex:pageBlock title="Fields" id="fieldTable">
-                <apex:pageMessages id="showmsg"></apex:pageMessages> 
+                <apex:actionStatus id="afterPressAllButton" onstop="makeInputsDisable()"/>
+                <apex:pageMessages id="showmsg" escape="false"></apex:pageMessages> 
                 <apex:pageBlockButtons style="display: flex;" location="top">
-                    <apex:commandButton action="{!createField}" value="Add" reRender="fieldTable" style="margin-left: 85%; width: 70px;"/>
+                    <apex:commandButton action="{!createField}" value="Add" reRender="fieldTable" style="margin-left: 85%; width: 70px;" status="afterPressAllButton"/>
                 </apex:pageBlockButtons>
                   <apex:pageBlockTable value="{!fields}" var="item">
                       <apex:column headerValue="Action">
-                          <apex:commandLink value="Delete" action="{!deleteField}" reRender="fieldTable" style="font-weight: bold; color: #006699">
+                          <apex:commandLink value="Delete" action="{!deleteField}" reRender="fieldTable" status="afterPressAllButton" style="font-weight: bold; color: #006699">
                                <apex:param name="fieldId" value="{!item.Id__c}" assignTo="{!fieldId}"/>
                           </apex:commandLink>
                       </apex:column>
-                      <apex:column headerValue="Name">
+                      <apex:column headerValue="Field name">
                         <apex:outputField value="{!item.Name__c}">
                            <apex:inlineEditSupport event="onclick" showOnEdit="update"/>
                         </apex:outputField>
-                       <!--  <apex:inputField value="{!item.Name__c}" onchange="replaceWhitespace(this)"/>  -->
                     </apex:column>
                     
                     <apex:column headerValue="Column name">
                          <apex:outputField value="{!item.Column_Name__c}">
                            <apex:inlineEditSupport event="onclick" showOnEdit="update"/>
                         </apex:outputField>
-                       <!--  <apex:inputField value="{!item.Column_Name__c}" onchange="replaceWhitespace(this)"/>  -->
                     </apex:column>
                     
                     <apex:column headerValue="Field type">
-                         <!-- <apex:outputField value="{!item.Field_Type__c}">
-                           <apex:inlineEditSupport event="onclick" showOnEdit="update"/>
-                        </apex:outputField> -->
-                        <apex:inputField value="{!item.Field_Type__c}"/>
+                        <apex:inputField value="{!item.Field_Type__c}" id="field-type" onchange="makeButtondisable(this)"/>
                     </apex:column>
                     
                     <apex:column headerValue="Length">
-                        <apex:outputField value="{!item.Length__c}">
-                           <apex:inlineEditSupport event="onclick" showOnEdit="update"/>
-                        </apex:outputField>
-                      <!--   <apex:inputField value="{!item.Length__c}"/>  -->
+                        <apex:inputField value="{!item.Length__c}" id="field-length"/>
+                        <!-- <apex:outputField value="{!item.Length__c}">
+                           <apex:inlineEditSupport event="onclick" showOnEdit="update" id="field-length"/>
+                        </apex:outputField> -->
                     </apex:column>
                      
                      <apex:column headerValue="PK">
@@ -93,10 +124,10 @@
                      </apex:column>
                   </apex:pageBlockTable>
                </apex:pageBlock>
-               <apex:commandButton action="{!save}" value="Save" style="width: 70px; margin-right: 20px"/> <!--reRender="fieldTable, entityData"-->
-               <apex:commandButton action="{!cancle}" value="Cancel" reRender="fieldTable, entityData" style="width: 70px; margin-right: 20px" immediate="true"/>
-               <!-- <apex:commandButton action="{!getEntityListPage}" value="Back" immediate="true" reRender="fieldTable, entityData" style="width: 70px; margin-right: 20px"/> -->
+               <apex:commandButton action="{!save}" value="Save" status="afterPressAllButton" style="width: 70px; margin-right: 20px"/>
+               <apex:commandButton action="{!cancle}" value="Cancel" status="afterPressAllButton" reRender="fieldTable, entityData" style="width: 70px; margin-right: 20px" immediate="true"/>
             </div>
+           
         </div>
     </apex:form>
 </apex:page>

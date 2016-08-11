@@ -13,6 +13,8 @@ repositories {
     mavenCentral()
 }
 
+
+
 dependencies {
 
     compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.4'
@@ -37,7 +39,8 @@ dependencies {
     compile group: 'org.apache.cxf', name: 'cxf-rt-rs-service-description', version: '3.1.6'
 
     compile group: 'org.codehaus.jackson', name: 'jackson-jaxrs', version: '1.9.13'
-}
+    }
+
 
 jacoco {
     toolVersion = jacocoVersion
@@ -83,3 +86,4 @@ tasks.deleteFile.dependsOn(build)
 tasks.copy.dependsOn(deleteFile)
 tasks.createDb.dependsOn(copy)
 tasks.startTomcat.dependsOn(createDb)
+
