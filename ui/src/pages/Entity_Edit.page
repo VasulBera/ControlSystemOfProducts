@@ -1,6 +1,8 @@
 <apex:page sidebar="false" controller="EditEntityController"> <!-- showHeader="false" sidebar="false" -->
 <apex:includeScript value="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js" />
 <apex:includeScript value="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.15.0/jquery.validate.js" />
+<apex:includeScript value="https://ap1.salesforce.com/soap/ajax/20.0/connection.js"/>
+
   <style type="text/css"> 
        .heads{margin-top: 2%; margin-left: 20%; margin-right: 20%; display: flex; margin-bottom: 1%;}
        .title{font-size: 17px;margin-left: 44%;}
@@ -12,10 +14,13 @@
        .field-editor{margin-top:20px; width: 100%;font-size: 13px;}
        body .bPageBlock .pbBody .dataCol{width: 100%;}
        body .pbBody table.list tr.headerRow th { width: 170px;}
+       .modal-main{display: flex; font-size: 14px; margin-bottom: 20px;}
+       .modal-btn{height: 22px; width: 100px;}
+       .innerContent{height: 55px}
     </style>
     
     <script>
-    
+
         $( document ).ready( function(){
             makeInputsDisable();
         })
@@ -30,7 +35,8 @@
                     if(typeValue == 'NVARCHAR'){
                         lengthElement.prop('disabled', false);
                     }else{
-                        lengthElement.prop('disabled', true);
+                    lengthElement.val('');
+                    lengthElement.prop('disabled', true);
                     }
                 }
             }
@@ -43,6 +49,7 @@
             if(value == 'NVARCHAR'){
                 lengthElement.prop('disabled', false);
             }else{
+                lengthElement.val('');
                 lengthElement.prop('disabled', true);
             }
         }
@@ -53,6 +60,32 @@
         
         String.prototype.replaceAll = function(search, replace){
           return this.split(search).join(replace);
+        }
+        
+        function openModal(){ 
+          var box = new SimpleDialog("hersh"+Math.random(), true); 
+          parent.box = box;
+          box.setTitle("DELETE FIELD"); 
+          box.createDialog(); 
+          box.setWidth(350); 
+          box.setContentInnerHTML(
+              "<div class='modal-main'><div style='margin-right: 5px;'>Do you want delete field </div>" + 
+              "<h1 id='field-name-modal'></h1></div>" + 
+              "<div class='btns'><button class='btn modal-btn' onclick='window.parent.box.hide(); return false;' style='float: left;' >Cancel</button>" + 
+              "<button class='modal-btn' onclick='deleteEntity()' style='float: right;'>Delete</button> </div>");
+          box.setupDefaultButtons();
+          box.show(); 
+}
+        function deleteEntity(){
+            deleteField();
+        } 
+        var fieldName;
+        var message = 'Do you want delete field ';
+        function setFiledName(name){
+        /*document.getElementById("field-name-modal").innerHTML = '';
+        document.getElementById("field-name-modal").innerHTML = name;*/
+        var changed = message +' "' + name + '"?';
+        $('.modal-main').text(changed);
         }
     
     </script>
@@ -85,6 +118,7 @@
                         
             <div class="field-editor">
                 <apex:pageBlock title="Fields" id="fieldTable">
+                <apex:actionFunction action="{!deleteField}" name="deleteField"/>
                 <apex:actionStatus id="afterPressAllButton" onstop="makeInputsDisable()"/>
                 <apex:pageMessages id="showmsg" escape="false"></apex:pageMessages> 
                 <apex:pageBlockButtons style="display: flex;" location="top">
@@ -92,7 +126,12 @@
                 </apex:pageBlockButtons>
                   <apex:pageBlockTable value="{!fields}" var="item">
                       <apex:column headerValue="Action">
-                          <apex:commandLink value="Delete" action="{!deleteField}" reRender="fieldTable" status="afterPressAllButton" style="font-weight: bold; color: #006699">
+                          <!-- <apex:commandLink value="Delete" action="{!deleteField}" reRender="fieldTable" status="afterPressAllButton" style="font-weight: bold; color: #006699">
+                               <apex:param name="fieldId" value="{!item.Id__c}" assignTo="{!fieldId}"/>
+                          </apex:commandLink> -->
+                          <apex:actionStatus id="openDialogWindow" onstop="openModal(), setFiledName('{!item.Name__c}')"/>
+                           <apex:commandLink value="Delete" reRender="fieldTable" status="openDialogWindow" style="font-weight: bold; color: #006699">
+                               <apex:actionSupport status="afterPressAllButton" event="onclick" reRender="fake"/>
                                <apex:param name="fieldId" value="{!item.Id__c}" assignTo="{!fieldId}"/>
                           </apex:commandLink>
                       </apex:column>
@@ -114,9 +153,6 @@
                     
                     <apex:column headerValue="Length">
                         <apex:inputField value="{!item.Length__c}" id="field-length"/>
-                        <!-- <apex:outputField value="{!item.Length__c}">
-                           <apex:inlineEditSupport event="onclick" showOnEdit="update" id="field-length"/>
-                        </apex:outputField> -->
                     </apex:column>
                      
                      <apex:column headerValue="PK">

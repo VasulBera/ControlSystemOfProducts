@@ -18,20 +18,28 @@ public class EntityService {
             result += 'Entity table name length can be less then 128 symbols. Pleas check your data! <br/>';
         }
         for(Field field: entity.fieldList){
+            if(String.isEmpty(field.ColumnName)){
+                result += 'Field \"' + field.name + '\" has empty name. Pleas check your data! <br/>';
+            }else{
+                if(field.ColumnName.length() > 128){
+                    result += 'Field column name of \"' + field.name + '\" length can be less then 128 symbols. Pleas check your data! <br/>';
+                }
+                if(!Pattern.matches('\\w+', field.ColumnName)){
+                  result += 'Field Column name of \"' + field.name + '\" can contain only symbols, numbers and underscore. Pleas check your data! <br/>';
+                }
+            }
+            if(String.isEmpty(field.name)){
+                result += 'Field \"' + field.name + '\" has empty schema name. Pleas check your data! <br/>';
+            }else{
+                 if(field.name.length() > 128){
+                    result += 'Field name of \"' + field.name + '\" length can be less then 128 symbols. Pleas check your data! <br/>';
+                }
+            }
             if(String.isEmpty(field.type)){
                result += 'Field \"' + field.name + '\" has empty type. Pleas check your data! <br/>';
             }
             if(field.length < 1 && field.type == 'NVARCHAR'){
               result += 'Field \"' + field.name + '\" with type \"NVARCHAR\" has lenght less then one (' + field.length + ').' + 'Pleas check your data! <br/>';
-            }
-            if(!Pattern.matches('\\w+', field.ColumnName)){
-              result += 'Field Column name of \"' + field.name + '\" can contain only symbols, numbers and underscore. Pleas check your data! <br/>';
-            }
-            if(field.name.length() > 128){
-                result += 'Field name of \"' + field.name + '\" length can be less then 128 symbols. Pleas check your data! <br/>';
-            }
-            if(field.ColumnName.length() > 128){
-                result += 'Field column name of \"' + field.name + '\" length can be less then 128 symbols. Pleas check your data! <br/>';
             }
             Integer count = 0;
             for(Field fieldCheck: entity.fieldList){

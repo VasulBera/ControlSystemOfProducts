@@ -10,6 +10,7 @@ public class EntityController {
     public List<Field__c> createdFields{get; set;}
     public Integer fakeId {get; set;}
     public String fieldId {get; set;}
+    public String entityName {get; set;}
     
     public EntityController (){
         entities = HttpService.getAllEntities();
@@ -18,7 +19,6 @@ public class EntityController {
         createdFields = new List<Field__c>();
         fakeId = 1;
     }
-
     public List<Entity> getEntities(){
         return entities;
     }

@@ -39,11 +39,13 @@ public class EditEntityController {
     }
     
     public void cancle(){
+        customEntity = HttpService.getEntity(entityId);
         entity = customEntity.convertIntoSEntity();
         fields = customEntity.getListSFields();
     }
     
     public void deleteField(){
+       List<Field__c> updateFields = customEntity.getListSFields(); 
        for(Integer i = 0; i < fields.size(); i++){
             if(fields.get(i).Id__c == fieldId){
               fields.remove(i); 

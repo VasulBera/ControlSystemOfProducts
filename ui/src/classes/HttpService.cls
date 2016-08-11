@@ -1,6 +1,5 @@
 public class HttpService {
     
-    @future(callout=true)
     public static void insertData(String data){
         Remote_Connection__c rc = Remote_Connection__c.getInstance('Static_IP');
         String ip = rc.Public_IP__c;
@@ -17,7 +16,6 @@ public class HttpService {
         response = http.send(request);
     }
     
-    @future(callout=true)
     public static void updateData(String data){
         Remote_Connection__c rc = Remote_Connection__c.getInstance('Static_IP');
         String ip = rc.Public_IP__c;
@@ -32,7 +30,6 @@ public class HttpService {
         response = http.send(request);
    }
     
-    @future(callout=true)
     public static void deleteData(String id){
         Remote_Connection__c rc = Remote_Connection__c.getInstance('Static_IP');
         String ip = rc.Public_IP__c;
@@ -48,7 +45,6 @@ public class HttpService {
         response = http.send(request);
     }
     
-    @future(callout=true)
     public static void patchData(String id, String data){
         Remote_Connection__c rc = Remote_Connection__c.getInstance('Static_IP');
         String ip = rc.Public_IP__c;
@@ -65,6 +61,7 @@ public class HttpService {
         HttpResponse response = new HttpResponse();
         response = http.send(request);
     }
+    
     public static List<Entity> getAllEntities(){
         Remote_Connection__c rc = Remote_Connection__c.getInstance('Static_IP');
         String ip = rc.Public_IP__c;
@@ -87,6 +84,7 @@ public class HttpService {
         }
       
     }
+    
     public static Entity getEntity(String id){
         Remote_Connection__c rc = Remote_Connection__c.getInstance('Static_IP');
         String ip = rc.Public_IP__c;

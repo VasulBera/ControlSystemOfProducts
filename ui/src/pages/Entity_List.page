@@ -1,6 +1,7 @@
 <apex:page sidebar="false" controller="EntityController">
 <apex:includeScript value="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js" />
 <apex:includeScript value="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.15.0/jquery.validate.js" />
+<apex:includeScript value="https://ap1.salesforce.com/soap/ajax/20.0/connection.js"/>
 
     <style type="text/css">
        .heads{margin-top: 2%; margin-left: 25%; margin-right: 25%; display: flex; margin-bottom: 1%; }
@@ -13,6 +14,9 @@
        .entity-editor-name div{margin-bottom: 10px;}
        .entity-editor-value{width: 79%; display: inline-table;}
        body .bPageBlock .pbBody .dataCol{width: 100%;}
+       .modal-main{display: flex; font-size: 14px; margin-bottom: 20px;}
+       .modal-btn{height: 22px; width: 100px;}
+       .innerContent{height: 55px}
     </style>
     
     <script type="text/javascript">
@@ -28,15 +32,11 @@
             for(var i = 0; i < lineArray.length; i++){
                 var typeValue = $($($('.list')[0]).find('.dataRow')[i]).find('[id$=field-type] option:selected').val();
                 var lengthElement = $($($('.list')[0]).find('.dataRow')[i]).find('[id$=field-length]');
-                console.log(typeValue );
                 if(typeValue == 'NVARCHAR'){
-                    console.log('is nvar');    
                     lengthElement.prop('disabled', false);
                 }else{
-                    console.log('must be mute');
-                    debugger;
+                    lengthElement.val('');
                     lengthElement.prop('disabled', true);
-                    debugger;
                 }
             }
         }
@@ -71,6 +71,7 @@
             if(value == 'NVARCHAR'){
                 lengthElement.prop('disabled', false);
             }else{
+                lengthElement.val('');
                 lengthElement.prop('disabled', true);
             }
         }
@@ -82,12 +83,41 @@
         String.prototype.replaceAll = function(search, replace){
           return this.split(search).join(replace);
         }
+        
+        
+        function openModal(){ 
+          var box = new SimpleDialog("hersh"+Math.random(), true); 
+          parent.box = box;
+          box.setTitle("DELETE ENTITY"); 
+          box.createDialog(); 
+          box.setWidth(350); 
+          box.setContentInnerHTML(
+              "<div class='modal-main'><div style='margin-right: 5px;'>Do you want delete entity </div>" + 
+              "<h1 id='entity-name-modal'></h1></div>" + 
+              "<div class='btns'><button class='btn modal-btn' onclick='window.parent.box.hide(); return false;' style='float: left;' >Cancel</button>" + 
+              "<button class='modal-btn' onclick='deleteEntity()' style='float: right;'>Delete</button> </div>");
+          box.setupDefaultButtons();
+          box.show(); 
+}
+        function deleteEntity(){
+            deleteEntity();
+        } 
+        var message = 'Do you want delete entity ';
+        function setEntityName(name){
+            var changed = message +' "' + name + '"?';
+            $('.modal-main').text(changed);
+        }
+        
+        function getEntityName(){
+            
+        }
+
     </script>
     
     
     <div class="heads">
           <div class="title"></div>
-         <div class="create-botton"><apex:form ><apex:commandButton action="{!show}" value="CreateEntity" reRender="fullPage" id="CreateEntityButton" style="width: 100px; margin-right:20px;"/></apex:form></div>
+         <div class="create-botton"><apex:form ><apex:commandButton action="{!show}" value="Create Entity" reRender="fullPage" id="CreateEntityButton" style="width: 100px; margin-right:20px;"/></apex:form></div>
     </div>
   <apex:outputPanel id="fullPage" >
       
@@ -125,12 +155,12 @@
                                 <apex:pageBlockTable value="{!createdFields}" var="f">
                           
                              <apex:column headerValue="Action">
-                                  <apex:commandLink value="Delete" action="{!deleteField}" reRender="fieldTable" style="font-weight: bold; color: #006699" immediate="true"> <!-- -->
+                                  <apex:commandLink value="Delete" action="{!deleteField}" reRender="fieldTable" style="font-weight: bold; color: #006699" immediate="true">
                                        <apex:param name="fieldId" value="{!f.Id__c}" assignTo="{!fieldId}"/> 
                                   </apex:commandLink>
                              </apex:column>
                           
-                             <apex:column headerValue="Field Name">
+                             <apex:column headerValue="Field name">
                                 <apex:inputField value="{!f.Name__c}" id="fieldNameCreated" onchange="replaceWhitespace(this)"/>
                              </apex:column>
 
@@ -163,12 +193,19 @@
     <div class="entity-body">
         <div class="title">Entity List</div>
         <apex:form >
+        <apex:actionFunction action="{!deleteEntity}" name="deleteEntity">
+        </apex:actionFunction> 
             <apex:pageBlock title="Entity" id="entityTable">
             <apex:pageBlockTable value="{!entities}" var="entity">
                 <apex:column headerValue="Action">
-                    <apex:commandLink action="{!deleteEntity}" value="Delete" style="font-weight: bold; color: #006699" reRender="entityTable">
+                    <!-- <apex:commandLink action="{!deleteEntity}" value="Delete" style="font-weight: bold; color: #006699" reRender="entityTable" onclick="openModal()">
                         <apex:param name="entityId" value="{!entity.id}" assignTo="{!entityId}"/>
+                    </apex:commandlink> -->   
+                   <apex:actionStatus id="openDialogWindow" onstop="openModal(), setEntityName('{!entity.name}')"/>
+                   <apex:commandLink value="Delete" style="font-weight: bold; color: #006699" reRender="entityTable" status="openDialogWindow" >
+                        <apex:param name="entityName" value="{!entity.id}" assignTo="{!entityId}"/>
                     </apex:commandlink>
+                    
                 </apex:column>
                 <apex:column headerValue="Name">
                     <apex:commandLink action="{!getEntityEditPage}" value="{!entity.name}" style="font-weight: bold; color: #006699">
