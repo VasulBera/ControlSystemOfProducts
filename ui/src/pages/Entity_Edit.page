@@ -18,12 +18,17 @@
        .modal-btn{height: 22px; width: 100px;}
        .innerContent{height: 55px}
        .apexp{width: 100%;}
+       body.overviewPage .bPageBlock .pbTitle, body.overviewPage .bRelatedList .bPageBlock .pbTitle, body.homeTab .bPageBlock .pbTitle, body.homeTab .bRelatedList .bPageBlock .pbTitle{width: 460px;}
+       .listRelatedObject .bPageBlock .pbHeader .btn, .listRelatedObject .bPageBlock .pbBottomButtons .btn, .apexp .bPageBlock .pbHeader .btn, .apexp .bPageBlock .pbBottomButtons .btn, div.buttons .btn, div.pbBottomButtons>.btn {width: 70px;}
+       .bEditBlock .pbHeader>table>tbody>tr>td, .bPageBlock .pbHeader>table>tbody>tr>td, .bLayoutBlock .pbHeader>table>tbody>tr>td, .bEditBlock .pbBottomButtons>table>tbody>tr>td, .bPageBlock .pbBottomButtons>table>tbody>tr>td, .bLayoutBlock .pbBottomButtons>table>tbody>tr>td{margin-left: -25%;}
     </style>
     
     <script>
 
         $( document ).ready( function(){
             makeInputsDisable();
+            console.log($('.mainTitle'));
+            console.log($('.mainTitle').text());
         })
         
          function makeInputsDisable(){
@@ -73,7 +78,7 @@
               "<div class='modal-main'><div style='margin-right: 5px;'>Do you want delete field </div>" + 
               "<h1 id='field-name-modal'></h1></div>" + 
               "<div class='btns'><button class='btn modal-btn' onclick='window.parent.box.hide(); return false;' style='float: left;' >Cancel</button>" + 
-              "<button class='modal-btn' onclick='deleteEntity()' style='float: right;'>Delete</button> </div>");
+              "<button class='btn modal-btn' onclick='deleteEntity()' style='float: right;'>Delete</button> </div>");
           box.setupDefaultButtons();
           box.show(); 
 }
@@ -83,8 +88,6 @@
         var fieldName;
         var message = 'Do you want delete field ';
         function setFiledName(name){
-        /*document.getElementById("field-name-modal").innerHTML = '';
-        document.getElementById("field-name-modal").innerHTML = name;*/
         var changed = message +' "' + name + '"?';
         $('.modal-main').text(changed);
         }
@@ -123,7 +126,7 @@
                 <apex:actionStatus id="afterPressAllButton" onstop="makeInputsDisable()"/>
                 <apex:pageMessages id="showmsg" escape="false"></apex:pageMessages> 
                 <apex:pageBlockButtons style="display: flex;" location="top">
-                    <apex:commandButton action="{!createField}" value="Add" reRender="fieldTable" style="margin-left: 85%; width: 70px;" status="afterPressAllButton"/>
+                    <apex:commandButton action="{!createField}" value="Add" reRender="fieldTable" style="margin-left: 85%; width: 70px;" status="afterPressAllButton" onclick=""/>
                 </apex:pageBlockButtons>
                   <apex:pageBlockTable value="{!fields}" var="item">
                       <apex:column headerValue="Action">

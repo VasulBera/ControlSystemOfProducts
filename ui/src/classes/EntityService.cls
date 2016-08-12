@@ -2,6 +2,9 @@ public class EntityService {
     
     public static String checkCorrectData(Entity entity){
         String result = '';
+        if(!Pattern.matches('\\w+', entity.name)){
+              result += 'Entity Schema name can contain only symbols, numbers and underscore. Pleas check your data! <br/>';
+        }
         if(!Pattern.matches('\\w+', entity.schemaName)){
               result += 'Entity Schema name can contain only symbols, numbers and underscore. Pleas check your data! <br/>';
         }

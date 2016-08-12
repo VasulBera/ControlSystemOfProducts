@@ -39,9 +39,13 @@ public class EditEntityController {
     }
     
     public void cancle(){
+        System.debug('sdf');
         customEntity = HttpService.getEntity(entityId);
+        System.debug(customEntity);
         entity = customEntity.convertIntoSEntity();
         fields = customEntity.getListSFields();
+        System.debug(entity);
+        System.debug(fields);
     }
     
     public void deleteField(){
