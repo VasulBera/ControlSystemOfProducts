@@ -17,6 +17,7 @@
        .modal-main{display: flex; font-size: 14px; margin-bottom: 20px;}
        .modal-btn{height: 22px; width: 100px;}
        .innerContent{height: 55px}
+       .apexp{width: 100%;}
     </style>
     
     <script>
