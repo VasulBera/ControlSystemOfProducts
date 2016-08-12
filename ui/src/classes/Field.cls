@@ -9,7 +9,7 @@ public class Field {
         name = field.Name__c;
         ColumnName = field.Column_Name__c;
         type = field.Field_Type__c;
-        if(!String.isEmpty(String.valueOf(field.Length__c))){
+        if(!String.isEmpty(String.valueOf(field.Length__c)) && field.Field_Type__c == 'NVARCHAR'){
         	length = field.Length__c.intValue(); 
         }else{
             length = 0;
