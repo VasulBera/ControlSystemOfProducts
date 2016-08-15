@@ -3,10 +3,12 @@
 <apex:includeScript value="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.15.0/jquery.validate.js" />
 <apex:includeScript value="https://ap1.salesforce.com/soap/ajax/20.0/connection.js"/>
 
-  <style type="text/css"> 
-       .heads{margin-top: 2%; margin-left: 20%; margin-right: 20%; display: flex; margin-bottom: 1%;}
-       .title{font-size: 17px;margin-left: 44%;}
-       .body{margin-left: 25%; margin-right: 25%; margin-bottom: 1%; padding: 20px;} <!--background: linear-gradient(white, #d4e6ec)-->
+  <style type="text/css">
+       .main{min-width: 1860px;}
+       .zen{min-width: 1880px;} 
+       .heads{margin-top: 2%; margin-left: 10%; margin-right: 10%; display: flex; margin-bottom: 1%;}
+       .title{font-size: 17px; text-align: center; width: 100%;}
+       .body{margin-left: 10%; margin-right: 10%; margin-bottom: 1%; padding: 20px;}
        .entity-editor{width: 100%; display: flex;}
        .entity-editor-name{width: 30%; font-size: 15px; display: inline-table;}
        .entity-editor-name div{margin-bottom: 10px;}
@@ -18,18 +20,48 @@
        .modal-btn{height: 22px; width: 100px;}
        .innerContent{height: 55px}
        .apexp{width: 100%;}
-       body.overviewPage .bPageBlock .pbTitle, body.overviewPage .bRelatedList .bPageBlock .pbTitle, body.homeTab .bPageBlock .pbTitle, body.homeTab .bRelatedList .bPageBlock .pbTitle{width: 460px;}
-       .listRelatedObject .bPageBlock .pbHeader .btn, .listRelatedObject .bPageBlock .pbBottomButtons .btn, .apexp .bPageBlock .pbHeader .btn, .apexp .bPageBlock .pbBottomButtons .btn, div.buttons .btn, div.pbBottomButtons>.btn {width: 70px;}
-       .bEditBlock .pbHeader>table>tbody>tr>td, .bPageBlock .pbHeader>table>tbody>tr>td, .bLayoutBlock .pbHeader>table>tbody>tr>td, .bEditBlock .pbBottomButtons>table>tbody>tr>td, .bPageBlock .pbBottomButtons>table>tbody>tr>td, .bLayoutBlock .pbBottomButtons>table>tbody>tr>td{margin-left: -25%;}
+
     </style>
     
     <script>
 
         $( document ).ready( function(){
             makeInputsDisable();
-            console.log($('.mainTitle'));
-            console.log($('.mainTitle').text());
+            deleteLongName();
+            
+            var elements = $('[id$=fieldTable]').find('.dataRow');
+            $(elements).change(function(){
+                deleteLongName();
+            });
+            
+            /*var el = $($($('[id$=fieldTable]').find('.dataRow')).find('.dataCell')[1]).find('span span span')[0];*/
         })
+                               
+         function deleteLongName(){
+           var elements = $('[id$=fieldTable]').find('.dataRow');
+           for(var i = 0; i < elements.length; i++){
+               var columns = $(elements[i]).find('.dataCell');
+               var primaryKey = $(columns[columns.length-1]).find('span');
+               var fieldName = $(columns[1]).find('span span span');
+               var columnName = $(columns[2]).find('span span span');
+               var fieldNameValue = fieldName.text();
+               var columnNameValue = columnName.text();
+               var primaryKeyValue = primaryKey.text();
+               if(primaryKeyValue.length > 30){
+                   primaryKey.text(replaceValue(primaryKeyValue));
+               }
+               if(fieldNameValue.length > 30){
+                   fieldName.text(replaceValue(fieldNameValue));
+               }
+               if(columnNameValue.length > 30){
+                   columnName.text(replaceValue(columnNameValue));
+               }
+           }  
+         }   
+        
+        function replaceValue(value){
+            return value.substring(0, 27) + '...';
+        }
         
          function makeInputsDisable(){
            var isExists = $($($('.list')[0]).find('.dataRow')[0]).find('[id$=field-type]').is(":visible");
@@ -88,12 +120,19 @@
         var fieldName;
         var message = 'Do you want delete field ';
         function setFiledName(name){
+        if(name.length > 12){
+            name = name.substring(0, 9) + '...';
+        }
         var changed = message +' "' + name + '"?';
         $('.modal-main').text(changed);
         }
+        
+        function reset(){
+            console.log('reset');
+        }
     
     </script>
-    
+    <div class='main'>
     <div class="heads">
          <div class="title">Entity Edit</div> 
     </div>
@@ -123,10 +162,10 @@
             <div class="field-editor">
                 <apex:pageBlock title="Fields" id="fieldTable">
                 <apex:actionFunction action="{!deleteField}" name="deleteField"/>
-                <apex:actionStatus id="afterPressAllButton" onstop="makeInputsDisable()"/>
+                <apex:actionStatus id="afterPressAllButton" onstop="makeInputsDisable(), deleteLongName()"/>
                 <apex:pageMessages id="showmsg" escape="false"></apex:pageMessages> 
                 <apex:pageBlockButtons style="display: flex;" location="top">
-                    <apex:commandButton action="{!createField}" value="Add" reRender="fieldTable" style="margin-left: 85%; width: 70px;" status="afterPressAllButton" onclick=""/>
+                    <apex:commandButton action="{!createField}" value="Add" reRender="fieldTable" style="margin-left: 92%; width: 70px;" status="afterPressAllButton" onclick=""/>
                 </apex:pageBlockButtons>
                   <apex:pageBlockTable value="{!fields}" var="item">
                       <apex:column headerValue="Action">
@@ -139,14 +178,14 @@
                                <apex:param name="fieldId" value="{!item.Id__c}" assignTo="{!fieldId}"/>
                           </apex:commandLink>
                       </apex:column>
-                      <apex:column headerValue="Field name">
-                        <apex:outputField value="{!item.Name__c}">
+                    <apex:column headerValue="Field name">
+                        <apex:outputField value="{!item.Name__c}" >
                            <apex:inlineEditSupport event="onclick" showOnEdit="update"/>
                         </apex:outputField>
                     </apex:column>
                     
                     <apex:column headerValue="Column name">
-                         <apex:outputField value="{!item.Column_Name__c}">
+                        <apex:outputField value="{!item.Column_Name__c}">
                            <apex:inlineEditSupport event="onclick" showOnEdit="update"/>
                         </apex:outputField>
                     </apex:column>
@@ -162,12 +201,12 @@
                      <apex:column headerValue="PK">
                          <apex:outputField value="{!entity.Name__c}"/>
                      </apex:column>
-                  </apex:pageBlockTable>
+                 </apex:pageBlockTable>
                </apex:pageBlock>
                <apex:commandButton action="{!save}" value="Save" status="afterPressAllButton" style="width: 70px; margin-right: 20px"/>
                <apex:commandButton action="{!cancle}" value="Cancel" status="afterPressAllButton" reRender="fieldTable, entityData" style="width: 70px; margin-right: 20px" immediate="true"/>
             </div>
-           
         </div>
     </apex:form>
+    </div>
 </apex:page>

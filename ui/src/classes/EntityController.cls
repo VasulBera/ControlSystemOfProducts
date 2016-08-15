@@ -52,6 +52,7 @@ public class EntityController {
             Entity entity = new Entity(createdEntity);
             entity.addFileds(createdFields);
             String info = EntityService.checkCorrectDataInsert(entity);
+            System.debug('info ' + !String.isEmpty(info));
             if(!String.isEmpty(info)){
                 throw new EntityExistedException(info);
             }
