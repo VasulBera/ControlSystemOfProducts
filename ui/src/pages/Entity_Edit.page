@@ -33,8 +33,6 @@
             $(elements).change(function(){
                 deleteLongName();
             });
-            
-            /*var el = $($($('[id$=fieldTable]').find('.dataRow')).find('.dataCell')[1]).find('span span span')[0];*/
         })
                                
          function deleteLongName(){
@@ -134,8 +132,25 @@
     </script>
     <div class='main'>
     <div class="heads">
-         <div class="title">Entity Edit</div> 
+         <div class="title">Entity Edit</div>
     </div>
+    <div style='display: flex;'>
+    <apex:form ><apex:commandButton action="{!createTable}" value="Create Table" style="width: 100px; height:23px; font-size:12px; margin-left: 208px;" reRender="fake"/></apex:form>
+    <apex:form ><apex:commandButton action="{!show}" value="Create Request" reRender="requestPanel" style="width: 100px; height:23px; font-size:12px; margin-left: 10px;"/></apex:form>
+    </div>
+    <apex:outputPanel id="requestPanel">
+        <apex:outputPanel rendered="{!showSection}">
+            <apex:form >
+                <div style="display: table-caption; margin-left: 206px; margin-top: 20px;">
+                Name:
+                <apex:inputTextarea value="{!owner}" title="owner"/>
+                Description:
+                <apex:inputTextarea value="{!description}" title="owner"/>
+                <apex:commandButton value="Save" action="{!createRequestTask}"/>
+                </div>
+            </apex:form>
+        </apex:outputPanel>
+    </apex:outputPanel>
     <apex:form >
         <div class="body">
             <div class="entity-editor">
@@ -172,7 +187,7 @@
                           <!-- <apex:commandLink value="Delete" action="{!deleteField}" reRender="fieldTable" status="afterPressAllButton" style="font-weight: bold; color: #006699">
                                <apex:param name="fieldId" value="{!item.Id__c}" assignTo="{!fieldId}"/>
                           </apex:commandLink> -->
-                          <apex:actionStatus id="openDialogWindow" onstop="openModal(), setFiledName('{!item.Name__c}')"/>
+                          <apex:actionStatus id="openDialogWindow" onstop="openModal(), setFiledName('{!item.Name__c}'), deleteLongName()"/>
                            <apex:commandLink value="Delete" reRender="fieldTable" status="openDialogWindow" style="font-weight: bold; color: #006699">
                                <apex:actionSupport status="afterPressAllButton" event="onclick" reRender="fake"/>
                                <apex:param name="fieldId" value="{!item.Id__c}" assignTo="{!fieldId}"/>

@@ -107,4 +107,32 @@ public class HttpService {
             return null;
         }
     }
+    
+    public static void CreateTable(String id){
+        Remote_Connection__c rc = Remote_Connection__c.getInstance('Static_IP');
+        String ip = rc.Public_IP__c;
+        String url = 'http://' + ip + ':8080/service/rest/task/create/' + id;
+        System.debug('url ' + url);
+        HttpRequest request = new HttpRequest();
+        request.setEndpoint(url);
+        request.setMethod('GET');
+        request.setHeader('content-type', 'application/json');
+        Http http = new Http();
+        HttpResponse response = new HttpResponse();
+        response = http.send(request);
+        System.debug(response);
+    }
+    
+    public static void createRequestTask(String id, String description, String owner){
+        Remote_Connection__c rc = Remote_Connection__c.getInstance('Static_IP');
+        String ip = rc.Public_IP__c;
+        String url = 'http://' + ip + ':8080/service/rest/task/' + id + '/' + description + '/' + owner;
+        HttpRequest request = new HttpRequest();
+        request.setEndpoint(url);
+        request.setMethod('GET');
+        request.setHeader('content-type', 'application/json');
+        Http http = new Http();
+        HttpResponse response = new HttpResponse();
+        response = http.send(request);
+    }
 }

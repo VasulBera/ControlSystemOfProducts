@@ -1,0 +1,1 @@
+IF NOT EXISTS(SELECT * FROM sys.databases WHERE name = 'CustomerRequest') CREATE DATABASE CustomerRequest

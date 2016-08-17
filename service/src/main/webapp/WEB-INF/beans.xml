@@ -13,9 +13,11 @@ http://cxf.apache.org/schemas/jaxrs.xsd http://www.springframework.org/schema/co
 
     <import resource="classpath:META-INF/cxf/cxf.xml"/>
     <import resource="classpath:META-INF/cxf/cxf-servlet.xml"/>
-    <bean id="restService" class="com.softserveinc.trainee.service.Impl.EntityServiceImpl" />
 
-<jaxrs:server id="RestContainer" address="/">
+    <bean id="EntityService" class="com.softserveinc.trainee.service.Impl.EntityServiceImpl" />
+    <bean id="RequestTaskService" class="com.softserveinc.trainee.service.Impl.RequestServiceImpl"/>
+
+    <jaxrs:server id="RestContainer" address="/">
     <jaxrs:providers>
         <bean class="com.softserveinc.trainee.mapper.NotFoundExceptionHandler" />
         <bean class="com.softserveinc.trainee.mapper.ClientErrorExeptionHandler"/>
@@ -24,7 +26,8 @@ http://cxf.apache.org/schemas/jaxrs.xsd http://www.springframework.org/schema/co
         <bean class="org.codehaus.jackson.jaxrs.JacksonJsonProvider" />
       </jaxrs:providers>
     <jaxrs:serviceBeans>
-        <ref bean="restService"/>
+        <ref bean="EntityService"/>
+        <ref bean="RequestTaskService"/>
     </jaxrs:serviceBeans>
 </jaxrs:server>
 </beans>

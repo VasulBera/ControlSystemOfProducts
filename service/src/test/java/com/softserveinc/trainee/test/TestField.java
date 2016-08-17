@@ -1,11 +1,23 @@
 package com.softserveinc.trainee.test;
 
+import com.softserveinc.trainee.EntityUtil.EntityUtil;
+import com.softserveinc.trainee.dao.Impl.EntityDaoImpl;
+import com.softserveinc.trainee.entity.Entity;
 import com.softserveinc.trainee.entity.Field;
 import com.softserveinc.trainee.entity.FieldType;
 import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
+
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Properties;
 
 public class TestField {
 
