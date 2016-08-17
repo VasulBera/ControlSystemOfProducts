@@ -135,7 +135,7 @@
          <div class="title">Entity Edit</div>
     </div>
     <div style='display: flex;'>
-    <apex:form ><apex:commandButton action="{!createTable}" value="Create Table" style="width: 100px; height:23px; font-size:12px; margin-left: 208px;" reRender="fake"/></apex:form>
+    <apex:form ><apex:commandButton action="{!createTable}" value="Create Table" style="width: 100px; height:23px; font-size:12px; margin-left: 208px;"/></apex:form>
     <apex:form ><apex:commandButton action="{!show}" value="Create Request" reRender="requestPanel" style="width: 100px; height:23px; font-size:12px; margin-left: 10px;"/></apex:form>
     </div>
     <apex:outputPanel id="requestPanel">
