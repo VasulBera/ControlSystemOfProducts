@@ -39,7 +39,7 @@ dependencies {
     compile group: 'org.apache.cxf', name: 'cxf-rt-rs-service-description', version: '3.1.6'
 
     compile group: 'org.codehaus.jackson', name: 'jackson-jaxrs', version: '1.9.13'
-    }
+}
 
 
 jacoco {

@@ -1,1 +1,1 @@
-IF NOT EXISTS(SELECT * FROM sys.databases WHERE name = 'CustomerRequest') CREATE DATABASE CustomerRequest
+IF NOT EXISTS(SELECT * FROM sys.databases WHERE name = 'Request_job') CREATE DATABASE Request_job

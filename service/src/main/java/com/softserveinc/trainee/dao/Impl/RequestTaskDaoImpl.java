@@ -3,6 +3,7 @@ package com.softserveinc.trainee.dao.Impl;
 import com.softserveinc.trainee.EntityUtil.EntityUtil;
 import com.softserveinc.trainee.dao.RequestTaskDao;
 import com.softserveinc.trainee.entity.Entity;
+import com.softserveinc.trainee.entity.RequestTaskStatus;
 import org.springframework.stereotype.Repository;
 
 import java.io.FileInputStream;
@@ -16,7 +17,7 @@ import java.util.Properties;
 @Repository("requestTaskDao")
 public class RequestTaskDaoImpl implements RequestTaskDao{
 
-    private static final String PATH_TO_DATABASE_PROPERTIES = "service/src/main/resources/database.properties";
+    private static final String PATH_TO_DATABASE_PROPERTIES = "database.properties";
     private static final String MS_SQL_SERVER_ADDRES = "jdbc:sqlserver://localhost;";
     private static final String USERNAME_KEY_PROPERTIES = "javax.persistence.jdbc.user";
     private static final String PASSWORD_KEY_PROPERTIES = "javax.persistence.jdbc.password";
@@ -25,7 +26,7 @@ public class RequestTaskDaoImpl implements RequestTaskDao{
     public void createRequestTask(String id, String description, String owner) {
 
         Properties properties = new Properties();
-        try(InputStream inputStream = new FileInputStream(PATH_TO_DATABASE_PROPERTIES)){
+        try(InputStream inputStream = this.getClass().getClassLoader().getResourceAsStream(PATH_TO_DATABASE_PROPERTIES)){
             properties.load(inputStream);
         } catch (IOException e) {
             System.out.println("Cannot load properties file");
@@ -33,11 +34,8 @@ public class RequestTaskDaoImpl implements RequestTaskDao{
 
         String username = properties.getProperty(USERNAME_KEY_PROPERTIES);
         String password = properties.getProperty(PASSWORD_KEY_PROPERTIES);
-        Date currentdate = new Date();
-        SimpleDateFormat dt1 = new SimpleDateFormat("yyyy-MM-dd");
-        String date = dt1.format(currentdate);
-        String sql = "INSERT INTO request_tasks (owner, date, aim, description) VALUES ('" + owner + "', '" + date + "', '" + id + "', '" + description + "')";
-        try(Connection connection = DriverManager.getConnection(MS_SQL_SERVER_ADDRES + "databaseName=CustomerRequest" + ";user=" + username + ";password=" + password)){
+        String sql = "INSERT INTO request_tasks (owner, aim, description, status, create_time) VALUES ('" + owner + "', '" + id + "', '" + description + "', '" + RequestTaskStatus.ACTUAL + "', GETDATE())";
+        try(Connection connection = DriverManager.getConnection(MS_SQL_SERVER_ADDRES + "databaseName=Request_job" + ";user=" + username + ";password=" + password)){
             Statement statement = connection.createStatement();
             statement.execute(sql);
         }catch (SQLException e) {

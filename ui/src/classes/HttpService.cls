@@ -127,6 +127,7 @@ public class HttpService {
         Remote_Connection__c rc = Remote_Connection__c.getInstance('Static_IP');
         String ip = rc.Public_IP__c;
         String url = 'http://' + ip + ':8080/service/rest/task/' + id + '/' + description + '/' + owner;
+        System.debug(url);
         HttpRequest request = new HttpRequest();
         request.setEndpoint(url);
         request.setMethod('GET');

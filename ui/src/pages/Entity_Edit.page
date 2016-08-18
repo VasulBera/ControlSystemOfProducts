@@ -136,21 +136,7 @@
     </div>
     <div style='display: flex;'>
     <apex:form ><apex:commandButton action="{!createTable}" value="Create Table" style="width: 100px; height:23px; font-size:12px; margin-left: 208px;"/></apex:form>
-    <apex:form ><apex:commandButton action="{!show}" value="Create Request" reRender="requestPanel" style="width: 100px; height:23px; font-size:12px; margin-left: 10px;"/></apex:form>
     </div>
-    <apex:outputPanel id="requestPanel">
-        <apex:outputPanel rendered="{!showSection}">
-            <apex:form >
-                <div style="display: table-caption; margin-left: 206px; margin-top: 20px;">
-                Name:
-                <apex:inputTextarea value="{!owner}" title="owner"/>
-                Description:
-                <apex:inputTextarea value="{!description}" title="owner"/>
-                <apex:commandButton value="Save" action="{!createRequestTask}"/>
-                </div>
-            </apex:form>
-        </apex:outputPanel>
-    </apex:outputPanel>
     <apex:form >
         <div class="body">
             <div class="entity-editor">

@@ -6,18 +6,34 @@ public class EntityController {
     List<Entity> entities{get; set;}
     
     public String entityId{get; set;}
+    public String dropDownEntityName{get; set;}
+    public String requestName{get; set;}
     public Entity__c createdEntity{get; set;}
     public List<Field__c> createdFields{get; set;}
     public Integer fakeId {get; set;}
     public String fieldId {get; set;}
     public String entityName {get; set;}
+    public SelectOption[] entityOptions{get; set;}
+    public SelectOption[] requestOptions{get; set;}
     
     public EntityController (){
+        List<Request_job__c> listRequest = Request_job__c.getAll().values();
+        requestOptions = new SelectOption[]{};
+        for(Request_job__c requestJob : listRequest){
+            requestOptions.add(new SelectOption(requestJob.Job_type__c, requestJob.Job_type__c));
+        }
         entities = HttpService.getAllEntities();
         showSection = false;
         createdEntity = new Entity__c();
         createdFields = new List<Field__c>();
         fakeId = 1;
+        entityOptions = new SelectOption[]{};
+        entityOptions.add(new SelectOption('all_entities', 'all entities'));
+        for(Entity e: entities){
+           entityOptions.add(new SelectOption(e.id, e.name));
+        }
+        requestName = 'Apply_metadata';
+       
     }
     public List<Entity> getEntities(){
         return entities;
@@ -71,17 +87,21 @@ public class EntityController {
     }
     
     public void createField(){
-        Field__C field = new Field__c(Id__c = String.valueOf(fakeId++), Field_Type__c = 'NVARCHAR');/*, Length__c = 1*/
+        Field__C field = new Field__c(Id__c = String.valueOf(fakeId++), Field_Type__c = 'NVARCHAR');
         createdFields.add(field);
     }
     
     public void deleteField(){
-        System.debug('id = ' + entityId);
         for(Integer i = 0; i < createdFields.size(); i++){
             if(createdFields.get(i).Id__c == fieldId){
               createdFields.remove(i); 
             }
         }
+    }
+    
+    public void requestApply(){
+        String userName = UserInfo.getFirstName() + ' ' + UserInfo.getLastName();
+        HttpService.createRequestTask(dropDownEntityName, requestName, userName);
     }
     
 }

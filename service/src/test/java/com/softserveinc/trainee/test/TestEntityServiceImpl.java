@@ -15,6 +15,7 @@ import org.mockito.MockitoAnnotations;
 import org.mockito.runners.MockitoJUnitRunner;
 import javax.ws.rs.ClientErrorException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static org.mockito.Matchers.any;
@@ -115,6 +116,41 @@ public class TestEntityServiceImpl {
 
     }
 
+    @Test
+    public void testUpdateEntityWithoutId(){
+        Entity expected = new Entity();
+        expected.setTableName("Product");
+        expected.setSchemaName("Customer");
+
+        Mockito.when(entityDao.getEntity(anyString())).thenReturn(expected);
+        Mockito.when(entityDao.updateEntity(expected)).thenReturn(expected);
+
+        Entity actually = cxfWebRestService.updateEntity(expected);
+        Assert.assertEquals(expected, actually);
+
+    }
+
+    @Test
+    public void testUpdateEntityWithoutFieldId(){
+        Entity expected = new Entity();
+        expected.setTableName("Product");
+        expected.setSchemaName("Customer");
+        expected.setId("CustomerProduct");
+
+        Field field = new Field();
+        field.setType(FieldType.INT);
+        field.setName("field");
+        List<Field> fields = new ArrayList(Arrays.asList(field));
+        expected.setFieldList(fields);
+
+        Mockito.when(entityDao.getEntity(anyString())).thenReturn(expected);
+        Mockito.when(entityDao.updateEntity(expected)).thenReturn(expected);
+
+        Entity actually = cxfWebRestService.updateEntity(expected);
+        Assert.assertEquals(expected, actually);
+
+    }
+
     @Test(expected = ClientErrorException.class)
     public void testPatchEntityNull(){
         Entity entity = new Entity();
@@ -155,6 +191,42 @@ public class TestEntityServiceImpl {
         Entity actually = cxfWebRestService.patchEntity("CustomerProduct", enteredEntity);
         System.out.println(actually);
         Assert.assertEquals(actually, enteredEntity);
+    }
+
+    @Test
+    public void testPatchEntityWithName(){
+        Entity entity = new Entity();
+        entity.setName("Product");
+        Entity expected = new Entity();
+        expected.setName("ProductPached");
+        Mockito.when(entityDao.getEntity(anyString())).thenReturn(entity);
+        Mockito.when(entityDao.updateEntity(any(Entity.class))).thenReturn(expected);
+        Entity actually = cxfWebRestService.patchEntity(anyString(), expected);
+        Assert.assertEquals(expected, actually);
+    }
+
+    @Test
+    public void testPatchEntityWithSchemaName(){
+        Entity entity = new Entity();
+        entity.setSchemaName("Product");
+        Entity expected = new Entity();
+        expected.setSchemaName("ProductPached");
+        Mockito.when(entityDao.getEntity(anyString())).thenReturn(entity);
+        Mockito.when(entityDao.updateEntity(any(Entity.class))).thenReturn(expected);
+        Entity actually = cxfWebRestService.patchEntity(anyString(), expected);
+        Assert.assertEquals(expected, actually);
+    }
+
+    @Test
+    public void testPatchEntityWithTableName(){
+        Entity entity = new Entity();
+        entity.setTableName("Product");
+        Entity expected = new Entity();
+        expected.setTableName("ProductPached");
+        Mockito.when(entityDao.getEntity(anyString())).thenReturn(entity);
+        Mockito.when(entityDao.updateEntity(any(Entity.class))).thenReturn(expected);
+        Entity actually = cxfWebRestService.patchEntity(anyString(), expected);
+        Assert.assertEquals(expected, actually);
     }
 
     @Test(expected = ClientErrorException.class)

@@ -2,15 +2,16 @@
 <apex:includeScript value="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js" />
 <apex:includeScript value="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.15.0/jquery.validate.js" />
 <apex:includeScript value="https://ap1.salesforce.com/soap/ajax/20.0/connection.js"/>
-
     <style type="text/css">
-       .main{min-width: 1860px;}
+       .main{min-width: 1860px; display: flex;}
+       .main-body{margin-left: 5%; width: 80%;}
+       .side-panel{width: 14%; margin-top: 125px; display: flex;}
        .zen{min-width: 1880px;}
-       .heads{margin-top: 2%; margin-left: 10%; margin-right: 10%; display: flex; margin-bottom: 1%; }
+       .heads{margin-top: 2%;  display: flex; margin-bottom: 1%; }
        .title{font-size: 17px; text-align: center; margin-bottom: 20px;}
        .create-botton{width: 100%; text-align: right;}
-       .entity-body{margin-left: 10%; margin-right: 10%; margin-bottom: 1%; padding: 20px; font-size: 13px;}
-       .create-entity{margin-left: 10%; margin-right: 10%; margin-bottom: 1%; padding: 20px;  font-size: 13px;}
+       .entity-body{margin-bottom: 1%; padding: 20px; font-size: 13px;}
+       .create-entity{margin-bottom: 1%; padding: 20px;  font-size: 13px;}
        .entity-editor{width: 100%; display: block;}
        .entity-editor-name{width: 20%; font-size: 15px; display: inline-table;}
        .entity-editor-name div{margin-bottom: 10px;}
@@ -138,13 +139,10 @@
             $('.modal-main').text(changed);
         }
         
-        function getEntityName(){
-            
-        }
-
     </script>
     
     <div class='main'>
+    <div class="main-body">
     <div class="heads">
           <div class="title"></div>
          <apex:actionStatus id="afterPressCreateEntity" onstop="deleteLongName()"/>
@@ -216,11 +214,6 @@
                     </div>
          </apex:form>   
     </apex:outputPanel>
-      
-      
-      
-      
-      
     <div class="entity-body">
         <div class="title">Entity List</div>
         <apex:form >
@@ -246,5 +239,34 @@
         </apex:form>
     </div>
   </apex:outputPanel>
+  </div>
+  
+      <div class="side-panel">
+      
+      
+       <div style="width: 40%; font-size: 14px; margin-top: 1px; text-align: right; font-style: oblique;">
+           <div style="margin-bottom: 22px;">Request job:</div>
+           <div>Entity:</div>
+       </div>
+       <div style="width: 50%; margin-left:10%;">
+        <apex:form >
+            
+            <apex:selectList value="{!requestName}" size="1" style="width:120px;  font-style: oblique; margin-bottom: 20px;">
+                <apex:selectOptions value="{!requestOptions}"/>       
+            </apex:selectList>
+            
+            <apex:selectList value="{!dropDownEntityName}" size="1" style="width:120px;  font-style: oblique; margin-bottom: 20px;">
+                <apex:selectOptions value="{!entityOptions}"/>   
+            </apex:selectList>
+            
+            <apex:commandButton action="{!requestApply}" value="Apply" style="width:120px;"/>
+            
+        </apex:form>
+      </div>
+      
+      
+      
+      
+      </div>
   </div>
 </apex:page>

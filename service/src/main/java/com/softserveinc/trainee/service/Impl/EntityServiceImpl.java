@@ -4,6 +4,7 @@ import com.softserveinc.trainee.dao.EntityDao;
 import com.softserveinc.trainee.entity.Entity;
 import com.softserveinc.trainee.entity.Field;
 import com.softserveinc.trainee.service.EntityService;
+import org.apache.log4j.Logger;
 import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 import org.springframework.beans.factory.annotation.Autowired;
 import javax.ws.rs.ClientErrorException;
@@ -17,6 +18,8 @@ public class EntityServiceImpl implements EntityService {
     @Autowired
     EntityDao entityDao;
 
+    /*public static Logger LOGGER = Logger.getLogger(EntityServiceImpl.class);*/
+
     private static final String REPLACE_REGEX = "[^a-zA-Z0-9\\_]";
 
     public Entity getEntity(String id) {
@@ -28,6 +31,10 @@ public class EntityServiceImpl implements EntityService {
     }
 
     public List<Entity> getAllEntities(){
+        /*LOGGER.debug("debug ");
+        LOGGER.info("debug ");
+        LOGGER.error("debug ");
+        LOGGER.warn("debug ");*/
         List<Entity> listEntities = entityDao.getAllEntity();
         if(listEntities.size() == 0) {
             throw new ClientErrorException(Response.Status.NOT_FOUND);

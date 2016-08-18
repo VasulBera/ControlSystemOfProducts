@@ -1,14 +1,11 @@
 public class EditEntityController {
 
     public String entityId{get; set;}
-    public String description{get; set;}
-    public String owner{get; set;}
     public Entity__c entity{get; set;}
     public List<Field__c> fields{get; set;}
     public String fieldId{get; set;}
     public Integer fakeId{get; set;}
     Entity customEntity{get; set;}
-    public Boolean showSection{get;set;}
     
     public EditEntityController(){
         entityId = apexpages.currentpage().getparameters().get('entityID');
@@ -17,7 +14,6 @@ public class EditEntityController {
         fields = customEntity.getListSFields();
         System.debug(fields);
         fakeId = 1;
-        showSection = false;
     }
     
     public void createField(){
@@ -59,18 +55,5 @@ public class EditEntityController {
     
     public void createTable(){
         HttpService.CreateTable(entityId);
-    }
-    
-    public void createRequestTask(){
-                HttpService.createRequestTask(entityId, description, owner);        
-    }
-    
-    public void show() {
-        System.debug('sdfdsfsdf');
-         if(showSection){
-             showSection = false;
-         }else{
-             showSection = true;
-         }      
     }
 }
