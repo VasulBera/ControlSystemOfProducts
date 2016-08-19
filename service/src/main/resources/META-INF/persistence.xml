@@ -3,11 +3,28 @@
              xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd"
              version="2.0" xmlns="http://java.sun.com/xml/ns/persistence">
     <persistence-unit name="application">
-        <class>com.softserveinc.trainee.entity.Entity</class>
-        <class>com.softserveinc.trainee.entity.Field</class>
+        <provider>org.hibernate.ejb.HibernatePersistence</provider>
+        <class>com.softserveinc.trainee.entity.metadata.Entity</class>
+        <class>com.softserveinc.trainee.entity.metadata.Field</class>
+        <exclude-unlisted-classes>true</exclude-unlisted-classes>
         <properties>
             <property name="show_sql" value="true"/>
             <property name="hibernate.hbm2ddl.auto" value="update" />
         </properties>
     </persistence-unit>
+
+
+                <!--Add for secon DB-->
+
+    <persistence-unit name="administration">
+        <provider>org.hibernate.ejb.HibernatePersistence</provider>
+        <class>com.softserveinc.trainee.entity.administration.RequestTask</class>
+        <exclude-unlisted-classes>true</exclude-unlisted-classes>
+        <properties>
+            <property name="show_sql" value="true"/>
+            <property name="hibernate.hbm2ddl.auto" value="update" />
+        </properties>
+    </persistence-unit>
+
+
 </persistence>

@@ -1,1 +1,0 @@
-IF NOT EXISTS(SELECT * FROM sys.databases WHERE name = 'Request_job') CREATE DATABASE Request_job

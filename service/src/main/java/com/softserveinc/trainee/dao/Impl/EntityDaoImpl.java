@@ -1,7 +1,7 @@
 package com.softserveinc.trainee.dao.Impl;
 
 import com.softserveinc.trainee.dao.EntityDao;
-import com.softserveinc.trainee.entity.Entity;
+import com.softserveinc.trainee.entity.metadata.Entity;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
@@ -12,10 +12,11 @@ import java.util.List;
 @Repository("entityDao")
 public class EntityDaoImpl implements EntityDao{
 
-    @PersistenceContext
+    @PersistenceContext(unitName = "application")
     private EntityManager entityManager;
 
     public Entity getEntity(String id) {
+        System.out.println("in entoity dao imp");
         return entityManager.find(Entity.class, id);
     }
 

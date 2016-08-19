@@ -1,6 +1,6 @@
 package com.softserveinc.trainee.dao;
 
-import com.softserveinc.trainee.entity.Field;
+import com.softserveinc.trainee.entity.metadata.Field;
 
 
 public interface FieldDao {

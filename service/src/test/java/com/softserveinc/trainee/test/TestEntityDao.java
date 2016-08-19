@@ -2,7 +2,7 @@
 package com.softserveinc.trainee.test;
 
 import com.softserveinc.trainee.dao.Impl.EntityDaoImpl;
-import com.softserveinc.trainee.entity.Entity;
+import com.softserveinc.trainee.entity.metadata.Entity;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;

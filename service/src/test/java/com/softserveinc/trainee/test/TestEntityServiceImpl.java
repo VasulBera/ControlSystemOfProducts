@@ -2,9 +2,9 @@
 package com.softserveinc.trainee.test;
 
 import com.softserveinc.trainee.dao.EntityDao;
-import com.softserveinc.trainee.entity.Entity;
-import com.softserveinc.trainee.entity.Field;
-import com.softserveinc.trainee.entity.FieldType;
+import com.softserveinc.trainee.entity.metadata.Entity;
+import com.softserveinc.trainee.entity.metadata.Field;
+import com.softserveinc.trainee.entity.metadata.FieldType;
 import com.softserveinc.trainee.service.Impl.EntityServiceImpl;
 import org.junit.*;
 import org.junit.runner.RunWith;

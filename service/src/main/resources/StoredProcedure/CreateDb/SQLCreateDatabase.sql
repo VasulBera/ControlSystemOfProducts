@@ -1,1 +1,1 @@
-IF NOT EXISTS(SELECT * FROM sys.databases WHERE name = 'Customer') CREATE DATABASE Customer
+IF NOT EXISTS(SELECT * FROM sys.databases WHERE name = 'EntityMetadata') CREATE DATABASE EntityMetadata

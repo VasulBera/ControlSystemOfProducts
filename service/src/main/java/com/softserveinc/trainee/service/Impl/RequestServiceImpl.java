@@ -1,9 +1,8 @@
 package com.softserveinc.trainee.service.Impl;
 
 import com.softserveinc.trainee.dao.EntityDao;
-import com.softserveinc.trainee.dao.Impl.RequestTaskDaoImpl;
 import com.softserveinc.trainee.dao.RequestTaskDao;
-import com.softserveinc.trainee.entity.Entity;
+import com.softserveinc.trainee.entity.metadata.Entity;
 import com.softserveinc.trainee.service.RequestService;
 import org.springframework.beans.factory.annotation.Autowired;
 

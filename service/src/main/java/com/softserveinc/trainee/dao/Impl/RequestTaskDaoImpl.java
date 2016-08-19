@@ -2,16 +2,14 @@ package com.softserveinc.trainee.dao.Impl;
 
 import com.softserveinc.trainee.EntityUtil.EntityUtil;
 import com.softserveinc.trainee.dao.RequestTaskDao;
-import com.softserveinc.trainee.entity.Entity;
-import com.softserveinc.trainee.entity.RequestTaskStatus;
+import com.softserveinc.trainee.entity.metadata.Entity;
+import com.softserveinc.trainee.entity.administration.RequestTaskStatus;
 import org.springframework.stereotype.Repository;
 
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.*;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.Properties;
 
 @Repository("requestTaskDao")

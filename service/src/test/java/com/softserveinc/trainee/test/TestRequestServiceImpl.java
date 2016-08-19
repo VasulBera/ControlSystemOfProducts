@@ -2,7 +2,7 @@ package com.softserveinc.trainee.test;
 
 import com.softserveinc.trainee.dao.EntityDao;
 import com.softserveinc.trainee.dao.RequestTaskDao;
-import com.softserveinc.trainee.entity.Entity;
+import com.softserveinc.trainee.entity.metadata.Entity;
 import com.softserveinc.trainee.service.Impl.RequestServiceImpl;
 import org.junit.Before;
 import org.junit.Test;
@@ -12,7 +12,6 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.mockito.runners.MockitoJUnitRunner;
-import org.powermock.api.mockito.PowerMockito;
 
 import javax.ws.rs.ClientErrorException;
 

@@ -1,10 +1,9 @@
 package com.softserveinc.trainee.service.Impl;
 
 import com.softserveinc.trainee.dao.EntityDao;
-import com.softserveinc.trainee.entity.Entity;
-import com.softserveinc.trainee.entity.Field;
+import com.softserveinc.trainee.entity.metadata.Entity;
+import com.softserveinc.trainee.entity.metadata.Field;
 import com.softserveinc.trainee.service.EntityService;
-import org.apache.log4j.Logger;
 import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 import org.springframework.beans.factory.annotation.Autowired;
 import javax.ws.rs.ClientErrorException;
@@ -35,7 +34,9 @@ public class EntityServiceImpl implements EntityService {
         LOGGER.info("debug ");
         LOGGER.error("debug ");
         LOGGER.warn("debug ");*/
+        System.out.println("in service");
         List<Entity> listEntities = entityDao.getAllEntity();
+        System.out.println("after in service");
         if(listEntities.size() == 0) {
             throw new ClientErrorException(Response.Status.NOT_FOUND);
         } else {

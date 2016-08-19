@@ -1,8 +1,8 @@
 package com.softserveinc.trainee.EntityUtil;
 
-import com.softserveinc.trainee.entity.Entity;
-import com.softserveinc.trainee.entity.Field;
-import com.softserveinc.trainee.entity.FieldType;
+import com.softserveinc.trainee.entity.metadata.Entity;
+import com.softserveinc.trainee.entity.metadata.Field;
+import com.softserveinc.trainee.entity.metadata.FieldType;
 
 public class EntityUtil {
 

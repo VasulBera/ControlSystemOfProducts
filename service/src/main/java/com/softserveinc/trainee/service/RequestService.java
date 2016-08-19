@@ -9,7 +9,7 @@ import javax.ws.rs.*;
 @Path("/task")
 @Consumes("application/json")
 @Produces("application/json")
-@Transactional
+@Transactional("transactionManagerAdministration")
 public interface RequestService {
 
     @GET

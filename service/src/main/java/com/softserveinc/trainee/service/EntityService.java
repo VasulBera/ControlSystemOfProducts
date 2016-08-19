@@ -1,6 +1,6 @@
 package com.softserveinc.trainee.service;
 
-import com.softserveinc.trainee.entity.Entity;
+import com.softserveinc.trainee.entity.metadata.Entity;
 import org.apache.cxf.jaxrs.ext.PATCH;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -12,7 +12,7 @@ import java.util.List;
 @Path("/entity")
 @Consumes("application/json")
 @Produces("application/json")
-@Transactional
+@Transactional("transactionManager")
 public interface EntityService {
 
     @GET

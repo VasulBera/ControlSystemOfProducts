@@ -2,9 +2,9 @@ package com.softserveinc.trainee.test;
 
 
 import com.softserveinc.trainee.EntityUtil.EntityUtil;
-import com.softserveinc.trainee.entity.Entity;
-import com.softserveinc.trainee.entity.Field;
-import com.softserveinc.trainee.entity.FieldType;
+import com.softserveinc.trainee.entity.metadata.Entity;
+import com.softserveinc.trainee.entity.metadata.Field;
+import com.softserveinc.trainee.entity.metadata.FieldType;
 import org.junit.Assert;
 import org.junit.Test;
 

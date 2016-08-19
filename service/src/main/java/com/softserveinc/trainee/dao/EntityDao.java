@@ -1,6 +1,6 @@
 package com.softserveinc.trainee.dao;
 
-import com.softserveinc.trainee.entity.Entity;
+import com.softserveinc.trainee.entity.metadata.Entity;
 
 import java.util.List;
 

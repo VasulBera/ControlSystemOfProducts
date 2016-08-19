@@ -1,4 +1,4 @@
-USE Customer
+USE EntityMetadata
  IF NOT EXISTS (SELECT * FROM sysobjects WHERE name='entities' AND xtype='U')
  CREATE TABLE entities (
  id VARCHAR(256) NOT NULL Primary Key,

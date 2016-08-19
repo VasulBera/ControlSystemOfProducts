@@ -1,5 +1,4 @@
-
-USE Customer
+USE EntityMetadata
  IF NOT EXISTS (SELECT * FROM sysobjects WHERE name='fields' AND xtype='U')
  CREATE TABLE fields (
  id VARCHAR(384) PRIMARY KEY NOT NULL,
