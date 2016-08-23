@@ -3,11 +3,16 @@ package com.softserveinc.trainee.test;
 
 import com.softserveinc.trainee.entity.metadata.Entity;
 import com.softserveinc.trainee.entity.metadata.Field;
+import com.softserveinc.trainee.entity.metadata.FieldType;
 import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,7 +27,12 @@ public class TestEntity {
         entity.setSchemaName("Customer");
         entity.setTableName("entities");
         Field field = new Field();
+        field.setColumnName("baba");
+        field.setType(FieldType.NVARCHAR);
+        field.setLength(89);
         Field field1 = new Field();
+        field1.setColumnName("dido");
+        field1.setType(FieldType.BIT);
         List<Field> fieldList = new ArrayList();
         fieldList.add(field);
         fieldList.add(field1);
@@ -71,17 +81,6 @@ public class TestEntity {
         entity.setTableName("fields");
         String expected = "fields";
         String actually = entity.getTableName();
-        Assert.assertEquals(actually, expected);
-    }
-
-    @Test
-    public void testGetFieldList(){
-        Field field = new Field();
-        Field field1 = new Field();
-        List<Field> expected = new ArrayList();
-        expected.add(field);
-        expected.add(field1);
-        List<Field> actually = entity.getFieldList();
         Assert.assertEquals(actually, expected);
     }
 

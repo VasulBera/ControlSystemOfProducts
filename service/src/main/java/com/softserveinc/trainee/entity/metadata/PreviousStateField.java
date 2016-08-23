@@ -1,5 +1,6 @@
 package com.softserveinc.trainee.entity.metadata;
 
+
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.codehaus.jackson.annotate.JsonAutoDetect;
@@ -12,14 +13,16 @@ import javax.validation.constraints.Size;
 import java.io.Serializable;
 
 @javax.persistence.Entity
-@Table(name = "fields")
+@Table(name = "previous_state_fields")
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY, getterVisibility = JsonAutoDetect.Visibility.NONE, setterVisibility = JsonAutoDetect.Visibility.NONE)
-public class Field implements Serializable{
+public class PreviousStateField implements Serializable {
 
     private static final String VALIDATE_REGEX = "[a-zA-Z0-9\\_]+";
 
-    @Id @Column(name = "id")
-    @NotNull @Size(min = 1, max = 384)
+    @Id
+    @Column(name = "id")
+    @NotNull
+    @Size(min = 1, max = 384)
     @Pattern(regexp = VALIDATE_REGEX)
     private String id;
 
@@ -104,16 +107,16 @@ public class Field implements Serializable{
     @Override
     public int hashCode() {
         return new HashCodeBuilder().append(getId())
-                                    .append(getLength())
-                                    .append(getName())
-                                    .append(getType())
-                                    .append(getColumnName())
-                                    .toHashCode();
+                .append(getLength())
+                .append(getName())
+                .append(getType())
+                .append(getColumnName())
+                .toHashCode();
     }
 
     @Override
     public String toString() {
-        return "Field{" +
+        return "PreviousStateField{" +
                 "id='" + id + '\'' +
                 ", name='" + name + '\'' +
                 ", ColumnName='" + ColumnName + '\'' +
@@ -121,14 +124,5 @@ public class Field implements Serializable{
                 ", length=" + length +
                 '}';
     }
-
-    public PreviousStateField createPreviousStateField(){
-        PreviousStateField previousStateField = new PreviousStateField();
-        previousStateField.setId(this.getId());
-        previousStateField.setName(this.getName());
-        previousStateField.setColumnName(this.getColumnName());
-        previousStateField.setType(this.getType());
-        previousStateField.setLength(this.getLength());
-        return previousStateField;
-    }
 }
+

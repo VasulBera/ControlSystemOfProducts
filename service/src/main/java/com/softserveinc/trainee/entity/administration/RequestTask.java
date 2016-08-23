@@ -1,12 +1,14 @@
 package com.softserveinc.trainee.entity.administration;
 
+import com.softserveinc.trainee.entity.TimeStamp;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.Date;
 
 @javax.persistence.Entity
 @Table(name = "request_tasks")
-public class RequestTask {
+public class RequestTask extends TimeStamp{
 
     @Id
     @Column(name = "id")
@@ -24,14 +26,14 @@ public class RequestTask {
 
     @Column(name = "status")
     @Enumerated(EnumType.STRING) @NotNull
-    private RequestTaskStatus status;
-
+    private RequestTaskStatus status = RequestTaskStatus.ACTUAL;
+/*
     @Column(name = "create_time")
-    private Date create_time;
+    private Date create_time = new Date();
 
     @Column(name = "update_time")
     private Date update_time;
-
+*/
     public Integer getId() {
         return id;
     }
@@ -71,7 +73,7 @@ public class RequestTask {
     public void setStatus(RequestTaskStatus status) {
         this.status = status;
     }
-
+/*
     public Date getCreate_time() {
         return create_time;
     }
@@ -87,4 +89,5 @@ public class RequestTask {
     public void setUpdate_time(Date update_time) {
         this.update_time = update_time;
     }
+*/
 }

@@ -16,7 +16,6 @@ public class EntityDaoImpl implements EntityDao{
     private EntityManager entityManager;
 
     public Entity getEntity(String id) {
-        System.out.println("in entoity dao imp");
         return entityManager.find(Entity.class, id);
     }
 
@@ -28,11 +27,12 @@ public class EntityDaoImpl implements EntityDao{
 
     @Override
     public Entity updateEntity(Entity entity) {
-        Entity persistEntity = entityManager.find(Entity.class, entity.getId());
+        /*Entity persistEntity = entityManager.find(Entity.class, entity.getId());
         if(persistEntity != null){
             entityManager.remove(persistEntity);
         }
-        entityManager.persist(entity);
+        entityManager.persist(entity);*/
+        entityManager.merge(entity);
         return entity;
     }
 

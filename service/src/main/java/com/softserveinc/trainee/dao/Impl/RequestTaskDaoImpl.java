@@ -2,10 +2,13 @@ package com.softserveinc.trainee.dao.Impl;
 
 import com.softserveinc.trainee.EntityUtil.EntityUtil;
 import com.softserveinc.trainee.dao.RequestTaskDao;
+import com.softserveinc.trainee.entity.administration.RequestTask;
 import com.softserveinc.trainee.entity.metadata.Entity;
-import com.softserveinc.trainee.entity.administration.RequestTaskStatus;
+import com.softserveinc.trainee.entity.metadata.PreviousStateEntity;
 import org.springframework.stereotype.Repository;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -15,51 +18,26 @@ import java.util.Properties;
 @Repository("requestTaskDao")
 public class RequestTaskDaoImpl implements RequestTaskDao{
 
+    @PersistenceContext(unitName = "administration")
+    private EntityManager entityManager;
+
     private static final String PATH_TO_DATABASE_PROPERTIES = "database.properties";
     private static final String MS_SQL_SERVER_ADDRES = "jdbc:sqlserver://localhost;";
     private static final String USERNAME_KEY_PROPERTIES = "javax.persistence.jdbc.user";
     private static final String PASSWORD_KEY_PROPERTIES = "javax.persistence.jdbc.password";
 
     @Override
-    public void createRequestTask(String id, String description, String owner) {
-
-        Properties properties = new Properties();
-        try(InputStream inputStream = this.getClass().getClassLoader().getResourceAsStream(PATH_TO_DATABASE_PROPERTIES)){
-            properties.load(inputStream);
-        } catch (IOException e) {
-            System.out.println("Cannot load properties file");
-        }
-
-        String username = properties.getProperty(USERNAME_KEY_PROPERTIES);
-        String password = properties.getProperty(PASSWORD_KEY_PROPERTIES);
-        String sql = "INSERT INTO request_tasks (owner, aim, description, status, create_time) VALUES ('" + owner + "', '" + id + "', '" + description + "', '" + RequestTaskStatus.ACTUAL + "', GETDATE())";
-        try(Connection connection = DriverManager.getConnection(MS_SQL_SERVER_ADDRES + "databaseName=Request_job" + ";user=" + username + ";password=" + password)){
-            Statement statement = connection.createStatement();
-            statement.execute(sql);
-        }catch (SQLException e) {
-            System.out.println("Cannot execute sql query");
-        }
+    public void createRequestTask(RequestTask requestTask) {
+        entityManager.persist(requestTask);
     }
 
     @Override
     public void createEntityTable(Entity entity) {
-        Properties properties = new Properties();
-        try(InputStream inputStream = new FileInputStream(PATH_TO_DATABASE_PROPERTIES)){
-            properties.load(inputStream);
-        } catch (IOException e) {
-            System.out.println("Cannot load properties file");
-        }
-        String username = properties.getProperty(USERNAME_KEY_PROPERTIES);
-        String password = properties.getProperty(PASSWORD_KEY_PROPERTIES);
-        String queryDatabase = EntityUtil.createDb(entity);
-        String queryTable = EntityUtil.createTable(entity);
-        try(Connection connection = DriverManager.getConnection(MS_SQL_SERVER_ADDRES + "user=" + username + ";password=" + password)){
-            PreparedStatement ps = connection.prepareStatement(queryDatabase);
-            ps.executeUpdate();
-            ps = connection.prepareStatement(queryTable);
-            ps.executeUpdate();
-        }catch (SQLException e) {
-            System.out.println("Cannot execute sql query");
-        }
+        EntityUtil.generateTable(entity);
+    }
+
+    @Override
+    public void updateTable(PreviousStateEntity previousStateEntity, Entity entity) {
+        EntityUtil.updateTable(previousStateEntity , entity);
     }
 }

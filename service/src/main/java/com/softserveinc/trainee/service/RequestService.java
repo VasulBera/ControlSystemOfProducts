@@ -1,5 +1,6 @@
 package com.softserveinc.trainee.service;
 
+import com.softserveinc.trainee.entity.administration.RequestTask;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -12,12 +13,16 @@ import javax.ws.rs.*;
 @Transactional("transactionManagerAdministration")
 public interface RequestService {
 
-    @GET
-    @Path("/{id : .+}/{description}/{owner}")
-    public void createTask(@PathParam("id") String id, @PathParam("description") String description, @PathParam("owner") String owner);
+    @POST
+    @Path("/")
+    public void createTask(RequestTask requestTask);
 
     @GET
     @Path("/create/{id : .+}")
-    public void createEntity(@PathParam("id") String id);
+    public void createTables(@PathParam("id") String id);
+
+    @GET
+    @Path("/update/{id : .+}")
+    public void updateTable(@PathParam("id") String id);
 
 }

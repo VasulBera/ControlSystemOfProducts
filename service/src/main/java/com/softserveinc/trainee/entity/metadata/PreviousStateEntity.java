@@ -10,18 +10,19 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 
 @javax.persistence.Entity
-@Table(name = "entities")
+@Table(name = "previous_state_entities")
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY, getterVisibility = JsonAutoDetect.Visibility.NONE, setterVisibility = JsonAutoDetect.Visibility.NONE)
-public class Entity extends TimeStamp implements Serializable{
+public class PreviousStateEntity extends TimeStamp implements Serializable {
 
     private static final String VALIDATE_REGEX = "[a-zA-Z0-9\\_]+";
 
-    @Id @Column(name = "id")
-    @NotNull @Size(min = 2 , max = 256)
+    @Id
+    @Column(name = "id")
+    @NotNull
+    @Size(min = 2 , max = 255)
     @Pattern(regexp = VALIDATE_REGEX)
     private String id;
 
@@ -42,7 +43,7 @@ public class Entity extends TimeStamp implements Serializable{
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "entity_id")
-    private List<Field> fieldList;
+    private List<PreviousStateField> fieldList;
 
     public String getName() {
         return name;
@@ -76,14 +77,13 @@ public class Entity extends TimeStamp implements Serializable{
         this.tableName = tableName;
     }
 
-    public List<Field> getFieldList() {
+    public List<PreviousStateField> getFieldList() {
         return fieldList;
     }
 
-    public void setFieldList(List<Field> fieldList) {
+    public void setFieldList(List<PreviousStateField> fieldList) {
         this.fieldList = fieldList;
     }
-
 
     @Override
     public boolean equals(Object obj) {
@@ -96,28 +96,28 @@ public class Entity extends TimeStamp implements Serializable{
         if (getClass() != obj.getClass()) {
             return false;
         }
-        Entity other = (Entity)obj;
+        PreviousStateEntity other = (PreviousStateEntity)obj;
         return new EqualsBuilder().append(getId(), other.getId())
-                    .append(getSchemaName(), other.getSchemaName())
-                    .append(getTableName(), other.getTableName())
-                    .append(getFieldList(), other.getFieldList())
-                    .append(getName(), other.getName())
-                    .isEquals();
+                .append(getSchemaName(), other.getSchemaName())
+                .append(getTableName(), other.getTableName())
+                .append(getFieldList(), other.getFieldList())
+                .append(getName(), other.getName())
+                .isEquals();
     }
 
     @Override
     public int hashCode() {
         return new HashCodeBuilder().append(getId())
-                                    .append(getSchemaName())
-                                    .append(getTableName())
-                                    .append(getFieldList())
-                                    .append(getName())
-                                    .toHashCode();
+                .append(getSchemaName())
+                .append(getTableName())
+                .append(getFieldList())
+                .append(getName())
+                .toHashCode();
     }
 
     @Override
     public String toString() {
-        return "Entity{" +
+        return "PreviousStateEntity{" +
                 "id='" + id + '\'' +
                 ", name='" + name + '\'' +
                 ", schemaName='" + schemaName + '\'' +
@@ -125,22 +125,4 @@ public class Entity extends TimeStamp implements Serializable{
                 ", fieldList=" + fieldList +
                 '}';
     }
-
-    public PreviousStateEntity createPreviousStateEntity(){
-        PreviousStateEntity previousStateEntity = new PreviousStateEntity();
-        previousStateEntity.setId(this.getId());
-        previousStateEntity.setSchemaName(this.getSchemaName());
-        previousStateEntity.setName(this.getName());
-        previousStateEntity.setTableName(this.getTableName());
-        if(this.getFieldList() != null){
-            List<PreviousStateField> list = new ArrayList();
-            for(Field field: this.getFieldList()){
-                list.add(field.createPreviousStateField());
-            }
-            previousStateEntity.setFieldList(list);
-        }
-        return previousStateEntity;
-    }
 }
-
-

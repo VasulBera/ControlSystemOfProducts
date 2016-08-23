@@ -19,6 +19,8 @@
     <persistence-unit name="administration">
         <provider>org.hibernate.ejb.HibernatePersistence</provider>
         <class>com.softserveinc.trainee.entity.administration.RequestTask</class>
+        <class>com.softserveinc.trainee.entity.metadata.PreviousStateEntity</class>
+        <class>com.softserveinc.trainee.entity.metadata.PreviousStateField</class>
         <exclude-unlisted-classes>true</exclude-unlisted-classes>
         <properties>
             <property name="show_sql" value="true"/>

@@ -4,9 +4,6 @@ import com.softserveinc.trainee.entity.metadata.Entity;
 
 import java.util.List;
 
-/**
- * Created by vberv on 6/27/2016.
- */
 public interface EntityDao {
     public Entity getEntity(String id);
 
