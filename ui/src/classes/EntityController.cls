@@ -1,19 +1,15 @@
-public class EntityController {
-  
+@RestResource(urlMapping='/task/*')
+global with sharing class EntityController {
     public Boolean showSection{get;set;}
     public Field__c field{get; set;}
-    
     List<Entity> entities{get; set;}
-    
     public String entityId{get; set;}
-    public String dropDownEntityName{get; set;}
     public String requestName{get; set;}
     public Entity__c createdEntity{get; set;}
     public List<Field__c> createdFields{get; set;}
     public Integer fakeId {get; set;}
     public String fieldId {get; set;}
     public String entityName {get; set;}
-    public SelectOption[] entityOptions{get; set;}
     public SelectOption[] requestOptions{get; set;}
     
     public EntityController (){
@@ -27,11 +23,6 @@ public class EntityController {
         createdEntity = new Entity__c();
         createdFields = new List<Field__c>();
         fakeId = 1;
-        entityOptions = new SelectOption[]{};
-        entityOptions.add(new SelectOption('all_entities', 'all entities'));
-        for(Entity e: entities){
-           entityOptions.add(new SelectOption(e.id, e.name));
-        }
         requestName = 'Apply_metadata';
        
     }
@@ -68,7 +59,6 @@ public class EntityController {
             Entity entity = new Entity(createdEntity);
             entity.addFileds(createdFields);
             String info = EntityService.checkCorrectDataInsert(entity);
-            System.debug('info ' + !String.isEmpty(info));
             if(!String.isEmpty(info)){
                 throw new EntityExistedException(info);
             }
@@ -100,8 +90,40 @@ public class EntityController {
     }
     
     public void requestApply(){
-        String userName = UserInfo.getFirstName() + ' ' + UserInfo.getLastName();
-        HttpService.createRequestTask(dropDownEntityName, requestName, userName);
+        String userName = UserInfo.getFirstName() + UserInfo.getLastName();
+        RequestJob job = new RequestJob(userName, 'all_entities', requestName);
+        String data = JSON.serialize(job);
+        HttpService.createRequestTask(data);
+    }
+    
+    public PageReference chackTakenRequest(){
+        if(Taken_request__c.getOrgDefaults().request__c){
+            PageReference redirect = new PageReference('/apex/Entity_List');
+            redirect.setRedirect(true);
+            Taken_request__c tr = Taken_request__c.getOrgDefaults();
+            tr.request__c = false;
+            update tr; 
+            return redirect;
+        }
+        return null;
+    }
+    
+    public static PageReference changeTakenRequest(){
+        PageReference redirect = new PageReference('http://www.google.com');
+        redirect.setRedirect(true);
+        return redirect;
+    }
+    
+    @HttpGet
+    global static void setRequestJodDone(){
+        Taken_request__c tr = Taken_request__c.getOrgDefaults();
+        tr.request__c = true;
+        update tr; 
+    }
+    
+    public static PageReference RequestJobRedirect(){
+        PageReference redirect = new PageReference('http://www.google.com');
+        return redirect;
     }
     
 }

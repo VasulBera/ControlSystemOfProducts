@@ -2,6 +2,7 @@ package com.softserveinc.trainee.test;
 
 import com.softserveinc.trainee.entity.metadata.Field;
 import com.softserveinc.trainee.entity.metadata.FieldType;
+import com.softserveinc.trainee.entity.administration.PreviousStateField;
 import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.BeforeClass;
@@ -102,6 +103,58 @@ public class TestField {
         boolean expected = true;
         boolean actually = field.equals(field);
         Assert.assertEquals(actually, expected);
+    }
+
+    @Test
+    public void testCreatePreviousStateField(){
+        Field field = new Field();
+        field.setId("QUANTITY");
+        field.setName("Quantity");
+        field.setType(FieldType.INT);
+        field.setLength(45);
+
+        PreviousStateField expected = new PreviousStateField();
+        expected.setId("QUANTITY");
+        expected.setName("Quantity");
+        expected.setType(FieldType.INT);
+        expected.setLength(45);
+        PreviousStateField actually = field.createPreviousStateField();
+        Assert.assertEquals(actually, expected);
+    }
+
+    @Test
+    public void testGenerateColumnSqlTypeNvarchar(){
+        Field field = new Field();
+        field.setColumnName("name");
+        field.setType(FieldType.NVARCHAR);
+        field.setLength(45);
+        String expected = "name NVARCHAR(45)";
+        String actualy = field.generateColumnSql();
+        Assert.assertEquals(expected, actualy);
+    }
+
+    @Test
+    public void testGenerateColumnSqlTypeInt(){
+        Field field = new Field();
+        field.setColumnName("name");
+        field.setType(FieldType.INT);
+        String expected = "name INT";
+        String actualy = field.generateColumnSql();
+        Assert.assertEquals(expected, actualy);
+    }
+
+    @Test
+    public void testToString(){
+        Field field = new Field();
+        field.setId("colorname");
+        field.setName("color");
+        field.setColumnName("COLOR");
+        field.setType(FieldType.NVARCHAR);
+        field.setLength(45);
+        System.out.println(field);
+        String expected = "Field{id='colorname', name='color', ColumnName='COLOR', type=NVARCHAR, length=45}";
+        String actually = field.toString();
+        Assert.assertEquals(expected, actually);
     }
 
     @AfterClass

@@ -1,4 +1,4 @@
-package com.softserveinc.trainee.entity.metadata;
+package com.softserveinc.trainee.entity.administration;
 
 import com.softserveinc.trainee.entity.TimeStamp;
 import org.apache.commons.lang3.builder.EqualsBuilder;
@@ -6,6 +6,7 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.codehaus.jackson.annotate.JsonAutoDetect;
 
 import javax.persistence.*;
+import javax.persistence.criteria.CriteriaBuilder;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
@@ -45,6 +46,9 @@ public class PreviousStateEntity extends TimeStamp implements Serializable {
     @JoinColumn(name = "entity_id")
     private List<PreviousStateField> fieldList;
 
+    @Column(name = "full_upload_data")
+    private boolean fullUploadData = false;
+
     public String getName() {
         return name;
     }
@@ -53,6 +57,7 @@ public class PreviousStateEntity extends TimeStamp implements Serializable {
         this.name = name;
     }
 
+
     public String getId() {
         return id;
     }
@@ -60,6 +65,7 @@ public class PreviousStateEntity extends TimeStamp implements Serializable {
     public void setId(String id) {
         this.id = id;
     }
+
 
     public String getSchemaName() {
         return schemaName;
@@ -83,6 +89,14 @@ public class PreviousStateEntity extends TimeStamp implements Serializable {
 
     public void setFieldList(List<PreviousStateField> fieldList) {
         this.fieldList = fieldList;
+    }
+
+    public boolean isFullUploadData() {
+        return fullUploadData;
+    }
+
+    public void setFullUploadData(boolean fullUploadData) {
+        this.fullUploadData = fullUploadData;
     }
 
     @Override

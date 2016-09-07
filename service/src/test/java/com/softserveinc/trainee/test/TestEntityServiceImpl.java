@@ -69,37 +69,53 @@ public class TestEntityServiceImpl {
         cxfWebRestService.getAllEntities();
     }
 
-    /*@Test
-    public void testAddEntityWithoutField(){
+    @Test
+    public void testAddEntityWithoutIdWithoutField(){
         Entity entity = new Entity();
         entity.setTableName("Product");
         entity.setSchemaName("Customer");
-        Mockito.when(entityDao.getEntity(anyString())).thenReturn(null);
         Mockito.when(entityDao.addEntity(any(Entity.class))).thenReturn(entity);
         Entity actually = cxfWebRestService.addEntity(entity);
         Assert.assertEquals(entity, actually);
-    }*/
+    }
 
-/*@Test
-    public void testAddEntity(){
+    @Test
+    public void testAddEntityWithIdWithoutField(){
+        Entity entity = new Entity();
+        entity.setId("ID");
+        entity.setTableName("Product");
+        entity.setSchemaName("Customer");
+        Mockito.when(entityDao.addEntity(any(Entity.class))).thenReturn(entity);
+        Entity actually = cxfWebRestService.addEntity(entity);
+        Assert.assertEquals(entity, actually);
+    }
+
+    @Test
+    public void testAddEntityWithoutIdWithField(){
         Entity entity = new Entity();
         entity.setTableName("Product");
         entity.setSchemaName("Customer");
-
         Field field = new Field();
-        field.setType(FieldType.NVARCHAR);
-        field.setName("price");
-        field.setLength(1);
-
-        List<Field> list = new ArrayList();
-        list.add(field);
-        entity.setFieldList(list);
-
-        Mockito.when(entityDao.getEntity(anyString())).thenReturn(null);
+        field.setColumnName("Price");
+        entity.setFieldList(new ArrayList<>(Arrays.asList(field)));
         Mockito.when(entityDao.addEntity(any(Entity.class))).thenReturn(entity);
         Entity actually = cxfWebRestService.addEntity(entity);
         Assert.assertEquals(entity, actually);
-    }*/
+    }
+
+    @Test
+    public void testAddEntityWithIdWithField(){
+        Entity entity = new Entity();
+        entity.setTableName("Product");
+        entity.setSchemaName("Customer");
+        Field field = new Field();
+        field.setColumnName("Price");
+        field.setId("PRICE");
+        entity.setFieldList(new ArrayList<>(Arrays.asList(field)));
+        Mockito.when(entityDao.addEntity(any(Entity.class))).thenReturn(entity);
+        Entity actually = cxfWebRestService.addEntity(entity);
+        Assert.assertEquals(entity, actually);
+    }
 
     @Test
     public void testUpdateEntity(){
@@ -227,22 +243,6 @@ public class TestEntityServiceImpl {
         Mockito.when(entityDao.updateEntity(any(Entity.class))).thenReturn(expected);
         Entity actually = cxfWebRestService.patchEntity(anyString(), expected);
         Assert.assertEquals(expected, actually);
-    }
-
-    @Test(expected = ClientErrorException.class)
-    public void testDeleteEntityNull(){
-        Mockito.when(entityDao.getEntity(anyString())).thenReturn(null);
-        cxfWebRestService.deleteEntity(anyString());
-    }
-
-    @Test
-    public void testDeleteEntity(){
-        Entity entity = new Entity();
-        entity.setTableName("Product");
-        entity.setSchemaName("Customer");
-        Mockito.when(entityDao.getEntity(anyString())).thenReturn(entity);
-        Mockito.doNothing().when(entityDao).deleteEntity(any(Entity.class));
-        cxfWebRestService.deleteEntity(anyString());
     }
 
     @AfterClass

@@ -12,7 +12,7 @@ import java.util.List;
 @Path("/entity")
 @Consumes("application/json")
 @Produces("application/json")
-@Transactional("transactionManager")
+//@Transactional("transactionManager")
 public interface EntityService {
 
     @GET
@@ -27,7 +27,7 @@ public interface EntityService {
 
     @PATCH
     @Path("/{id : .+}")
-    public Entity patchEntity(@PathParam("id")String id, Entity entity) throws Throwable;
+    public Entity patchEntity(@PathParam("id")String id, Entity entity);
 
     @PUT
     public Entity updateEntity(Entity entity);

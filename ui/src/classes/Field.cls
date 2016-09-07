@@ -30,4 +30,7 @@ public class Field {
 
         return field;
     }
+    public Field(){
+        
+    }
 }

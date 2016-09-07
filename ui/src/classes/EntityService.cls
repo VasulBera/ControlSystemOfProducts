@@ -5,10 +5,10 @@ public class EntityService {
         if(!Pattern.matches('[a-zA-Z0-9\\_]+', entity.name)){
               result += 'Entity name can contain only symbols, numbers and underscore. Pleas check your data! <br/>';
         }
-        if(!Pattern.matches('[a-zA-Z\\_][a-zA-Z0-9\\_]+', entity.schemaName)){
+        if(!Pattern.matches('[a-zA-Z\\_]([a-zA-Z0-9\\_]+)?', entity.schemaName)){
               result += 'Entity Schema name must begin with a letter or underscore and contain only symbols, numbers and underscore. Pleas check your data! <br/>';
         }
-        if(!Pattern.matches('[a-zA-Z\\_][a-zA-Z0-9\\_]+', entity.tableName)){
+        if(!Pattern.matches('[a-zA-Z\\_]([a-zA-Z0-9\\_]+)?', entity.tableName)){
               result += 'Entity Table name must begin with a letter or underscore and contain only symbols, numbers and underscore. Pleas check your data! <br/>';
         }
         if(entity.name.length() > 128){
@@ -27,7 +27,7 @@ public class EntityService {
                 if(field.ColumnName.length() > 128){
                     result += 'Field column name of \"' + field.name + '\" length can be less then 128 symbols. Pleas check your data! <br/>';
                 }
-                if(!Pattern.matches('[a-zA-Z\\_][a-zA-Z0-9\\_]+', field.ColumnName)){
+                if(!Pattern.matches('[a-zA-Z\\_]([a-zA-Z0-9\\_]+)?', field.ColumnName)){
                   result += 'Field Column name of \"' + field.name + '\" must begin with a letter or underscore and contain only symbols, numbers and underscore. Pleas check your data! <br/>';
                 }
             }

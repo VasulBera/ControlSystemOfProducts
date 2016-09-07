@@ -1,5 +1,7 @@
 package com.softserveinc.trainee.entity.metadata;
 
+import com.softserveinc.trainee.entity.TimeStamp;
+import com.softserveinc.trainee.entity.administration.PreviousStateField;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.codehaus.jackson.annotate.JsonAutoDetect;
@@ -14,7 +16,7 @@ import java.io.Serializable;
 @javax.persistence.Entity
 @Table(name = "fields")
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY, getterVisibility = JsonAutoDetect.Visibility.NONE, setterVisibility = JsonAutoDetect.Visibility.NONE)
-public class Field implements Serializable{
+public class Field extends TimeStamp implements Serializable{
 
     private static final String VALIDATE_REGEX = "[a-zA-Z0-9\\_]+";
 
@@ -130,5 +132,13 @@ public class Field implements Serializable{
         previousStateField.setType(this.getType());
         previousStateField.setLength(this.getLength());
         return previousStateField;
+    }
+
+    public String generateColumnSql(){
+        if (getType() == FieldType.NVARCHAR) {
+            return getColumnName() + " " + getType() + "(" + getLength() + ")";
+        } else {
+            return getColumnName() + " " + getType();
+        }
     }
 }

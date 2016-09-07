@@ -1,14 +1,18 @@
 package com.softserveinc.trainee.dao;
 
-import com.softserveinc.trainee.entity.metadata.PreviousStateEntity;
+import com.softserveinc.trainee.entity.administration.PreviousStateEntity;
+import org.springframework.transaction.annotation.Transactional;
 
 public interface PreviousStateEntityDao {
 
-    public PreviousStateEntity getEntity(String id);
+    @Transactional("transactionManagerAdministration")
+    public PreviousStateEntity getPreviousStateEntity(String id);
 
-    public void addEntity(PreviousStateEntity entity);
+    @Transactional("transactionManagerAdministration")
+    public boolean addPreviousStateEntity(PreviousStateEntity entity);
 
-    public PreviousStateEntity updateEntity(PreviousStateEntity entity);
+    @Transactional("transactionManagerAdministration")
+    public PreviousStateEntity updatePreviousStateEntity(PreviousStateEntity entity);
 
 
 }

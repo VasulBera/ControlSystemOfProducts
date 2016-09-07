@@ -5,8 +5,9 @@ USE EntityMetadata
  name VARCHAR(128),
  schema_name VARCHAR(128),
  table_name VARCHAR(128),
- create_time datetime,
- update_time datetime
+ full_upload_data BIT,
+ created_date datetime,
+ last_modifier datetime
 )
 
 

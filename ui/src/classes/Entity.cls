@@ -4,12 +4,14 @@ public class Entity{
     public String schemaName{get; set;}
     public String tableName{get; set;}
     public List<Field> fieldList{get; set;}
+    public Boolean fullUploadData{get; set;}
     
     public Entity(Entity__c entity){
         id = (entity.Schema_Name__c + entity.Table_Name__c).toUpperCase();
         name = entity.Name__c;
         schemaName = entity.Schema_Name__c;
         tableName = entity.Table_Name__c;
+        fullUploadData = false;
         if(!entity.Fields__r.isempty()){
             fieldList = new List<Field>();
             for(Field__c field: entity.Fields__r){

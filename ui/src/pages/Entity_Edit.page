@@ -13,6 +13,7 @@
        .entity-editor-name{width: 30%; font-size: 15px; display: inline-table;}
        .entity-editor-name div{margin-bottom: 10px;}
        .entity-editor-value{width: 50%; display: inline-table;}
+       entity-editor-checkbox{width: 20%; display: inline-table;}
        .field-editor{margin-top:20px; width: 100%;font-size: 13px;}
        body .bPageBlock .pbBody .dataCol{width: 100%;}
        body .pbBody table.list tr.headerRow th { width: 170px;}
@@ -20,6 +21,98 @@
        .modal-btn{height: 22px; width: 100px;}
        .innerContent{height: 55px}
        .apexp{width: 100%;}
+       
+              .cs-loader {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+}
+
+.cs-loader-inner {
+  transform: translateY(-50%);
+  top: 50%;
+  position: absolute;
+  width: calc(100% - 200px);
+  color: #FFF;
+  padding: 0 100px;
+  text-align: center;
+}
+
+.cs-loader-inner label {
+  font-size: 20px;
+  opacity: 0;
+  display:inline-block;
+}
+
+@keyframes lol {
+  0% {
+    opacity: 0;
+    transform: translateX(-300px);
+  }
+  33% {
+    opacity: 1;
+    transform: translateX(0px);
+  }
+  66% {
+    opacity: 1;
+    transform: translateX(0px);
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(300px);
+  }
+}
+
+@-webkit-keyframes lol {
+  0% {
+    opacity: 0;
+    -webkit-transform: translateX(-300px);
+  }
+  33% {
+    opacity: 1;
+    -webkit-transform: translateX(0px);
+  }
+  66% {
+    opacity: 1;
+    -webkit-transform: translateX(0px);
+  }
+  100% {
+    opacity: 0;
+    -webkit-transform: translateX(300px);
+  }
+}
+
+.cs-loader-inner label:nth-child(6) {
+  -webkit-animation: lol 3s infinite ease-in-out;
+  animation: lol 3s infinite ease-in-out;
+}
+
+.cs-loader-inner label:nth-child(5) {
+  -webkit-animation: lol 3s 100ms infinite ease-in-out;
+  animation: lol 3s 100ms infinite ease-in-out;
+}
+
+.cs-loader-inner label:nth-child(4) {
+  -webkit-animation: lol 3s 200ms infinite ease-in-out;
+  animation: lol 3s 200ms infinite ease-in-out;
+}
+
+.cs-loader-inner label:nth-child(3) {
+  -webkit-animation: lol 3s 300ms infinite ease-in-out;
+  animation: lol 3s 300ms infinite ease-in-out;
+}
+
+.cs-loader-inner label:nth-child(2) {
+  -webkit-animation: lol 3s 400ms infinite ease-in-out;
+  animation: lol 3s 400ms infinite ease-in-out;
+}
+
+.cs-loader-inner label:nth-child(1) {
+  -webkit-animation: lol 3s 500ms infinite ease-in-out;
+  animation: lol 3s 500ms infinite ease-in-out;
+}
 
     </style>
     
@@ -128,14 +221,39 @@
         function reset(){
             console.log('reset');
         }
+        
+        function startChecking(){
+            setInterval(function(){
+               chackTakenRequest();
+               console.log('sdf');
+              },1000);
+        }
+        function checkIfDone(){
+            $('#maska').css('display', 'block');
+            startChecking();
+            
+        }
     
     </script>
+    <div class="super-main">
+    <div class='main' style='width: 100%; height: 100%; background: black; z-index: 10; opacity: 0.8; position: absolute; margin-top: -47px; margin-left: -10px; display: none' id='maska'>
+      <div style='font-size: 45px; color: cornflowerblue; text-align: center; padding-top: 110px;'>Please wait until system will finish work...</div>
+      <div class="cs-loader">
+          <div class="cs-loader-inner">
+            <label> ●</label>
+            <label> ●</label>
+            <label> ●</label>
+            <label> ●</label>
+            <label> ●</label>
+            <label> ●</label>
+          </div>
+        </div>
+  </div>
     <div class='main'>
     <div class="heads">
          <div class="title">Entity Edit</div>
     </div>
     <div style='display: flex;'>
-    <apex:form ><apex:commandButton action="{!createTable}" value="Create Table" style="width: 100px; height:23px; font-size:12px; margin-left: 208px;"/></apex:form>
     </div>
     <apex:form >
         <div class="body">
@@ -144,15 +262,18 @@
                                     <apex:pageBlockSection >
                                         <apex:pageBlockSectionItem > 
                                             <apex:outputPanel id="createdEntity"> 
-                                                <div class="entity-editor-name"> <!-- entity-editor-name -->
+                                                <div class="entity-editor-name">
                                                     <div>Entity name:</div>
                                                     <div>Schema name:</div>
                                                     <div>Table name:</div>
                                                 </div>
-                                                <div class="entity-editor-value"> <!-- entity-editor-value -->
+                                                <div class="entity-editor-value">
                                                     <div style="margin-bottom: 8px;"><apex:inputField value="{!entity.Name__c}" styleClass="entityNameCreate" id="entity-name" required="true" onchange="replaceWhitespace(this)"/></div>
                                                     <div style="margin-bottom: 8px;"><apex:inputField value="{!entity.Schema_Name__c}" onclick="proba()" styleClass="entitySchemaNameCreate" id="entity-schema-name" onchange="replaceWhitespace(this)"/></div>
-                                                    <div style="margin-bottom: 0px;"><apex:inputField value="{!entity.Table_Name__c}" styleClass="entityTableNameCreate" id="entity-table-name" onchange="replaceWhitespace(this)"/></div>
+                                                    <div style="margin-bottom: 8px;"><apex:inputField value="{!entity.Table_Name__c}" styleClass="entityTableNameCreate" id="entity-table-name" onchange="replaceWhitespace(this)"/></div>
+                                                </div>
+                                                <div class="entity-editor-checkbox">
+                                                
                                                 </div>
                                             </apex:outputPanel>
                                          </apex:pageBlockSectionItem>
@@ -160,6 +281,12 @@
                                 </apex:pageBlock>
                         </div>
                         
+                        <div style="display: flex;">
+                            <div style="margin-top: 10px; font-size: 15px; font-style: oblique; margin-right: 10px;">File load type:</div>
+                            <apex:selectList value="{!fileLoadType}" size="1" style="width:120px;  font-style: oblique; margin-top: 10px;">
+                                <apex:selectOptions value="{!loadFileTypeOptions}"/>       
+                            </apex:selectList>
+                        </div>
             <div class="field-editor">
                 <apex:pageBlock title="Fields" id="fieldTable">
                 <apex:actionFunction action="{!deleteField}" name="deleteField"/>
@@ -170,9 +297,6 @@
                 </apex:pageBlockButtons>
                   <apex:pageBlockTable value="{!fields}" var="item">
                       <apex:column headerValue="Action">
-                          <!-- <apex:commandLink value="Delete" action="{!deleteField}" reRender="fieldTable" status="afterPressAllButton" style="font-weight: bold; color: #006699">
-                               <apex:param name="fieldId" value="{!item.Id__c}" assignTo="{!fieldId}"/>
-                          </apex:commandLink> -->
                           <apex:actionStatus id="openDialogWindow" onstop="openModal(), setFiledName('{!item.Name__c}'), deleteLongName()"/>
                            <apex:commandLink value="Delete" reRender="fieldTable" status="openDialogWindow" style="font-weight: bold; color: #006699">
                                <apex:actionSupport status="afterPressAllButton" event="onclick" reRender="fake"/>
@@ -209,5 +333,6 @@
             </div>
         </div>
     </apex:form>
-    </div>
+    </div>    
+</div>    
 </apex:page>

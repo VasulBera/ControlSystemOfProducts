@@ -18,8 +18,7 @@ public class EntityServiceImpl implements EntityService {
     @Autowired
     EntityDao entityDao;
 
-    @Autowired
-    PreviousStateEntityDao previousStateEntityDao;
+    private static Integer INCREMENT = 1;
 
     private static final String REPLACE_REGEX = "[^a-zA-Z0-9\\_]";
 
@@ -32,6 +31,7 @@ public class EntityServiceImpl implements EntityService {
     }
 
     public List<Entity> getAllEntities(){
+        System.out.println();
         List<Entity> listEntities = entityDao.getAllEntity();
         if(listEntities.size() == 0) {
             throw new ClientErrorException(Response.Status.NOT_FOUND);
@@ -46,7 +46,7 @@ public class EntityServiceImpl implements EntityService {
         }
         if(entity.getFieldList() != null) {
             for(Field field: entity.getFieldList()){
-                field.setId((entity.getId() + field.getName()).replaceAll(REPLACE_REGEX, "").toUpperCase());
+                field.setId((entity.getId() + field.getColumnName()).replaceAll(REPLACE_REGEX, "").toUpperCase());
             }
         }
         return entityDao.addEntity(entity);
@@ -97,11 +97,6 @@ public class EntityServiceImpl implements EntityService {
     }
 
     public void deleteEntity(String id){
-        Entity entity = entityDao.getEntity(id);
-        if(entity != null){
-            entityDao.deleteEntity(entity);
-        }else {
-            throw new ClientErrorException(Response.Status.NOT_FOUND);
-        }
+        entityDao.deleteEntity(id);
     }
 }

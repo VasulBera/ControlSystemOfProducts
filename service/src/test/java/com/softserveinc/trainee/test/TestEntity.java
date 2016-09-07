@@ -1,18 +1,13 @@
 
 package com.softserveinc.trainee.test;
 
-import com.softserveinc.trainee.entity.metadata.Entity;
-import com.softserveinc.trainee.entity.metadata.Field;
-import com.softserveinc.trainee.entity.metadata.FieldType;
+import com.softserveinc.trainee.entity.administration.PreviousStateEntity;
+import com.softserveinc.trainee.entity.administration.PreviousStateField;
+import com.softserveinc.trainee.entity.metadata.*;
 import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
-
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -121,6 +116,72 @@ public class TestEntity {
         Assert.assertEquals(actually, expected);
     }
 
+    @Test
+    public void testCreatePreviousStateEntity(){
+        Entity entity = new Entity();
+        entity.setId("CUSTOM");
+        entity.setSchemaName("Customer");
+        entity.setTableName("entities");
+        Field field = new Field();
+        field.setColumnName("baba");
+        field.setType(FieldType.NVARCHAR);
+        field.setLength(89);
+        Field field1 = new Field();
+        field1.setColumnName("dido");
+        field1.setType(FieldType.BIT);
+        List<Field> fieldList = new ArrayList();
+        fieldList.add(field);
+        fieldList.add(field1);
+        entity.setFieldList(fieldList);
+
+        PreviousStateEntity expected = new PreviousStateEntity();
+        expected.setSchemaName("Customer");
+        expected.setId("CUSTOM");
+        expected.setTableName("entities");
+        PreviousStateField previousStateFieldOne = new PreviousStateField();
+        previousStateFieldOne.setType(FieldType.NVARCHAR);
+        previousStateFieldOne.setColumnName("baba");
+        previousStateFieldOne.setLength(89);
+        PreviousStateField previousStateFieldTwo = new PreviousStateField();
+        previousStateFieldTwo.setType(FieldType.BIT);
+        previousStateFieldTwo.setColumnName("dido");
+        List<PreviousStateField> preFieldList = new ArrayList();
+        preFieldList.add(previousStateFieldOne);
+        preFieldList.add(previousStateFieldTwo);
+        expected.setFieldList(preFieldList);
+
+
+        PreviousStateEntity actualy = entity.createPreviousStateEntity();
+        Assert.assertEquals(expected, actualy);
+    }
+
+    @Test
+    public void testIsFullUploadData(){
+        Entity entity = new Entity();
+        entity.setFullUploadData(true);
+        boolean expected = true;
+        boolean actually = entity.isFullUploadData();
+        Assert.assertEquals(expected, actually);
+    }
+
+    @Test
+    public void testSetFullUploadData(){
+        Entity entity = new Entity();
+        entity.setFullUploadData(true);
+        boolean expected = true;
+        boolean actually = entity.isFullUploadData();
+        Assert.assertEquals(expected, actually);
+    }
+
+    @Test
+    public void testGenereateShemaWithTable(){
+        Entity entity = new Entity();
+        entity.setTableName("PRODUCT");
+        entity.setSchemaName("client");
+        String expected = "client.PRODUCT";
+        String actually = entity.genereateShemaWithTable();
+        Assert.assertEquals(expected, actually);
+    }
     @AfterClass
     public static void deleteField(){
         entity = null;

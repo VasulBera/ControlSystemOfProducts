@@ -1,11 +1,14 @@
-package com.softserveinc.trainee.entity.metadata;
+package com.softserveinc.trainee.entity.administration;
 
 
+import com.softserveinc.trainee.entity.TimeStamp;
+import com.softserveinc.trainee.entity.metadata.FieldType;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.codehaus.jackson.annotate.JsonAutoDetect;
 
 import javax.persistence.*;
+import javax.persistence.criteria.CriteriaBuilder;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
@@ -15,7 +18,7 @@ import java.io.Serializable;
 @javax.persistence.Entity
 @Table(name = "previous_state_fields")
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY, getterVisibility = JsonAutoDetect.Visibility.NONE, setterVisibility = JsonAutoDetect.Visibility.NONE)
-public class PreviousStateField implements Serializable {
+public class PreviousStateField extends TimeStamp implements Serializable {
 
     private static final String VALIDATE_REGEX = "[a-zA-Z0-9\\_]+";
 
@@ -94,7 +97,7 @@ public class PreviousStateField implements Serializable {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        Field other = (Field)obj;
+        PreviousStateField other = (PreviousStateField)obj;
         return new EqualsBuilder()
                 .append(getId(), other.getId())
                 .append(getLength(), other.getLength())

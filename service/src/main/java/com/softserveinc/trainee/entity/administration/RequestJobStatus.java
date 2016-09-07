@@ -1,5 +1,5 @@
 package com.softserveinc.trainee.entity.administration;
 
-public enum RequestTaskStatus {
+public enum RequestJobStatus {
     ACTUAL, DONE, INPROGGRES, ERROR
 }

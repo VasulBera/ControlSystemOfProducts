@@ -3,4 +3,8 @@ repositories {
 }
 dependencies {
     compile group: 'com.hynnet', name: 'sqljdbc4-chs', version: '4.0.2206.100'
+    compile group: 'org.apache.httpcomponents', name: 'httpclient', version: '4.5.2'
+    compile group: 'com.google.code.gson', name: 'gson', version: '2.7'
+
+
 }

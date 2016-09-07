@@ -2,30 +2,43 @@ package com.softserveinc.trainee.entity;
 
 import javax.persistence.Column;
 import javax.persistence.MappedSuperclass;
+import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
 import java.util.Date;
 
 @MappedSuperclass
 public class TimeStamp {
 
-    @Column(name = "create_time")
-    private Date create_time = new Date();
+    @Column(name = "created_date")
+    private Date createdDate;
 
-    @Column(name = "update_time")
-    private Date update_time;
+    @Column(name = "last_modifier")
+    private Date lastModifier;
 
-    public Date getCreate_time() {
-        return create_time;
+    public Date getCreatedDate() {
+        return createdDate;
     }
 
-    public void setCreate_time(Date create_time) {
-        this.create_time = create_time;
+    public void setCreatedDate(Date createdDate) {
+        this.createdDate = createdDate;
     }
 
-    public Date getUpdate_time() {
-        return update_time;
+    public Date getLastModifier() {
+        return lastModifier;
     }
 
-    public void setUpdate_time(Date update_time) {
-        this.update_time = update_time;
+    public void setLastModifier(Date lastModifier) {
+        this.lastModifier = lastModifier;
+    }
+
+
+    @PreUpdate
+    public void setLastModifierOnChange(){
+        this.setLastModifier(new Date());
+    }
+
+    @PrePersist
+    public void onCreate(){
+        this.setCreatedDate(new Date());
     }
 }

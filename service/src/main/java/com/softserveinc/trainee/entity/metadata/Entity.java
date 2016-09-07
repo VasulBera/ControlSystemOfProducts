@@ -1,6 +1,8 @@
 package com.softserveinc.trainee.entity.metadata;
 
 import com.softserveinc.trainee.entity.TimeStamp;
+import com.softserveinc.trainee.entity.administration.PreviousStateEntity;
+import com.softserveinc.trainee.entity.administration.PreviousStateField;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.codehaus.jackson.annotate.JsonAutoDetect;
@@ -15,6 +17,7 @@ import java.util.List;
 
 @javax.persistence.Entity
 @Table(name = "entities")
+@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY, getterVisibility = JsonAutoDetect.Visibility.NONE, setterVisibility = JsonAutoDetect.Visibility.NONE)
 public class Entity extends TimeStamp implements Serializable{
 
@@ -43,6 +46,9 @@ public class Entity extends TimeStamp implements Serializable{
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "entity_id")
     private List<Field> fieldList;
+
+    @Column(name = "full_upload_data")
+    private boolean fullUploadData = false;
 
     public String getName() {
         return name;
@@ -84,6 +90,13 @@ public class Entity extends TimeStamp implements Serializable{
         this.fieldList = fieldList;
     }
 
+    public boolean isFullUploadData() {
+        return fullUploadData;
+    }
+
+    public void setFullUploadData(boolean fullUploadData) {
+        this.fullUploadData = fullUploadData;
+    }
 
     @Override
     public boolean equals(Object obj) {
@@ -115,16 +128,6 @@ public class Entity extends TimeStamp implements Serializable{
                                     .toHashCode();
     }
 
-    @Override
-    public String toString() {
-        return "Entity{" +
-                "id='" + id + '\'' +
-                ", name='" + name + '\'' +
-                ", schemaName='" + schemaName + '\'' +
-                ", tableName='" + tableName + '\'' +
-                ", fieldList=" + fieldList +
-                '}';
-    }
 
     public PreviousStateEntity createPreviousStateEntity(){
         PreviousStateEntity previousStateEntity = new PreviousStateEntity();
@@ -132,6 +135,7 @@ public class Entity extends TimeStamp implements Serializable{
         previousStateEntity.setSchemaName(this.getSchemaName());
         previousStateEntity.setName(this.getName());
         previousStateEntity.setTableName(this.getTableName());
+        //previousStateEntity.setCreatedDate(this.getCreatedDate());
         if(this.getFieldList() != null){
             List<PreviousStateField> list = new ArrayList();
             for(Field field: this.getFieldList()){
@@ -140,6 +144,10 @@ public class Entity extends TimeStamp implements Serializable{
             previousStateEntity.setFieldList(list);
         }
         return previousStateEntity;
+    }
+
+    public String genereateShemaWithTable(){
+        return getSchemaName() + "." + getTableName();
     }
 }
 

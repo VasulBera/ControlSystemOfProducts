@@ -1,3 +1,5 @@
+import com.softserveinc.trainee.gradle.tasks.*
+
 group 'ControlSystemOfProducts'
 version '1.0'
 
@@ -12,8 +14,6 @@ ext{
 repositories {
     mavenCentral()
 }
-
-
 
 dependencies {
 
@@ -39,8 +39,13 @@ dependencies {
     compile group: 'org.apache.cxf', name: 'cxf-rt-rs-service-description', version: '3.1.6'
 
     compile group: 'org.codehaus.jackson', name: 'jackson-jaxrs', version: '1.9.13'
-}
 
+    compile group: 'org.apache.httpcomponents', name: 'httpclient', version: '4.5.2'
+    compile group: 'com.google.code.gson', name: 'gson', version: '2.7'
+    compile group: 'com.amazonaws', name: 'aws-java-sdk', version: '1.11.29'
+    compile group: 'org.apache.commons', name: 'commons-csv', version: '1.4'
+    compile group: 'org.springframework', name: 'spring-jdbc', version: '4.3.2.RELEASE'
+}
 
 jacoco {
     toolVersion = jacocoVersion
@@ -52,6 +57,7 @@ jacocoTestReport {
         html.enabled = true
     }
 }
+
 task codeCoverageCheks(type: com.softserveinc.trainee.gradle.tasks.CodeCoverage)
 
 task copy(type: Copy){
@@ -60,9 +66,9 @@ task copy(type: Copy){
     properties.load(inputStream);
     String pathToTomcat = properties.getProperty("pathToTomcat");
     String pathToWar = file('.').toString() + "/build/libs/service-1.0.war";
-        from pathToWar
-        into pathToTomcat + '/webapps'
-        rename ('service-1.0.war', 'service.war')
+    from pathToWar
+    into pathToTomcat + '/webapps'
+    rename ('service-1.0.war', 'service.war')
 }
 
 task deleteFile(type: Delete){
@@ -74,10 +80,13 @@ task deleteFile(type: Delete){
     delete pathToTomcat + '/webapps/service.war'
 }
 
+task createTestEntityAmazon(type: RemoteServiceFill)
 task startTomcat(type: com.softserveinc.trainee.gradle.tasks.StartTomcat)
 task stopTomcat(type: com.softserveinc.trainee.gradle.tasks.StopTomcat)
 task createDb(type: com.softserveinc.trainee.gradle.tasks.SqlRunner)
 task fillDb(type: com.softserveinc.trainee.gradle.tasks.TestDataRunner)
+
+
 
 tasks.jacocoTestReport.dependsOn(test)
 tasks.codeCoverageCheks.dependsOn(jacocoTestReport)

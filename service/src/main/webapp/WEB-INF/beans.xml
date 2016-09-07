@@ -15,14 +15,14 @@ http://cxf.apache.org/schemas/jaxrs.xsd http://www.springframework.org/schema/co
     <import resource="classpath:META-INF/cxf/cxf-servlet.xml"/>
 
     <bean id="EntityService" class="com.softserveinc.trainee.service.Impl.EntityServiceImpl" />
-    <bean id="RequestTaskService" class="com.softserveinc.trainee.service.Impl.RequestServiceImpl"/>
+    <bean id="RequestTaskService" class="com.softserveinc.trainee.service.Impl.JobServiceImpl"/>
 
     <jaxrs:server id="RestContainer" address="/">
     <jaxrs:providers>
-        <bean class="com.softserveinc.trainee.mapper.NotFoundExceptionHandler" />
+        <!-- <bean class="com.softserveinc.trainee.mapper.NotFoundExceptionHandler" />
         <bean class="com.softserveinc.trainee.mapper.ClientErrorExeptionHandler"/>
         <bean class="com.softserveinc.trainee.mapper.WebApplicationExceptionHandler"/>
-        <bean class="com.softserveinc.trainee.mapper.ThrowableMapper"/>
+        <bean class="com.softserveinc.trainee.mapper.ThrowableMapper"/> -->
         <bean class="org.codehaus.jackson.jaxrs.JacksonJsonProvider" />
       </jaxrs:providers>
     <jaxrs:serviceBeans>

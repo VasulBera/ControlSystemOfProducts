@@ -4,13 +4,11 @@ public class HttpService {
         Remote_Connection__c rc = Remote_Connection__c.getInstance('Static_IP');
         String ip = rc.Public_IP__c;
         String url = 'http://' + ip + ':8080/service/rest/entity';
-        
         HttpRequest request = new HttpRequest();
         request.setEndpoint(url);
         request.setMethod('POST');
         request.setHeader('content-type', 'application/json');
         request.setBody(data);
-        
         Http http = new Http();
         HttpResponse response = new HttpResponse();
         response = http.send(request);
@@ -89,7 +87,6 @@ public class HttpService {
         Remote_Connection__c rc = Remote_Connection__c.getInstance('Static_IP');
         String ip = rc.Public_IP__c;
         String url = 'http://' + ip + ':8080/service/rest/entity/' + id;
-        System.debug('url ' + url);
         HttpRequest request = new HttpRequest();
         request.setEndpoint(url);
         request.setMethod('GET');
@@ -112,7 +109,6 @@ public class HttpService {
         Remote_Connection__c rc = Remote_Connection__c.getInstance('Static_IP');
         String ip = rc.Public_IP__c;
         String url = 'http://' + ip + ':8080/service/rest/task/create/' + id;
-        System.debug('url ' + url);
         HttpRequest request = new HttpRequest();
         request.setEndpoint(url);
         request.setMethod('GET');
@@ -120,17 +116,30 @@ public class HttpService {
         Http http = new Http();
         HttpResponse response = new HttpResponse();
         response = http.send(request);
-        System.debug(response);
     }
     
-    public static void createRequestTask(String id, String description, String owner){
+    public static void UpdateTable(String id){
         Remote_Connection__c rc = Remote_Connection__c.getInstance('Static_IP');
         String ip = rc.Public_IP__c;
-        String url = 'http://' + ip + ':8080/service/rest/task/' + id + '/' + description + '/' + owner;
-        System.debug(url);
+        String url = 'http://' + ip + ':8080/service/rest/task/update/' + id;
         HttpRequest request = new HttpRequest();
         request.setEndpoint(url);
         request.setMethod('GET');
+        request.setHeader('content-type', 'application/json');
+        Http http = new Http();
+        HttpResponse response = new HttpResponse();
+        response = http.send(request);
+    }
+    
+    public static void createRequestTask(String data){
+        System.debug(data);
+        Remote_Connection__c rc = Remote_Connection__c.getInstance('Static_IP');
+        String ip = rc.Public_IP__c;
+        String url = 'http://' + ip + ':8080/service/rest/task/';
+        HttpRequest request = new HttpRequest();
+        request.setEndpoint(url);
+        request.setMethod('POST');
+        request.setBody(data);
         request.setHeader('content-type', 'application/json');
         Http http = new Http();
         HttpResponse response = new HttpResponse();
