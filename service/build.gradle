@@ -86,7 +86,8 @@ task stopTomcat(type: com.softserveinc.trainee.gradle.tasks.StopTomcat)
 task createDb(type: com.softserveinc.trainee.gradle.tasks.SqlRunner)
 task fillDb(type: com.softserveinc.trainee.gradle.tasks.TestDataRunner)
 
-
+task runUnitTest
+tasks.runUnitTest.dependsOn(test)
 
 tasks.jacocoTestReport.dependsOn(test)
 tasks.codeCoverageCheks.dependsOn(jacocoTestReport)
