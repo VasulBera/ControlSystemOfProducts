@@ -1,4 +1,79 @@
 apply plugin: 'java'
 
-dependencies {
+
+version = '1.0-SNAPSHOT'
+defaultTasks 'clean', 'test'
+
+repositories {
+    mavenCentral()
 }
+
+dependencies {
+    compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.4'
+    testCompile 'com.jayway.restassured:rest-assured:2.4.1'
+    compile 'com.tngtech.java:junit-dataprovider:1.11.0'
+    compile group: 'pl.pragmatists', name: 'JUnitParams', version: '1.0.4'
+    compile group: 'com.hynnet', name: 'sqljdbc4-chs', version: '4.0.2206.100'
+    compile group: 'com.google.code.gson', name: 'gson', version: '1.7.2'
+
+    // https://mvnrepository.com/artifact/org.seleniumhq.selenium/selenium-chrome-driver
+    compile group: 'org.seleniumhq.selenium', name: 'selenium-chrome-driver', version: '2.40.0'
+
+    // https://mvnrepository.com/artifact/org.seleniumhq.selenium/selenium-java
+    compile group: 'org.seleniumhq.selenium', name: 'selenium-java', version: '2.40.0'
+
+    // https://mvnrepository.com/artifact/org.seleniumhq.selenium/selenium-firefox-driver
+    compile group: 'org.seleniumhq.selenium', name: 'selenium-firefox-driver', version: '2.40.0'
+
+}
+
+task UIfirefox(type: Test, dependsOn: testClasses) {
+    include '**/*fireFoxDriver*'
+}
+
+task UIchrome(type: Test, dependsOn: testClasses) {
+include '**/*chromeDriver*'
+}
+
+task TestGetMethod(type: Test, dependsOn: testClasses) {
+    include '**/*TestGetMethod*'
+}
+
+configure(TestGetMethod) {
+    group = 'Integration tests'
+    description = 'Test GET method'
+}
+
+task TestURL(type: Test, dependsOn: testClasses) {
+    include '**/*TestURL*'
+}
+
+configure(TestURL) {
+    group = 'Integration tests'
+    description = 'Test URL'
+}
+
+task TestPutMethod(type: Test, dependsOn: testClasses) {
+    include '**/*TestPutMethod*'
+}
+
+configure(TestPutMethod) {
+    group = 'Integration tests'
+    description = 'Test PUT method'
+}
+
+task TestPostMethod(type: Test, dependsOn: testClasses) {
+    include '**/*TestPostMethod*'
+}
+
+configure(TestPostMethod) {
+    group = 'Integration tests'
+    description = 'Test POST method'
+}
+
+tasks.withType(Test) {
+    testLogging {
+        events 'started', 'passed', 'skipped'
+    }
+}
+
