@@ -71,6 +71,10 @@ configure(TestPostMethod) {
     description = 'Test POST method'
 }
 
+task SmokeTest(type: Test, dependsOn: testClasses) {
+    include '**/*SmokeTest*'
+}
+
 tasks.withType(Test) {
     testLogging {
         events 'started', 'passed', 'skipped'
