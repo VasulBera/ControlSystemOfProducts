@@ -26,8 +26,6 @@ public class CustomTableServiceImpl implements CustomTableService {
         GenericTableRowCallbackHandler handler = new GenericTableRowCallbackHandler(entity);
         jdbcTemplate.query("SELECT * FROM [client].[CARS]", handler);
         List<Line> list = handler.getGenericTableRows();
-
-        System.out.println(new Gson().toJson(list));
         return list;
     }
 }
