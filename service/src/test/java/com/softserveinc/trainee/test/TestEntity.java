@@ -8,7 +8,11 @@ import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
+
+import java.sql.Time;
+import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class TestEntity {
@@ -182,6 +186,193 @@ public class TestEntity {
         String actually = entity.genereateShemaWithTable();
         Assert.assertEquals(expected, actually);
     }
+
+    @Test
+    public void testAddLastModifierDateEntityNotMatch(){
+        Entity entity = new Entity();
+        entity.setId("SPORTGOODS");
+        entity.setTableName("GOODS");
+        entity.setSchemaName("client");
+        entity.setFullUploadData(true);
+
+        Entity persistedEntity = new Entity();
+        persistedEntity.setId("SPORTGOODSNOTMATCH");
+        persistedEntity.setTableName("GOODS");
+        persistedEntity.setSchemaName("client");
+        persistedEntity.setFullUploadData(true);
+
+        entity.addLastModifierDate(persistedEntity);
+        Timestamp timestamp = entity.getLastModifier();
+        Assert.assertNotNull(timestamp);
+    }
+
+    @Test
+    public void testAddLastModifierDateEntityMatch(){
+        Timestamp expected = new Timestamp(System.currentTimeMillis());
+
+        Entity entity = new Entity();
+        entity.setId("SPORTGOODS");
+        entity.setTableName("GOODS");
+        entity.setSchemaName("client");
+        entity.setFullUploadData(true);
+
+        Entity persistedEntity = new Entity();
+        persistedEntity.setId("SPORTGOODS");
+        persistedEntity.setTableName("GOODS");
+        persistedEntity.setSchemaName("client");
+        persistedEntity.setFullUploadData(true);
+        persistedEntity.setLastModifier(expected);
+
+        entity.addLastModifierDate(persistedEntity);
+        Timestamp actually = entity.getLastModifier();
+        Assert.assertEquals(expected, actually);
+    }
+
+    @Test
+    public void testGetFileName(){
+        Entity entity = new Entity();
+        entity.setTableName("product");
+        String expected = "product.csv";
+        String actually = entity.getFileName();
+        Assert.assertEquals(expected, actually);
+    }
+
+    @Test
+    public void testConatraintName(){
+        Entity entity = new Entity();
+        entity.setTableName("product");
+        entity.setSchemaName("client");
+        String expected = "client_product_Unique";
+        String actually = entity.getConstraintName();
+        Assert.assertEquals(expected, actually);
+    }
+
+    @Test
+    public void testCreateFullTableName(){
+        Entity entity = new Entity();
+        entity.setTableName("product");
+        entity.setSchemaName("client");
+        String expected = "[CustomTables].[client].[product]";
+        String actually = entity.createFullTableName();
+        Assert.assertEquals(expected, actually);
+    }
+
+    @Test
+    public void testGetUniqueFieldName(){
+        Entity entity = new Entity();
+        Field fieldName = new Field();
+        fieldName.setColumnName("name");
+        fieldName.setUnique(true);
+        Field fieldPrice = new Field();
+        fieldPrice.setColumnName("price");
+        fieldPrice.setUnique(false);
+        entity.setFieldList(new ArrayList<>(Arrays.asList(fieldName, fieldPrice)));
+        String expected = "name";
+        String actually = entity.getUniqueFieldName();
+        Assert.assertEquals(expected, actually);
+    }
+
+    @Test
+    public void testGetUniqueFieldNameNoUniqueName(){
+        Entity entity = new Entity();
+        Field fieldName = new Field();
+        fieldName.setColumnName("name");
+        fieldName.setUnique(false);
+        Field fieldPrice = new Field();
+        fieldPrice.setColumnName("price");
+        fieldPrice.setUnique(false);
+        entity.setFieldList(new ArrayList<>(Arrays.asList(fieldName, fieldPrice)));
+        String expected = null;
+        String actually = entity.getUniqueFieldName();
+        Assert.assertEquals(expected, actually);
+    }
+
+    @Test
+    public void testJoinColumnNames(){
+        Entity entity = new Entity();
+
+        Field fieldName = new Field();
+        fieldName.setColumnName("name");
+
+        Field fieldPrice = new Field();
+        fieldPrice.setColumnName("price");
+
+        entity.setFieldList(new ArrayList<>(Arrays.asList(fieldName, fieldPrice)));
+        String expected = "name, price";
+        String actually = entity.joinColumnNames();
+        Assert.assertEquals(expected, actually);
+    }
+
+    @Test
+    public void testGetTemporaryJoinColumnName(){
+        Entity entity = new Entity();
+
+        Field fieldName = new Field();
+        fieldName.setColumnName("name");
+
+        Field fieldPrice = new Field();
+        fieldPrice.setColumnName("price");
+
+        entity.setFieldList(new ArrayList<>(Arrays.asList(fieldName, fieldPrice)));
+        String expected = "temporary.name, temporary.price";
+        String actually = entity.getTemporaryJoinColumnName();
+        Assert.assertEquals(expected, actually);
+    }
+
+    @Test
+    public void testChackUniqueFieldNoChanges(){
+        Entity entity = new Entity();
+        Field fieldName = new Field();
+        fieldName.setId("nameId");
+        fieldName.setUnique(true);
+        entity.setFieldList(new ArrayList<>(Arrays.asList(fieldName)));
+
+        PreviousStateEntity previousStateEntity = new PreviousStateEntity();
+        PreviousStateField previousStateField = new PreviousStateField();
+        previousStateField.setId("nameId");
+        previousStateField.setUnique(true);
+        previousStateEntity.setFieldList(new ArrayList<>(Arrays.asList(previousStateField)));
+
+        boolean expected = false;
+        boolean actually = entity.changeUniqueField(previousStateEntity);
+        Assert.assertEquals(expected, actually);
+
+    }
+
+    @Test
+    public void testChackUniqueFieldWithChanges(){
+        Entity entity = new Entity();
+        Field fieldName = new Field();
+        fieldName.setId("nameId");
+        fieldName.setUnique(false);
+        entity.setFieldList(new ArrayList<>(Arrays.asList(fieldName)));
+
+        PreviousStateEntity previousStateEntity = new PreviousStateEntity();
+        PreviousStateField previousStateField = new PreviousStateField();
+        previousStateField.setId("nameId");
+        previousStateField.setUnique(true);
+        previousStateEntity.setFieldList(new ArrayList<>(Arrays.asList(previousStateField)));
+
+        boolean expected = true;
+        boolean actually = entity.changeUniqueField(previousStateEntity);
+        Assert.assertEquals(expected, actually);
+    }
+
+    @Test
+    public void testGetTmpEntity(){
+        Entity entity = new Entity();
+        entity.setTableName("product");
+        entity.setSchemaName("client");
+
+        Entity expected = new Entity();
+        expected.setTableName("product_temporary");
+        expected.setSchemaName("client");
+
+        Entity actually = entity.getTmpEntity();
+        Assert.assertEquals(expected, actually);
+    }
+
+
     @AfterClass
     public static void deleteField(){
         entity = null;

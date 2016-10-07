@@ -322,6 +322,10 @@
                     <apex:column headerValue="Length">
                         <apex:inputField value="{!item.Length__c}" id="field-length"/>
                     </apex:column>
+                    
+                    <apex:column headerValue="Unique">
+                        <apex:inputField value="{!item.isUnique__c}" id="field-unique"/>
+                    </apex:column>
                      
                      <apex:column headerValue="PK">
                          <apex:outputField value="{!entity.Name__c}"/>

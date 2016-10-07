@@ -1,0 +1,33 @@
+<apex:page sidebar="false" controller="requestStatusController">
+
+    <style>
+        .main{min-width: 1850px; height: 100px; background: rgba(110, 232, 103, 0.41); border-radius: 20px; border: 1px solid #1db52e; }
+        .block{display: flex; margin-left: 35%; margin-top: 1.5%;}
+        .title{font-size: 30px;}
+        .text{margin-top: 3px; margin-left: 20px; font-size: 25px;}
+        .return{}
+    </style>
+    <script>
+        setInterval(
+            function(){
+                           var countdownElement = document.getElementById('counter');
+                           countdownElement.innerHTML = countdownElement.innerHTML-1;
+                           if(countdownElement.innerHTML == 0){
+                               RequestRedirect();
+                           }
+                      },
+           1000);
+    </script>
+  <div class="main">
+      <div class="block">
+          <h1 class="title">SUCCESS:</h1>
+          <div class="text">Operation is completed successfully.</div>
+      </div>
+      <div style="display: flex; margin-top: 10px; font-size: 18px; margin-left: 45%;">
+          Return to home
+          <apex:form ><apex:CommandLink action="{!RequestJobRedirect}" style="margin-left:10px; font-weight: bold; color: #006699">page</apex:CommandLink></apex:form>
+          <div style="margin-left:10px; display: flex;">(<div id="counter">10</div>)</div>
+      </div>
+      <apex:form ><apex:actionFunction action="{!RequestJobRedirect}" name="RequestRedirect" reRender="fake"/></apex:form>
+  </div>  
+</apex:page>

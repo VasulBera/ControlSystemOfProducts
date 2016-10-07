@@ -1,13 +1,15 @@
 package com.softserveinc.trainee.entity.administration;
 
-import com.softserveinc.trainee.entity.TimeStamp;
+import com.softserveinc.trainee.entity.EntityTimeStamp;
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
 @javax.persistence.Entity
 @Table(name = "request_job")
-public class RequestJob extends TimeStamp{
+public class RequestJob extends EntityTimeStamp {
 
     @Id
     @Column(name = "id")
@@ -65,5 +67,34 @@ public class RequestJob extends TimeStamp{
 
     public void setStatus(RequestJobStatus status) {
         this.status = status;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        RequestJob that = (RequestJob) o;
+
+        return new EqualsBuilder().append(this.getId(), that.getId())
+                .append(getAim(), that.getAim())
+                .append(getDescription(), that.getDescription())
+                .append(getOwner(), that.getOwner())
+                .append(getStatus(), that.getStatus())
+                .append(getCreatedDate(), that.getCreatedDate())
+                .append(getLastModifier(), that.getLastModifier())
+                .build();
+    }
+
+    @Override
+    public int hashCode() {
+        return new HashCodeBuilder()
+                .append(getId())
+                .append(getStatus())
+                .append(getAim())
+                .append(getDescription())
+                .append(getOwner())
+                .append(getCreatedDate())
+                .append(getLastModifier()).build();
     }
 }

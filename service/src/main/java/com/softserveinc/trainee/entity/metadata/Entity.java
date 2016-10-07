@@ -1,6 +1,6 @@
 package com.softserveinc.trainee.entity.metadata;
 
-import com.softserveinc.trainee.entity.TimeStamp;
+import com.softserveinc.trainee.entity.EntityTimeStamp;
 import com.softserveinc.trainee.entity.administration.PreviousStateEntity;
 import com.softserveinc.trainee.entity.administration.PreviousStateField;
 import org.apache.commons.lang3.builder.EqualsBuilder;
@@ -12,16 +12,18 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
 @javax.persistence.Entity
 @Table(name = "entities")
-@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY, getterVisibility = JsonAutoDetect.Visibility.NONE, setterVisibility = JsonAutoDetect.Visibility.NONE)
-public class Entity extends TimeStamp implements Serializable{
+public class Entity extends EntityTimeStamp implements Serializable{
 
     private static final String VALIDATE_REGEX = "[a-zA-Z0-9\\_]+";
+    private static final String FILE_EXTENSION = ".csv";
+    private static final String DEFAULT_CUSTOM_DB_NAME = "CustomTables";
 
     @Id @Column(name = "id")
     @NotNull @Size(min = 2 , max = 256)
@@ -49,6 +51,19 @@ public class Entity extends TimeStamp implements Serializable{
 
     @Column(name = "full_upload_data")
     private boolean fullUploadData = false;
+
+    public Entity(){}
+
+    public Entity getTmpEntity(){
+        Entity tmpEntity = new Entity();
+        tmpEntity.id = getId();
+        tmpEntity.schemaName = getSchemaName();
+        tmpEntity.tableName = getTableName() + "_temporary";
+        tmpEntity.fullUploadData = isFullUploadData();
+        tmpEntity.name = getName();
+        tmpEntity.fieldList = getFieldList();
+        return tmpEntity;
+    }
 
     public String getName() {
         return name;
@@ -113,8 +128,8 @@ public class Entity extends TimeStamp implements Serializable{
         return new EqualsBuilder().append(getId(), other.getId())
                     .append(getSchemaName(), other.getSchemaName())
                     .append(getTableName(), other.getTableName())
-                    .append(getFieldList(), other.getFieldList())
                     .append(getName(), other.getName())
+                    .append(isFullUploadData(), other.isFullUploadData())
                     .isEquals();
     }
 
@@ -123,11 +138,9 @@ public class Entity extends TimeStamp implements Serializable{
         return new HashCodeBuilder().append(getId())
                                     .append(getSchemaName())
                                     .append(getTableName())
-                                    .append(getFieldList())
                                     .append(getName())
                                     .toHashCode();
     }
-
 
     public PreviousStateEntity createPreviousStateEntity(){
         PreviousStateEntity previousStateEntity = new PreviousStateEntity();
@@ -135,7 +148,6 @@ public class Entity extends TimeStamp implements Serializable{
         previousStateEntity.setSchemaName(this.getSchemaName());
         previousStateEntity.setName(this.getName());
         previousStateEntity.setTableName(this.getTableName());
-        //previousStateEntity.setCreatedDate(this.getCreatedDate());
         if(this.getFieldList() != null){
             List<PreviousStateField> list = new ArrayList();
             for(Field field: this.getFieldList()){
@@ -148,6 +160,72 @@ public class Entity extends TimeStamp implements Serializable{
 
     public String genereateShemaWithTable(){
         return getSchemaName() + "." + getTableName();
+    }
+
+    public void addLastModifierDate(Entity persistedEntity){
+        long timeInMillis = System.currentTimeMillis();
+        long timeInNanos = System.nanoTime();
+        Timestamp timestamp = new Timestamp(timeInMillis);
+        timestamp.setNanos((int) (timeInNanos % 1000000000));
+        if(!this.equals(persistedEntity)){
+            this.setLastModifier(timestamp);
+        }else{
+            this.setLastModifier(persistedEntity.getLastModifier());
+        }
+    }
+
+    public String getFileName(){
+        return this.getTableName() + FILE_EXTENSION;
+    }
+
+    public String getConstraintName(){
+        return getSchemaName() + "_" + getTableName()+ "_Unique";
+    }
+
+    public String createFullTableName(){
+        return "[" + DEFAULT_CUSTOM_DB_NAME +"].[" + getSchemaName() + "].[" + getTableName() + "]";
+    }
+
+    public String getUniqueFieldName(){
+        String uniqueColumnName = null;
+        for(Field field: getFieldList()){
+            if(field.isUnique()){
+               uniqueColumnName = field.getColumnName();
+                break;
+            }
+        }
+        return uniqueColumnName;
+    }
+
+    public String joinColumnNames(){
+        StringBuilder columnNames = new StringBuilder();
+        String prefix = "";
+        for(Field field: getFieldList()){
+            columnNames.append(prefix + field.getColumnName());
+            prefix = ", ";
+        }
+        return columnNames.toString();
+    }
+
+    public String getTemporaryJoinColumnName(){
+        StringBuilder columnNames = new StringBuilder();
+        String prefix = "";
+        for(Field field: getFieldList()){
+            columnNames.append(prefix + "temporary." + field.getColumnName());
+            prefix = ", ";
+        }
+        return columnNames.toString();
+    }
+
+    public boolean changeUniqueField(PreviousStateEntity previousStateEntity){
+        for(Field field: getFieldList()){
+            for(Field previousField: previousStateEntity.getFields()){
+                if(field.getId().equals(previousField.getId()) && field.isUnique() && previousField.isUnique()){
+                    return false;
+                }
+            }
+        }
+        return true;
     }
 }
 

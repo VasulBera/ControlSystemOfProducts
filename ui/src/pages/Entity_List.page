@@ -350,6 +350,7 @@
                 </apex:column>
                 <apex:column headerValue="Schema name" id="entity-schema-name">{!entity.schemaName}</apex:column>
                 <apex:column headerValue="Table name">{!entity.tableName}</apex:column>
+                <apex:column headerValue="Full load data">{!entity.fullUploadData}</apex:column>
             </apex:pageBlockTable>
             </apex:pageBlock>
         </apex:form>

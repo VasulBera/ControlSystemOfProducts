@@ -9,19 +9,30 @@
     <context:component-scan base-package="com.softserveinc.trainee.*" />
     <tx:annotation-driven transaction-manager="transactionManager"/>
 
-
     <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
         <property name="locations">
             <list>
                 <value>classpath:database.properties</value>
+                <value>classpath:s3.properties</value>
             </list>
         </property>
     </bean>
 
-    <bean id="Apply_metadata" class="com.softserveinc.trainee.executer.executerImpl.TableGenerator"/>
-    <bean id="Upload_data" class="com.softserveinc.trainee.executer.executerImpl.CsvLoader"/>
 
-    <bean id="applicationContextProvder" class="com.softserveinc.trainee.applicationUtil.ApplicationContextProvider"/>
+
+    <bean id="salesforceConfig" class="org.springframework.beans.factory.config.PropertiesFactoryBean">
+        <property name="singleton" value="true" />
+        <property name="locations">
+            <list>
+                <value>classpath:salesforce.properties</value>
+            </list>
+        </property>
+    </bean>
+
+    <bean id="Apply_metadata" class="com.softserveinc.trainee.executer.Impl.TableGeneratorExecutor"/>
+    <bean id="Upload_data" class="com.softserveinc.trainee.executer.Impl.DataLoaderExecutor"/>
+
+    <bean id="applicationContextProvder" class="com.softserveinc.trainee.applicationConfig.ApplicationContextProvider"/>
 
     <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
         <property name="driverClassName" value="${javax.persistence.jdbc.driver}" />
@@ -41,7 +52,7 @@
         <property name="jpaVendorAdapter">
             <bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
                 <property name="generateDdl" value="true" />
-                <property name="showSql" value="false" />
+                <property name="showSql" value="true" />
             </bean>
         </property>
     </bean>
@@ -71,7 +82,7 @@
         <property name="jpaVendorAdapter">
             <bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
                 <property name="generateDdl" value="true" />
-                <property name="showSql" value="false" />
+                <property name="showSql" value="true" />
             </bean>
         </property>
     </bean>
@@ -82,7 +93,7 @@
         <property name="dataSource" ref="dataSourceAdministration" />
     </bean>
 
-                                <!-- JDBC TEmplate beans -->
+                                <!-- JDBC Template beans -->
 
     <bean id="dataSourceJdbcTemplate" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
         <property name="driverClassName" value="${administration.javax.persistence.jdbc.driver}" />

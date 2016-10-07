@@ -1,75 +1,67 @@
 package com.softserveinc.trainee.test;
 
 
-import com.softserveinc.trainee.entity.TimeStamp;
-import com.softserveinc.trainee.entity.metadata.Entity;
+import com.softserveinc.trainee.entity.EntityTimeStamp;
 import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import java.sql.Timestamp;
 import java.util.Date;
 
 public class TestTimeStamp {
 
-    private static TimeStamp timeStamp;
+    private static EntityTimeStamp entityTimeStamp;
 
     @BeforeClass
     public static void initializeTimeStamp(){
-        timeStamp = new TimeStamp();
+        entityTimeStamp = new EntityTimeStamp();
     }
 
     @Test
-    public void testGetCreate_time(){
-        timeStamp.setCreatedDate(new Date(131313));
-        Date expected = new Date(131313);
-        Date actualy = timeStamp.getCreatedDate();
-        Assert.assertEquals(actualy, expected);
+    public void testGetCreatedDate(){
+        Timestamp expected = new Timestamp(System.currentTimeMillis());
+        entityTimeStamp.setCreatedDate(expected);
+        Timestamp actually = entityTimeStamp.getCreatedDate();
+        Assert.assertEquals(expected, actually);
     }
 
     @Test
-    public void testSetCreate_time(){
-        Date expected = new Date(131314);
-        timeStamp.setCreatedDate(expected);
-        Date actualy = timeStamp.getCreatedDate();
-        Assert.assertEquals(actualy, expected);
+    public void testGetLastModifier(){
+        Timestamp expected = new Timestamp(System.currentTimeMillis());
+        entityTimeStamp.setLastModifier(expected);
+        Timestamp actually = entityTimeStamp.getLastModifier();
+        Assert.assertEquals(expected, actually);
     }
 
     @Test
-    public void testGetUpdate_time(){
-        timeStamp.setLastModifier(new Date(262626));
-        Date expected = new Date(262626);
-        Date actualy = timeStamp.getLastModifier();
-        Assert.assertEquals(actualy, expected);
-    }
-
-    @Test
-    public void testSetUpdate_time(){
-        Date expected = new Date(262627);
-        timeStamp.setLastModifier(expected);
-        Date actualy = timeStamp.getLastModifier();
-        Assert.assertEquals(actualy, expected);
+    public void testSetCreatedDate(){
+        Timestamp expected = new Timestamp(System.currentTimeMillis());
+        entityTimeStamp.setCreatedDate(expected);
+        Timestamp actually = entityTimeStamp.getCreatedDate();
+        Assert.assertEquals(expected, actually);
     }
 
     @Test
     public void testSetLastModifier(){
-        TimeStamp timeStamp = new TimeStamp();
-        timeStamp.onCreate();
-        Date date = timeStamp.getCreatedDate();
-        Assert.assertNotNull(date);
+        Timestamp expected = new Timestamp(System.currentTimeMillis());
+        entityTimeStamp.setLastModifier(expected);
+        Timestamp actually = entityTimeStamp.getLastModifier();
+        Assert.assertEquals(expected, actually);
     }
 
     @Test
-    public void testSetLastModifierOnChange(){
-        TimeStamp timeStamp = new TimeStamp();
-        timeStamp.setLastModifierOnChange();
-        Date date = timeStamp.getLastModifier();
-        Assert.assertNotNull(date);
+    public void testOnCreate(){
+        EntityTimeStamp entityTimeStamp = new EntityTimeStamp();
+        entityTimeStamp.onCreate();
+        Timestamp timestamp = entityTimeStamp.getCreatedDate();
+        Assert.assertNotNull(timestamp);
     }
 
     @AfterClass
     public static void deleteTimeStamp(){
-        timeStamp = null;
+        entityTimeStamp = null;
     }
 
 

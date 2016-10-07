@@ -20,5 +20,8 @@ public interface EntityDao {
     public void deleteEntity(String id);
 
     @Transactional("transactionManager")
-    public List<Entity> getAllEntity();
+    public List<Entity> getAllEntities();
+
+    @Transactional("transactionManager")
+    public List<Entity> getEntitiesWithShemaNameClient();
 }

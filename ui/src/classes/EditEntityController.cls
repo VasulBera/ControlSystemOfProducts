@@ -29,8 +29,7 @@ public class EditEntityController {
     }
     
     public void save(){
-        System.debug(fileLoadType);
-        
+     
         try{
             customEntity.name = entity.Name__c;
             customEntity.schemaName = entity.Schema_Name__c;

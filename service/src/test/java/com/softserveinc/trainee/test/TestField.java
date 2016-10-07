@@ -8,6 +8,8 @@ import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import java.sql.Timestamp;
+
 public class TestField {
 
     private static Field field;
@@ -154,6 +156,51 @@ public class TestField {
         System.out.println(field);
         String expected = "Field{id='colorname', name='color', ColumnName='COLOR', type=NVARCHAR, length=45}";
         String actually = field.toString();
+        Assert.assertEquals(expected, actually);
+    }
+
+    @Test
+    public void testAddLastModifierDateNotMatch(){
+        Field field = new Field();
+        field.setId("CUSTOMERID");
+        field.setName("Price");
+        field.setColumnName("PRICE");
+        field.setType(FieldType.NVARCHAR);
+        field.setLength(45);
+
+        Field persistedField = new Field();
+        persistedField.setId("CUSTOMERIDNOTMATCH");
+        persistedField.setName("Price");
+        persistedField.setColumnName("PRICE");
+        persistedField.setType(FieldType.NVARCHAR);
+        persistedField.setLength(45);
+        field.addLastModifierDate(persistedField);
+        Timestamp timestamp = field.getLastModifier();
+        Assert.assertNotNull(timestamp);
+    }
+
+    @Test
+    public void testAddLastModifierDate(){
+        Timestamp expected = new Timestamp(System.currentTimeMillis());
+
+        Field field = new Field();
+        field.setId("CUSTOMERID");
+        field.setName("Price");
+        field.setColumnName("PRICE");
+        field.setType(FieldType.NVARCHAR);
+        field.setLength(45);
+
+        Field persistedField = new Field();
+        persistedField.setId("CUSTOMERID");
+        persistedField.setName("Price");
+        persistedField.setColumnName("PRICE");
+        persistedField.setType(FieldType.NVARCHAR);
+        persistedField.setLength(45);
+        persistedField.setLastModifier(expected);
+
+        field.addLastModifierDate(persistedField);
+
+        Timestamp actually = field.getLastModifier();
         Assert.assertEquals(expected, actually);
     }
 

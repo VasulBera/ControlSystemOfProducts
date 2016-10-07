@@ -10,7 +10,6 @@ import javax.ws.rs.container.Suspended;
 @Path("/task")
 @Consumes("application/json")
 @Produces("application/json")
-//@Transactional("transactionManagerAdministration")
 public interface JobService {
 
     @POST

@@ -1,22 +1,24 @@
 package com.softserveinc.trainee.entity.administration;
 
-import com.softserveinc.trainee.entity.TimeStamp;
+import com.softserveinc.trainee.entity.EntityTimeStamp;
+import com.softserveinc.trainee.entity.metadata.Field;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.codehaus.jackson.annotate.JsonAutoDetect;
 
 import javax.persistence.*;
-import javax.persistence.criteria.CriteriaBuilder;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
+import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.List;
 
 @javax.persistence.Entity
 @Table(name = "previous_state_entities")
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY, getterVisibility = JsonAutoDetect.Visibility.NONE, setterVisibility = JsonAutoDetect.Visibility.NONE)
-public class PreviousStateEntity extends TimeStamp implements Serializable {
+public class PreviousStateEntity extends EntityTimeStamp implements Serializable {
 
     private static final String VALIDATE_REGEX = "[a-zA-Z0-9\\_]+";
 
@@ -114,7 +116,6 @@ public class PreviousStateEntity extends TimeStamp implements Serializable {
         return new EqualsBuilder().append(getId(), other.getId())
                 .append(getSchemaName(), other.getSchemaName())
                 .append(getTableName(), other.getTableName())
-                .append(getFieldList(), other.getFieldList())
                 .append(getName(), other.getName())
                 .isEquals();
     }
@@ -124,7 +125,6 @@ public class PreviousStateEntity extends TimeStamp implements Serializable {
         return new HashCodeBuilder().append(getId())
                 .append(getSchemaName())
                 .append(getTableName())
-                .append(getFieldList())
                 .append(getName())
                 .toHashCode();
     }
@@ -138,5 +138,32 @@ public class PreviousStateEntity extends TimeStamp implements Serializable {
                 ", tableName='" + tableName + '\'' +
                 ", fieldList=" + fieldList +
                 '}';
+    }
+
+    public void addLastModifierDate(PreviousStateEntity persistedPreviousStateEntity){
+        long timeInMillis = System.currentTimeMillis();
+        long timeInNanos = System.nanoTime();
+        Timestamp timestamp = new Timestamp(timeInMillis);
+        timestamp.setNanos((int) (timeInNanos % 1000000000));
+        if(!this.equals(persistedPreviousStateEntity)){
+            this.setLastModifier(timestamp);
+        }else{
+            this.setLastModifier(persistedPreviousStateEntity.getLastModifier());
+        }
+    }
+
+    public List<Field> getFields(){
+        List<Field> list = new ArrayList();
+        for(PreviousStateField pSfield: this.getFieldList()){
+            Field field = new Field();
+            field.setId(pSfield.getId());
+            field.setColumnName(pSfield.getColumnName());
+            field.setLength(pSfield.getLength());
+            field.setName(pSfield.getName());
+            field.setType(pSfield.getType());
+            field.setUnique(pSfield.isUnique());
+            list.add(field);
+        }
+        return list;
     }
 }

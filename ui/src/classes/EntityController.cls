@@ -98,27 +98,29 @@ global with sharing class EntityController {
     
     public PageReference chackTakenRequest(){
         if(Taken_request__c.getOrgDefaults().request__c){
-            PageReference redirect = new PageReference('/apex/Entity_List');
-            redirect.setRedirect(true);
             Taken_request__c tr = Taken_request__c.getOrgDefaults();
             tr.request__c = false;
-            update tr; 
+            update tr;
+            PageReference redirect;
+            if(tr.status__c == 'DONE'){
+                redirect = new PageReference('/apex/SuccessfullPage');
+            }else{
+                redirect = new PageReference('/apex/ErrorPage');
+            }
+            redirect.setRedirect(true);
             return redirect;
         }
         return null;
     }
     
-    public static PageReference changeTakenRequest(){
-        PageReference redirect = new PageReference('http://www.google.com');
-        redirect.setRedirect(true);
-        return redirect;
-    }
-    
     @HttpGet
     global static void setRequestJodDone(){
+        Map<String, String> params = RestContext.request.headers;
+        String name = params.get('execution-status');
         Taken_request__c tr = Taken_request__c.getOrgDefaults();
         tr.request__c = true;
-        update tr; 
+                tr.status__c = name;
+        update tr;
     }
     
     public static PageReference RequestJobRedirect(){

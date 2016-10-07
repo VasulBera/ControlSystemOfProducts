@@ -1,6 +1,6 @@
 package com.softserveinc.trainee.entity.metadata;
 
-import com.softserveinc.trainee.entity.TimeStamp;
+import com.softserveinc.trainee.entity.EntityTimeStamp;
 import com.softserveinc.trainee.entity.administration.PreviousStateField;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
@@ -12,11 +12,12 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
+import java.sql.Timestamp;
 
 @javax.persistence.Entity
 @Table(name = "fields")
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY, getterVisibility = JsonAutoDetect.Visibility.NONE, setterVisibility = JsonAutoDetect.Visibility.NONE)
-public class Field extends TimeStamp implements Serializable{
+public class Field extends EntityTimeStamp implements Serializable{
 
     private static final String VALIDATE_REGEX = "[a-zA-Z0-9\\_]+";
 
@@ -41,6 +42,9 @@ public class Field extends TimeStamp implements Serializable{
 
     @Column(name = "length") @Min(0)
     private Integer length;
+
+    @Column(name = "is_unique")
+    private boolean unique = false;
 
     public String getId() {
         return id;
@@ -80,6 +84,14 @@ public class Field extends TimeStamp implements Serializable{
 
     public void setColumnName(String columnName) {
         ColumnName = columnName;
+    }
+
+    public boolean isUnique() {
+        return unique;
+    }
+
+    public void setUnique(boolean unique) {
+        this.unique = unique;
     }
 
     @Override
@@ -126,11 +138,12 @@ public class Field extends TimeStamp implements Serializable{
 
     public PreviousStateField createPreviousStateField(){
         PreviousStateField previousStateField = new PreviousStateField();
-        previousStateField.setId(this.getId());
-        previousStateField.setName(this.getName());
-        previousStateField.setColumnName(this.getColumnName());
-        previousStateField.setType(this.getType());
-        previousStateField.setLength(this.getLength());
+        previousStateField.setId(getId());
+        previousStateField.setName(getName());
+        previousStateField.setColumnName(getColumnName());
+        previousStateField.setType(getType());
+        previousStateField.setLength(getLength());
+        previousStateField.setUnique(isUnique());
         return previousStateField;
     }
 
@@ -139,6 +152,18 @@ public class Field extends TimeStamp implements Serializable{
             return getColumnName() + " " + getType() + "(" + getLength() + ")";
         } else {
             return getColumnName() + " " + getType();
+        }
+    }
+
+    public void addLastModifierDate(Field persistedField){
+        long timeInMillis = System.currentTimeMillis();
+        long timeInNanos = System.nanoTime();
+        Timestamp timestamp = new Timestamp(timeInMillis);
+        timestamp.setNanos((int) (timeInNanos % 1000000000));
+        if(!this.equals(persistedField)){
+            this.setLastModifier(timestamp);
+        }else{
+            this.setLastModifier(persistedField.getLastModifier());
         }
     }
 }

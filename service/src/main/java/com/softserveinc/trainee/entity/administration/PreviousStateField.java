@@ -1,24 +1,23 @@
 package com.softserveinc.trainee.entity.administration;
 
 
-import com.softserveinc.trainee.entity.TimeStamp;
+import com.softserveinc.trainee.entity.EntityTimeStamp;
 import com.softserveinc.trainee.entity.metadata.FieldType;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.codehaus.jackson.annotate.JsonAutoDetect;
-
 import javax.persistence.*;
-import javax.persistence.criteria.CriteriaBuilder;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
+import java.sql.Timestamp;
 
 @javax.persistence.Entity
 @Table(name = "previous_state_fields")
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY, getterVisibility = JsonAutoDetect.Visibility.NONE, setterVisibility = JsonAutoDetect.Visibility.NONE)
-public class PreviousStateField extends TimeStamp implements Serializable {
+public class PreviousStateField extends EntityTimeStamp implements Serializable {
 
     private static final String VALIDATE_REGEX = "[a-zA-Z0-9\\_]+";
 
@@ -45,6 +44,9 @@ public class PreviousStateField extends TimeStamp implements Serializable {
 
     @Column(name = "length") @Min(0)
     private Integer length;
+
+    @Column(name = "is_unique")
+    private boolean unique = false;
 
     public String getId() {
         return id;
@@ -86,6 +88,14 @@ public class PreviousStateField extends TimeStamp implements Serializable {
         ColumnName = columnName;
     }
 
+    public boolean isUnique() {
+        return unique;
+    }
+
+    public void setUnique(boolean unique) {
+        this.unique = unique;
+    }
+
     @Override
     public boolean equals(Object obj) {
         if (this == obj) {
@@ -104,6 +114,7 @@ public class PreviousStateField extends TimeStamp implements Serializable {
                 .append(getName(), other.getName())
                 .append(getType(), other.getType())
                 .append(getColumnName(), other.getColumnName())
+                .append(isUnique(), other.isUnique())
                 .isEquals();
     }
 
@@ -114,6 +125,7 @@ public class PreviousStateField extends TimeStamp implements Serializable {
                 .append(getName())
                 .append(getType())
                 .append(getColumnName())
+                .append(isUnique())
                 .toHashCode();
     }
 
@@ -127,5 +139,18 @@ public class PreviousStateField extends TimeStamp implements Serializable {
                 ", length=" + length +
                 '}';
     }
+
+    public void addLastModifierDate(PreviousStateField persistedPreviousStateField){
+        long timeInMillis = System.currentTimeMillis();
+        long timeInNanos = System.nanoTime();
+        Timestamp timestamp = new Timestamp(timeInMillis);
+        timestamp.setNanos((int) (timeInNanos % 1000000000));
+        if(!this.equals(persistedPreviousStateField)){
+            this.setLastModifier(timestamp);
+        }else{
+            this.setLastModifier(persistedPreviousStateField.getLastModifier());
+        }
+    }
+
 }
 

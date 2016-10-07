@@ -8,6 +8,8 @@ import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import java.sql.Timestamp;
+
 public class TestPreviousStateField {
 
     private static PreviousStateField previousStateField = new PreviousStateField();
@@ -48,6 +50,22 @@ public class TestPreviousStateField {
         boolean expected = false;
         boolean actually = previousStateField.equals(new String());
         Assert.assertEquals(expected, actually);
+    }
+
+    @Test
+    public void testAddLastModifierDate(){
+        Timestamp expected = new Timestamp(10_000_000);
+        PreviousStateField field = new PreviousStateField();
+        field.setId("fieldId");
+
+        PreviousStateField previousStateField = new PreviousStateField();
+        previousStateField.setId("fieldId");
+        previousStateField.setLastModifier(expected);
+
+        field.addLastModifierDate(previousStateField);
+        Timestamp actually = field.getLastModifier();
+        Assert.assertEquals(expected, actually);
+
     }
 
     @AfterClass

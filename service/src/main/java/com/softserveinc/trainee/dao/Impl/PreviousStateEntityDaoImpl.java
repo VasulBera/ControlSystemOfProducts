@@ -7,8 +7,6 @@ import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.ws.rs.ClientErrorException;
-import javax.ws.rs.core.Response;
 
 @Repository("previousStateEntityDao")
 public class PreviousStateEntityDaoImpl implements PreviousStateEntityDao{
@@ -25,26 +23,29 @@ public class PreviousStateEntityDaoImpl implements PreviousStateEntityDao{
     public boolean addPreviousStateEntity(PreviousStateEntity previousStateEntity) {
         PreviousStateEntity previousStateEntityDb = entityManager.find(PreviousStateEntity.class, previousStateEntity.getId());
         if(previousStateEntityDb != null){
-            return false;
+            return true;
         }
         entityManager.persist(previousStateEntity);
-        return true;
+        return false;
     }
 
     @Override
     public PreviousStateEntity updatePreviousStateEntity(PreviousStateEntity previousStateEntity) {
         PreviousStateEntity previousStateEntityPersist = entityManager.find(PreviousStateEntity.class, previousStateEntity.getId());
         if(previousStateEntityPersist != null){
-            for(PreviousStateField previousStateFieldPesisted: previousStateEntityPersist.getFieldList()){
-                for(PreviousStateField previousStateField: previousStateEntity.getFieldList()){
-                    if(previousStateFieldPesisted.getId().equals(previousStateField.getId())){
+            previousStateEntity.setCreatedDate(previousStateEntityPersist.getCreatedDate());
+            previousStateEntity.addLastModifierDate(previousStateEntityPersist);
+            fieldLable: for(PreviousStateField previousStateFieldPesisted: previousStateEntityPersist.getFieldList()) {
+                for (PreviousStateField previousStateField : previousStateEntity.getFieldList()) {
+                    if (previousStateFieldPesisted.getId().equals(previousStateField.getId())) {
                         previousStateField.setCreatedDate(previousStateFieldPesisted.getCreatedDate());
+                        previousStateField.addLastModifierDate(previousStateFieldPesisted);
+                        continue fieldLable;
                     }
                 }
+                entityManager.remove(previousStateFieldPesisted);
             }
-            previousStateEntity.setCreatedDate(previousStateEntityPersist.getCreatedDate());
-            return entityManager.merge(previousStateEntity);
         }
-        throw new ClientErrorException(Response.Status.NOT_FOUND);
+        return entityManager.merge(previousStateEntity);
     }
 }
