@@ -12,7 +12,7 @@ public class GenericTableRowCallbackHandler implements RowCallbackHandler {
 
     private Entity entity;
 
-    private List<Line> genericTableRows;
+    private List<GenericTableRow> genericTableRows;
 
     private GenericTableRowGenerator rowGenerator;
 
@@ -31,7 +31,7 @@ public class GenericTableRowCallbackHandler implements RowCallbackHandler {
         }
     }
 
-    public List<Line> getGenericTableRows(){
+    public List<GenericTableRow> getGenericTableRows(){
         return genericTableRows;
     }
 }

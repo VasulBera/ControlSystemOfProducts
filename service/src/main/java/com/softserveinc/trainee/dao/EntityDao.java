@@ -24,4 +24,5 @@ public interface EntityDao {
 
     @Transactional("transactionManager")
     public List<Entity> getEntitiesWithShemaNameClient();
+
 }

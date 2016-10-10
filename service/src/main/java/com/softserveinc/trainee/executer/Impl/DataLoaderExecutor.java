@@ -40,7 +40,7 @@ public class DataLoaderExecutor implements JobExecutor {
             }
             requestJob.setStatus(RequestJobStatus.DONE);
         }catch (IOException e) {
-            LOGGER.warn("Method: execute(RequestJob requestJob); Couldn't  load data");
+            LOGGER.warn("Method: execute(RequestJob requestJob); Couldn't  load data \n " + e.toString());
             requestJob.setStatus(RequestJobStatus.ERROR);
         }finally {
             requestTaskDao.updateRequestTask(requestJob);

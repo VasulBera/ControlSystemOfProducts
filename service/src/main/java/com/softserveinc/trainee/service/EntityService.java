@@ -1,10 +1,8 @@
 package com.softserveinc.trainee.service;
 
-import com.softserveinc.trainee.customObject.GenericTableRow;
 import com.softserveinc.trainee.entity.metadata.Entity;
 import org.apache.cxf.jaxrs.ext.PATCH;
 import org.springframework.stereotype.Service;
-
 import javax.ws.rs.*;
 import java.util.List;
 
@@ -34,5 +32,9 @@ public interface EntityService {
     @DELETE
     @Path("/{id : .+}")
     public void deleteEntity(@PathParam("id") String id);
+
+    @GET
+    @Path("/all-client")
+    public List<Entity> getEntityWithSchemaNameClient();
 
 }

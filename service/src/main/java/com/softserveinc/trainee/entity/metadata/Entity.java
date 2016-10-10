@@ -24,6 +24,7 @@ public class Entity extends EntityTimeStamp implements Serializable{
     private static final String VALIDATE_REGEX = "[a-zA-Z0-9\\_]+";
     private static final String FILE_EXTENSION = ".csv";
     private static final String DEFAULT_CUSTOM_DB_NAME = "CustomTables";
+    private static final String TEMPORARY_SUFIX = "_temporary";
 
     @Id @Column(name = "id")
     @NotNull @Size(min = 2 , max = 256)
@@ -58,7 +59,7 @@ public class Entity extends EntityTimeStamp implements Serializable{
         Entity tmpEntity = new Entity();
         tmpEntity.id = getId();
         tmpEntity.schemaName = getSchemaName();
-        tmpEntity.tableName = getTableName() + "_temporary";
+        tmpEntity.tableName = getTableName() + TEMPORARY_SUFIX;
         tmpEntity.fullUploadData = isFullUploadData();
         tmpEntity.name = getName();
         tmpEntity.fieldList = getFieldList();
@@ -175,7 +176,13 @@ public class Entity extends EntityTimeStamp implements Serializable{
     }
 
     public String getFileName(){
-        return this.getTableName() + FILE_EXTENSION;
+        String name = "";
+        if(getTableName().contains(TEMPORARY_SUFIX)){
+            name = getTableName().substring(0, getTableName().length() - TEMPORARY_SUFIX.length());
+        }else{
+            name = getTableName();
+        }
+        return name + FILE_EXTENSION;
     }
 
     public String getConstraintName(){

@@ -1,7 +1,6 @@
 package com.softserveinc.trainee.service.Impl;
 
 import com.softserveinc.trainee.applicationConfig.FieldComparator;
-import com.softserveinc.trainee.customObject.GenericTableRow;
 import com.softserveinc.trainee.dao.EntityDao;
 import com.softserveinc.trainee.entity.metadata.*;
 import com.softserveinc.trainee.service.EntityService;
@@ -24,14 +23,17 @@ public class EntityServiceImpl implements EntityService {
 
     private static final String REPLACE_REGEX = "[^a-zA-Z0-9\\_]";
 
+    @Override
     public Entity getEntity(String id) {
         return entityDao.getEntity(id);
     }
 
+    @Override
     public List<Entity> getAllEntities(){
         return entityDao.getAllEntities();
     }
 
+    @Override
     public Entity addEntity(Entity entity) {
         if(entity.getId() == null) {
             entity.setId((entity.getSchemaName() + entity.getTableName()).replaceAll(REPLACE_REGEX, "").toUpperCase());
@@ -47,7 +49,7 @@ public class EntityServiceImpl implements EntityService {
         }
         return addedEntity;
     }
-
+    @Override
     public Entity patchEntity(String id, Entity enteredEntity) {
         Entity entity = entityDao.getEntity(id);
         if (entity == null) {
@@ -78,7 +80,7 @@ public class EntityServiceImpl implements EntityService {
         }
         return entityDao.updateEntity(entity);
     }
-
+    @Override
     public Entity updateEntity(Entity entity){
         if (entity.getId() == null){
             entity.setId((entity.getSchemaName() + entity.getTableName()).replaceAll(REPLACE_REGEX, "").toUpperCase());
@@ -99,5 +101,11 @@ public class EntityServiceImpl implements EntityService {
 
     public void deleteEntity(String id){
         entityDao.deleteEntity(id);
+    }
+
+
+    @Override
+    public List<Entity> getEntityWithSchemaNameClient() {
+        return entityDao.getEntitiesWithShemaNameClient();
     }
 }

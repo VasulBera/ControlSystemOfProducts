@@ -1,9 +1,7 @@
 package com.softserveinc.trainee.service.Impl;
 
-import com.google.gson.Gson;
-import com.softserveinc.trainee.customObject.GenericTableRow;
 import com.softserveinc.trainee.customObject.GenericTableRowCallbackHandler;
-import com.softserveinc.trainee.customObject.Line;
+import com.softserveinc.trainee.customObject.GenericTableRow;
 import com.softserveinc.trainee.dao.EntityDao;
 import com.softserveinc.trainee.entity.metadata.Entity;
 import com.softserveinc.trainee.service.CustomTableService;
@@ -21,11 +19,10 @@ public class CustomTableServiceImpl implements CustomTableService {
     EntityDao entityDao;
 
     @Override
-    public List<Line> getAllObjects(String id) {
+    public List<GenericTableRow> getAllObjects(String id) {
         Entity entity = entityDao.getEntity(id);
         GenericTableRowCallbackHandler handler = new GenericTableRowCallbackHandler(entity);
-        jdbcTemplate.query("SELECT * FROM [client].[CARS]", handler);
-        List<Line> list = handler.getGenericTableRows();
-        return list;
+        jdbcTemplate.query("SELECT * FROM [client].[" + entity.getTableName() + "]", handler);
+        return handler.getGenericTableRows();
     }
 }
