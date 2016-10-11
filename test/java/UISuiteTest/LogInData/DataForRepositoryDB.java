@@ -22,7 +22,7 @@ public class DataForRepositoryDB {
     }
 
     public DataForDB getDataForDBCheck() {
-        return DataForDB.get().setEntityNameDB("fullyName").setEntitySchemaNameDB("fullySchema").setEntityTableNameDB("fullyTable").setFieldNameDB("fullyField").
-                setFieldColumnNameDB("fullyColumn").setDataTypeDB("NVARCHAR").setLengthValueDB("500").build();
+        return DataForDB.get().setEntityNameDB("FullRecordName").setEntitySchemaNameDB("FullRecordSchema").setEntityTableNameDB("FullRecordTable").setFieldNameDB("FullRecordField").
+                setFieldColumnNameDB("FullRecordColumn").setDataTypeDB("NVARCHAR").setLengthValueDB("500").build();
     }
 }

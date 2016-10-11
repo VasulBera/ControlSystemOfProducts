@@ -10,7 +10,6 @@ public final class ApplicationSources {
     private long implicitTimeOut;
     private String browserName;
 
-
     public ApplicationSources() {
         this.loginUrl = new String();
         this.logoutUrl = new String();
@@ -57,5 +56,4 @@ public final class ApplicationSources {
     public String getBrowserName() {
         return browserName;
     }
-
 }

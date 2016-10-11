@@ -3,14 +3,13 @@ package UISuiteTest.pages;
 import UISuiteTest.LogInData.CreateEntityData;
 import UISuiteTest.LogInData.EditData;
 import UISuiteTest.LogInData.EditDataRepository;
+import org.junit.Test;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.pagefactory.AjaxElementLocatorFactory;
-
 import java.util.List;
-
 import static UISuiteTest.ApplicationUtil.Application.driver;
 
 /**
@@ -19,9 +18,17 @@ import static UISuiteTest.ApplicationUtil.Application.driver;
 
 public class EditRecordPage extends HomePage {
 
-    //============================================================================
     @FindBy(css = "input[id*= 'entity-name'][value = 'EntityNameForEdit']")
     private WebElement entityNameEdit;
+
+    @FindBy(css = "input[id*= 'entity-name'][value = 'EntityNameForIncorrectEdit']")
+    private WebElement entityNameEditWithIncorrectData;
+
+    @FindBy(css = "input[id*= 'entity-schema-name'][value = 'EntitySchemaNameForIncorrectEdit']")
+    private WebElement entitySchemaNameEditWithIncorrectData;
+
+    @FindBy(css = "input[id*= 'entity-table-name'][value = 'EntityTableNameForIncorrectEdit']")
+    private WebElement entityTableNameEditWithIncorrectData;
 
     @FindBy(css = "input[id*= 'entity-schema-name'][value = 'EntitySchemaNameForEdit']")
     private WebElement entitySchemaNameEdit;
@@ -29,7 +36,6 @@ public class EditRecordPage extends HomePage {
     @FindBy(css = "input[id*= 'entity-table-name'][value = 'EntityTableNameForEdit']")
     private WebElement entityTableNameEdit;
 
-    //============================FULL_RECORD======================================
     @FindBy(css = "input[id*= 'entity-name'][value = 'FullEntityNameForEdit']")
     private WebElement entityNameForFullRecord;
 
@@ -45,9 +51,8 @@ public class EditRecordPage extends HomePage {
     @FindBy(xpath = "//span[contains(@id, fieldTable) and text() = 'FullFieldColumnForEdit']")
     private WebElement fieldColumnNameForFullRecord;
 
-    @FindBy(css = "input[id*= 'fieldTable'][value = '700']")
+    @FindBy(css = "input[id*= 'fieldTable'][value = '1,700']")
     private WebElement fieldLengthForFullRecord;
-//=================================================================================
 
     @FindBy(css = "input[class = 'btn'][value= 'Save']")
     private WebElement saveEditedRecord;
@@ -64,13 +69,6 @@ public class EditRecordPage extends HomePage {
     @FindBy(css = "a[title='Entity List Tab']")
     private WebElement entityListButton;
 
-    @FindBy(css = "div[id*='ileinneredit']")
-    private WebElement helpBox;
-
-    /*public EditRecordPage() {
-        PageFactory.initElements(driver, this);
-    }*/
-
     public EditRecordPage() {
         PageFactory.initElements(new AjaxElementLocatorFactory(driver, 30), this);
     }
@@ -80,19 +78,11 @@ public class EditRecordPage extends HomePage {
         return this.entityListButton;
     }
 
-    public WebElement getHelpBox() {
-        return this.helpBox;
-    }
+    public WebElement getEntityNameEditWithIncorrectData() {return  this.entityNameEditWithIncorrectData; }
 
-    public EditRecordPage clickHelpBox() {
-        getHelpBox().click();
-        return new EditRecordPage();
-    }
+    public WebElement getEntitySchemaNameEditWithIncorrectData() {return  this.entitySchemaNameEditWithIncorrectData; }
 
-    public HomePage goToHomePage() {
-        getEntityListButton().click();
-        return new HomePage();
-    }
+    public WebElement getEntityTableNameEditWithIncorrectData() {return this.entityTableNameEditWithIncorrectData; }
 
     public WebElement getEntityNameForFullRecord() {
         return this.entityNameForFullRecord;
@@ -118,7 +108,6 @@ public class EditRecordPage extends HomePage {
         return this.fieldLengthForFullRecord;
     }
 
-    //=============================================Invisible=====================================================
     public WebElement getLength() {
         return listFieldLength.get(listFieldLength.size() - 1);
     }
@@ -133,21 +122,6 @@ public class EditRecordPage extends HomePage {
 
     public WebElement getSaveEditedRecord() {
         return this.saveEditedRecord;
-    }
-    //=============================================================================================================
-
-    public EditRecordPage clickSaveEditedRecord() {
-        getSaveEditedRecord().click();
-        return new EditRecordPage();
-    }
-
-    public WebElement getAddRecordButton() {
-        return addRecordButton;
-    }
-
-    public EditRecordPage addNewField() {
-        getAddRecordButton().click();
-        return new EditRecordPage();
     }
 
     public WebElement getEntityNameEdit() {
@@ -206,11 +180,35 @@ public class EditRecordPage extends HomePage {
         getEntityTableNameForFullRecord().click();
     }
 
+    public void clickEntityNameEditWithIncorrectData() { getEntityNameEditWithIncorrectData().click();}
+
+    public void clickEntitySchemaNameEditWithIncorrectData() {getEntitySchemaNameEditWithIncorrectData().click();}
+
+    public void clickEntityTableNameEditWithIncorrectData() {getEntityTableNameEditWithIncorrectData().click();}
+
+    public void clearEntityNameEditWithIncorrectData() { getEntityNameEditWithIncorrectData().clear();}
+
+    public void clearEntitySchemaNameEditWithIncorrectData() { getEntitySchemaNameEditWithIncorrectData().clear();}
+
+    public void clearEntityTableNameEditWithIncorrectData() { getEntityTableNameEditWithIncorrectData().clear(); }
+
     public void clearEntityTableNameForFullRecord() {
         getEntityTableNameForFullRecord().clear();
     }
 
-    public void clickFieldNameForFullRecord() {
+    public void setEntityNameEditWithIncorrectData(String entityNameEdit) {
+        getEntityNameEditWithIncorrectData().sendKeys(entityNameEdit);
+    }
+
+    public void setEntitySchemaNameEditWithIncorrectDataa(String entityNameEdit) {
+        getEntitySchemaNameEditWithIncorrectData().sendKeys(entityNameEdit);
+    }
+
+    public void setEntityTableNameEditWithIncorrectData(String entityNameEdit) {
+        getEntityTableNameEditWithIncorrectData().sendKeys(entityNameEdit);
+    }
+
+   /* public void clickFieldNameForFullRecord() {
         getFieldNameForFullRecord().click();
     }
 
@@ -224,7 +222,8 @@ public class EditRecordPage extends HomePage {
 
     public void clearFieldColumnNameForFullRecord() {
         getFieldColumnNameForFullRecord().clear();
-    }
+    }*/
+
 
     public void clickFieldLengthValueForFullRecord() {
         getFieldLengthForFullRecord().click();
@@ -266,6 +265,25 @@ public class EditRecordPage extends HomePage {
         getFieldColumnNameForFullRecord().sendKeys(fieldColumnNameEdit);
     }
 
+    public HomePage goToHomePage() {
+        getEntityListButton().click();
+        return new HomePage();
+    }
+
+    public EditRecordPage clickSaveEditedRecord() {
+        getSaveEditedRecord().click();
+        return new EditRecordPage();
+    }
+
+    public WebElement getAddRecordButton() {
+        return addRecordButton;
+    }
+
+    public EditRecordPage addNewField() {
+        getAddRecordButton().click();
+        return new EditRecordPage();
+    }
+
     public void setFieldLengthValueForFullRecord(String fieldLengthEdit) {
         getFieldLengthForFullRecord().sendKeys(fieldLengthEdit);
     }
@@ -280,14 +298,29 @@ public class EditRecordPage extends HomePage {
         clickEntityTableNameForFullRecord();
         clearEntityTableNameForFullRecord();
         setEntityTableNameForFullRecord(editData.getEntityTableNameEdit());
-
         Actions actions = new Actions(driver);
         actions.moveToElement(getFieldNameForFullRecord()).click().sendKeys("").sendKeys("").sendKeys(EditDataRepository.get().getDataForEditFullRecord().getFieldNameEdit()).perform();
         actions.moveToElement(getFieldColumnNameForFullRecord()).click().sendKeys("").sendKeys("").sendKeys(EditDataRepository.get().getDataForEditFullRecord().getFieldColumnNameEdit()).perform();
-
         clickFieldLengthValueForFullRecord();
         clearFieldLengthValueForFullRecord();
         setFieldLengthValueForFullRecord("1800");
+    }
+
+    public void inputIncorrectDataForEdit(CreateEntityData createEntityData){
+        clickEntityNameEditWithIncorrectData();
+        clearEntityNameEditWithIncorrectData();
+        setEntityNameEditWithIncorrectData(createEntityData.getEntityName());
+        clickEntityTableNameEditWithIncorrectData();
+        clearEntitySchemaNameEditWithIncorrectData();
+        setEntitySchemaNameEditWithIncorrectDataa(createEntityData.getEntitySchemaName());
+        clickEntityTableNameEditWithIncorrectData();
+        clearEntityTableNameEditWithIncorrectData();
+        setEntityTableNameEditWithIncorrectData(createEntityData.getEntityTableName());
+    }
+
+    public EditRecordPageValidation setDataForIncorrectRecordEdit(CreateEntityData createEntityData){
+        inputIncorrectDataForEdit(createEntityData);
+        return new EditRecordPageValidation();
     }
 
     public EditRecordPage setFullEditedData(EditData editData) {

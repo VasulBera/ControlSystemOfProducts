@@ -1,17 +1,14 @@
-package UISuiteTest.tests;
+package UISuiteTest.TestsSuite;
 
-import UISuiteTest.ApplicationUtil.Application;
 import UISuiteTest.RuleUtil.LogInRule;
 import UISuiteTest.RuleUtil.OpenBrowserRule;
 import UISuiteTest.RuleUtil.SetPropertyBrowserRule;
-import UISuiteTest.pages.CreateEntityRecordPage;
-import UISuiteTest.pages.EditRecordPage;
-import UISuiteTest.pages.HomePage;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ErrorCollector;
 
+import static UISuiteTest.RuleUtil.LogInRule.homePage;
 import static org.hamcrest.core.Is.is;
 
 /**
@@ -19,11 +16,6 @@ import static org.hamcrest.core.Is.is;
  */
 
 public class SmokeTest {
-
-    private static Application application;
-    private HomePage homePage;
-    private CreateEntityRecordPage createEntityRecordPage;
-    private EditRecordPage editRecordPage;
 
     @ClassRule
     public static SetPropertyBrowserRule ruleProperty = new SetPropertyBrowserRule();
@@ -39,6 +31,7 @@ public class SmokeTest {
 
     @Test
     public void SmokeTest() {
-//        errors.checkThat("Title is not right", homePage.getTitleText().equals("Entity List"), is(true));
+        errors.checkThat("Table is not present", homePage.getTableEntityList().isDisplayed(), is(true));
+        errors.checkThat("Title is not right", homePage.getTableTitleText().equals("Entity List"), is(true));
     }
 }

@@ -1,4 +1,4 @@
-package UISuiteTest.tests;
+package UISuiteTest.TestsSuite;
 
 import UISuiteTest.LogInData.*;
 import UISuiteTest.RuleUtil.LogInRule;
@@ -17,12 +17,11 @@ import org.junit.rules.ErrorCollector;
 import org.junit.runner.RunWith;
 
 import static UISuiteTest.CompareUtils.CompareUtil.CheckListRecord;
-import static UISuiteTest.ConstantUtils.constatntValues.*;
+import static UISuiteTest.ConstantUtils.ConstantValues.*;
 import static UISuiteTest.RuleUtil.LogInRule.homePage;
 import static UISuiteTest.RuleUtil.OpenBrowserRule.application;
 import static UISuiteTest.SelectDB.*;
 import static org.hamcrest.core.Is.is;
-
 
 /**
  * Created by sriznych on 31.08.2016.
@@ -33,7 +32,7 @@ public class TestCreateRecordOption {
 
     private CreateRecordPageValidation createRecordPageValidation;
     private CreateEntityRecordPage createRecord;
-    private static HomePage changedHomePage;
+    private static HomePage updatedHomePage;
 
     @ClassRule
     public static SetPropertyBrowserRule ruleProperty = new SetPropertyBrowserRule();
@@ -50,20 +49,25 @@ public class TestCreateRecordOption {
     @Test
     public void createEntityRecord() {
         createRecord = homePage.createRecordButton().setEntityData(CreateEntityDataRepository.get().getDataCreateEntity()).saveRecordButton();
-
+        errors.checkThat("Record was not create", CheckListRecord(homePage.getEntityNameList(), "EntityName"), is(true));
+        errors.checkThat("Record was not created", CheckListRecord(homePage.getSchemaNameList(), "EntitySchemaName"), is(true));
+        errors.checkThat("Record was not created", CheckListRecord(homePage.getTableNameList(), "EntityTableName"), is(true));
+        System.out.println("FROM DB-->" + selectEntityTableFromAmazonDB("ENTITYSCHEMANAMEENTITYTABLENAME"));
+        errors.checkThat("Data is not equal",
+                selectEntityTableFromAmazonDB("ENTITYSCHEMANAMEENTITYTABLENAME").equals(CreateEntityDataRepository.get().getDataCreateEntity()), is(true));
     }
 
-    @Test
+   @Test
     public void createFullRecord() {
-     /*   createRecord = homePage.createRecordButton().
+        createRecord = homePage.createRecordButton().
                 setEntityData(CreateEntityDataRepository.get().getDataCreateEntityFully()).inputFieldRecord().setFieldData(CreateFieldDataRepository.get().getDataCreateFieldFully()).
                 saveRecordButton();
-        errors.checkThat("Record was not create", CheckListRecord(homePage.getEntityNameList(), "fullyName"), is(true));
-        errors.checkThat("Record was not created", CheckListRecord(homePage.getSchemaNameList(), "fullySchema"), is(true));
-        errors.checkThat("Record was not created", CheckListRecord(homePage.getTableNameList(), "fullyTable"), is(true));*/
-        System.out.println("FROM DB-->" + selectFullRecordFromAmazonDB(idFieldFully));
+        errors.checkThat("Record was not create", CheckListRecord(homePage.getEntityNameList(), "FullRecordName"), is(true));
+        errors.checkThat("Record was not created", CheckListRecord(homePage.getSchemaNameList(), "FullRecordSchema"), is(true));
+        errors.checkThat("Record was not created", CheckListRecord(homePage.getTableNameList(), "FullRecordTable"), is(true));
+        System.out.println("FROM DB-->" + selectFullRecordFromAmazonDB("FULLRECORDSCHEMAFULLRECORDTABLE"));
         System.out.println("REPO--->" + DataForRepositoryDB.get().getDataForDBCheck());
-        errors.checkThat("Data is not equal", selectFullRecordFromAmazonDB(idFieldFully).equals(DataForRepositoryDB.get().getDataForDBCheck()), is(true));
+        errors.checkThat("Data is not equal", selectFullRecordFromAmazonDB("FULLRECORDSCHEMAFULLRECORDTABLE").equals(DataForRepositoryDB.get().getDataForDBCheck()), is(true));
     }
 
     @Test
@@ -86,7 +90,7 @@ public class TestCreateRecordOption {
 
     @Test
     @UseDataProvider("forValidationMessage")
-    public void forValidation(CreateEntityData entityData, CreateFieldData createFieldData, String validationMessage, String idRecord) throws InterruptedException {
+    public void forValidation(CreateEntityData entityData, CreateFieldData createFieldData, String validationMessage, String idRecord)   {
         createRecordPageValidation = homePage.createRecordButton().
                 setInvalidEntityData(entityData).inputInvalidField().setInvalidFieldData(createFieldData).saveInvalidRecordButton();
         errors.checkThat(createRecordPageValidation.getValidationMessage().isDisplayed(), is(true));
@@ -94,12 +98,16 @@ public class TestCreateRecordOption {
         errors.checkThat("Record was created", CheckListRecord(homePage.getEntityNameList(), idRecord), is(false));
     }
 
-    // @AfterClass
-    public static void deleteAllChange() {
-        changedHomePage = application.loadChrome().successLogin(AccountRepository.get().getDataAccount()).gotoHomePage().deleteRecord().confirmDeleteRecord().deleteFullRecord().confirmDeleteRecord();
-        errors.checkThat("Record was not deleted", CheckListRecord(changedHomePage.getEntityNameList(), "EntityName"), is(false));
-        errors.checkThat("Record was not deleted", CheckListRecord(changedHomePage.getSchemaNameList(), "EntitySchemaName"), is(false));
-        errors.checkThat("Record was not deleted", CheckListRecord(changedHomePage.getTableNameList(), "EntityTableName"), is(false));
-        errors.checkThat("Record was not deleted", isExistEntity(idForEntityTable), is(false));
+    @Test
+    public void deleteAllChange() {
+        updatedHomePage = application.loadChrome().successLogin(AccountRepository.get().getDataAccount()).gotoHomePage().deleteRecord().confirmDeleteRecord().deleteFullRecordLink().confirmDeleteRecord();
+        errors.checkThat("Record was not deleted", CheckListRecord(updatedHomePage.getEntityNameList(), "EntityName"), is(false));
+        errors.checkThat("Record was not deleted", CheckListRecord(updatedHomePage.getSchemaNameList(), "EntitySchemaName"), is(false));
+        errors.checkThat("Record was not deleted", CheckListRecord(updatedHomePage.getTableNameList(), "EntityTableName"), is(false));
+        errors.checkThat("Record was not deleted", isExistEntity("ENTITYSCHEMANAMEENTITYTABLENAME"), is(false));
+        errors.checkThat("Record was not deleted", CheckListRecord(updatedHomePage.getEntityNameList(), "FullRecordName"), is(false));
+        errors.checkThat("Record was not deleted", CheckListRecord(updatedHomePage.getSchemaNameList(), "FullRecordSchema"), is(false));
+        errors.checkThat("Record was not deleted", CheckListRecord(updatedHomePage.getTableNameList(), "FullRecordTable"), is(false));
+        errors.checkThat("Record was not deleted", isExistEntity("FULLRECORDSCHEMAFULLRECORDTABLE"), is(false));
     }
 }

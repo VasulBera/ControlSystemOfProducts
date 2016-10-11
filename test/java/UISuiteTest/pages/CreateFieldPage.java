@@ -5,14 +5,13 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
-import java.util.List;
-
 import static UISuiteTest.ApplicationUtil.Application.driver;
 
 /**
  * Created by sriznych on 02.09.2016.
  */
-public class CreateFieldPage  extends CreateEntityRecordPage{
+
+public class CreateFieldPage extends CreateEntityRecordPage {
 
     @FindBy(xpath = "//input[contains(@id, 'fieldNameCreated')]")
     private WebElement fieldName;
@@ -23,39 +22,9 @@ public class CreateFieldPage  extends CreateEntityRecordPage{
     @FindBy(xpath = "//input[contains(@id, 'field-length')]")
     private WebElement fieldLengthValue;
 
-    @FindBy(xpath = "//select[contains(@id, 'createEntity')]//option")
-    private List<WebElement> listDropDown;
-
-    @FindBy(xpath = "//tr[contains(@class , 'dataRow')]")
-    private List<WebElement> listOfLine;
-    //========================================================
-    @FindBy(xpath = "//select[contains(@id, 'createEntity')]")
-    private WebElement dropDownList;
-
-    @FindBy(xpath = "//option[contains(@value, 'NVARCHAR') and text() = 'NVARCHAR']")
-    private WebElement getDropDownListNVARCHAR;
-
-    @FindBy(xpath = "//option[contains(@value, 'INT') and text() = 'INT']")
-    private WebElement getDropDownListINT;
-
-    //======================================================
-
-    public WebElement getDropDownList() {return this.dropDownList; }
-
-    public void clickDropDown() { getDropDownList().click(); }
-
-    public WebElement getGetDropDownListNVARCHAR() {return  this.getDropDownListNVARCHAR;}
-
-    public void clickDropDownListNVARCHAR() {getGetDropDownListNVARCHAR().click(); }
-
-    //========================================================
-
     public CreateFieldPage() {
         PageFactory.initElements(driver, this);
     }
-
-    public List<WebElement> getListOfLine() {return  this.listOfLine; }
-
 
     public WebElement getFieldName() {
         return this.fieldName;
@@ -112,9 +81,6 @@ public class CreateFieldPage  extends CreateEntityRecordPage{
         clickFieldColumnName();
         clearFieldColumnName();
         setFieldColumnName(createFieldData.getFieldColumnName());
-       /* Thread.sleep(3000);
-        clickDropDown();
-        clickDropDownListNVARCHAR();*/
         clickFieldLength();
         clearFieldLengthValue();
         setFieldLength(createFieldData.getFieldLengthValue());
@@ -125,12 +91,7 @@ public class CreateFieldPage  extends CreateEntityRecordPage{
         return new CreateFieldPage();
     }
 
- /*   public CreateRecordPageValidation setInvalidFieldData(CreateFieldData createFieldData){
-        createFieldRecord(createFieldData);
-        return new CreateRecordPageValidation();
-    }*/
-
-    public CreateRecordPageValidation setInvalidFieldData(CreateFieldData createFieldData) throws InterruptedException {
+    public CreateRecordPageValidation setInvalidFieldData(CreateFieldData createFieldData)  {
         createFieldRecord(createFieldData);
         return new CreateRecordPageValidation();
     }

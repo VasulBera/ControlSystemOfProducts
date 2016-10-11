@@ -1,16 +1,5 @@
 package UISuiteTest.LogInData;
 
-import UISuiteTest.SelectDB;
-import org.junit.Test;
-
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
-
-import static java.util.Arrays.asList;
-import static java.util.Arrays.setAll;
-
 /**
  * Created by sriznych on 30.08.2016.
  */
@@ -34,7 +23,6 @@ public class CreateEntityDataRepository {
     }
 
     public CreateEntityData getDataCreateEntity() {
-
         return CreateEntityData.get().setEntityName("EntityName").
                 setEntitySchemaName("EntitySchemaName").
                 setEntityTableName("EntityTableName").
@@ -42,9 +30,9 @@ public class CreateEntityDataRepository {
     }
 
     public CreateEntityData getDataCreateEntityFully() {
-        return CreateEntityData.get().setEntityName("fullyName").
-                setEntitySchemaName("fullySchema").
-                setEntityTableName("fullyTable").
+        return CreateEntityData.get().setEntityName("FullRecordName").
+                setEntitySchemaName("FullRecordSchema").
+                setEntityTableName("FullRecordTable").
                 build();
     }
 
@@ -88,14 +76,6 @@ public class CreateEntityDataRepository {
                 build();
     }
 
-    public CreateEntityData verifySimiliarRecord() {
-        return CreateEntityData.get().
-                setEntityName("EntityNameDouble").
-                setEntitySchemaName("EntityShemaNameDouble").
-                setEntityTableName("EntityTableNameDouble").
-                build();
-    }
-
     public CreateEntityData getDataForCreateFieldInvalidLength() {
         return CreateEntityData.get().
                 setEntityName("ghhhhhhhhhhhgfyhfygtffffffffffffffffffhjhhhhhhhhhhhhhhhhhhhhhhhhffffffffffffffffffffffffffffffffffffffffffffffffffffffff1234567898").
@@ -105,10 +85,23 @@ public class CreateEntityDataRepository {
     }
 
     public CreateEntityData getDataCreateEntityForEdit() {
-
         return CreateEntityData.get().setEntityName("EntityNameForEdit").
                 setEntitySchemaName("EntitySchemaNameForEdit").
                 setEntityTableName("EntityTableNameForEdit").
+                build();
+    }
+
+    public CreateEntityData dataForIncorrectEntityRecordEdit() {
+        return CreateEntityData.get().setEntityName("EntityNameForIncorrectEdit").
+                setEntitySchemaName("EntitySchemaNameForIncorrectEdit").
+                setEntityTableName("EntityTableNameForIncorrectEdit").
+                build();
+    }
+
+    public CreateEntityData dataForIncorrectFullRecordEdit() {
+        return CreateEntityData.get().setEntityName("FullNameForIncorrectEdit").
+                setEntitySchemaName("FullEntitySchemaNameForIncorrectEdit").
+                setEntityTableName("FullEntityTableNameForIncorrectEdit").
                 build();
     }
 

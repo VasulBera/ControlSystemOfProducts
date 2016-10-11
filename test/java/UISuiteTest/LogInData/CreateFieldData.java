@@ -1,9 +1,8 @@
 package UISuiteTest.LogInData;
 
 /**
- * Created by Salome on 28.08.2016.
+ * Created by sriznych on 28.08.2016.
  */
-
 
 interface ICreateFieldName {
     ICreateFieldColumnName setFieldName(String fieldName);
@@ -35,13 +34,9 @@ public class CreateFieldData implements ICreateFieldName, ICreateFieldColumnName
     public CreateFieldData() {
     }
 
-    // static factory - - - - - - - - - -
-
     public static ICreateFieldName get() {
         return new CreateFieldData();
     }
-
-    // set - - - - - - - - - -
 
     public ICreateFieldColumnName setFieldName(String fieldName) {
         this.fieldName = fieldName;
@@ -53,7 +48,7 @@ public class CreateFieldData implements ICreateFieldName, ICreateFieldColumnName
         return this;
     }
 
-   public ICreateFieldLengthValue setFieldDataType(String fieldDataType) {
+    public ICreateFieldLengthValue setFieldDataType(String fieldDataType) {
         this.fieldDataType = fieldDataType;
         return this;
     }
@@ -75,10 +70,6 @@ public class CreateFieldData implements ICreateFieldName, ICreateFieldColumnName
         return fieldColumnName;
     }
 
-  /*  public DataType getFieldDataType() {
-        return fieldDataType;
-    }*/
-
     public String getFieldLengthValue() {
         return fieldLengthValue;
     }
@@ -88,7 +79,7 @@ public class CreateFieldData implements ICreateFieldName, ICreateFieldColumnName
         return "CreateFieldData{" +
                 "fieldName='" + fieldName + '\'' +
                 ", fieldColumnName='" + fieldColumnName + '\'' +
-              // ", fieldDataType=" + fieldDataType +
+                ", fieldDataType=" + fieldDataType +
                 ", fieldLengthValue='" + fieldLengthValue + '\'' +
                 '}';
     }
@@ -107,5 +98,4 @@ public class CreateFieldData implements ICreateFieldName, ICreateFieldColumnName
         return fieldLengthValue != null ? fieldLengthValue.equals(that.fieldLengthValue) : that.fieldLengthValue == null;
 
     }
-
 }

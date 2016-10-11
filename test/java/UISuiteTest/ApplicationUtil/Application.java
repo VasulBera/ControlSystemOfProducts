@@ -1,16 +1,15 @@
 package UISuiteTest.ApplicationUtil;
 
-
 import UISuiteTest.pages.LoginPage;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
-
 import java.util.concurrent.TimeUnit;
 
 /**
  * Created by sriznych on 25.08.2016.
  */
+
 public class Application {
 
     private ApplicationSources applicationSources;
@@ -52,14 +51,6 @@ public class Application {
         driver.get(applicationSources.getLoginUrl());
         return new LoginPage();
     }
-   /* public LoginPageInner login() {
-        if (driver == null){
-            return load();
-        }
-        driver.get(applicationSources.getLogoutUrl());
-        driver.get(applicationSources.getLoginUrl());
-        return new LoginPageInner(driver);
-    }*/
 
     public LoginPage logout() {
         if (driver == null) {

@@ -3,6 +3,7 @@ package UISuiteTest.LogInData;
 /**
  * Created by sriznych on 29.08.2016.
  */
+
 public class EditDataRepository {
     private static volatile EditDataRepository instance = null;
 

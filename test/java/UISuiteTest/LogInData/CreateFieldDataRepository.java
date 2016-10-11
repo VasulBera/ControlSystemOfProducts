@@ -23,13 +23,11 @@ public class CreateFieldDataRepository {
     }
 
     public CreateFieldData getDataCreateField() {
-
         return CreateFieldData.get().
                 setFieldName("TestFieldName").
                 setFieldColumnName("TestFieldColumnName").
                 setFieldDataType("NVARCHAR").
                 setFieldLengthValue("10").build();
-
     }
 
     public CreateFieldData getDataForCreateCyrillicField() {
@@ -76,8 +74,8 @@ public class CreateFieldDataRepository {
     public CreateFieldData getDataCreateFieldFully() {
 
         return CreateFieldData.get().
-                setFieldName("fullyField").
-                setFieldColumnName("fullyColumn").
+                setFieldName("FullRecordField").
+                setFieldColumnName("FullRecordColumn").
                 setFieldDataType("NVARCHAR").
                 setFieldLengthValue("500").build();
     }
@@ -101,11 +99,26 @@ public class CreateFieldDataRepository {
     }
 
     public CreateFieldData getDataCreateFullRecordForEdit() {
-
         return CreateFieldData.get().
                 setFieldName("FullFieldNameForEdit").
                 setFieldColumnName("FullFieldColumnForEdit").
                 setFieldDataType("NVARCHAR").
-                setFieldLengthValue("700").build();
+                setFieldLengthValue("1700").build();
+    }
+
+    public CreateFieldData dataFo() {
+        return CreateFieldData.get().
+                setFieldName("FullFieldNameForEdit").
+                setFieldColumnName("FullFieldColumnForEdit").
+                setFieldDataType("NVARCHAR").
+                setFieldLengthValue("1700").build();
+    }
+
+    public CreateFieldData getDataForIncorrectEdit() {
+        return CreateFieldData.get().
+                setFieldName("NameForIncorrectEditing").
+                setFieldColumnName("ColumnNameForIncorrectEditing").
+                setFieldDataType("NVARCHAR").
+                setFieldLengthValue("1700").build();
     }
 }

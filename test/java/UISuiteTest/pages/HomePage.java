@@ -1,14 +1,11 @@
 package UISuiteTest.pages;
 
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-
 import java.util.List;
-
 import static UISuiteTest.ApplicationUtil.Application.driver;
-import static UISuiteTest.ConstantUtils.constatntValues.*;
+import static UISuiteTest.ConstantUtils.ConstantValues.idForEntityTable;
 
 /**
  * Created by sriznych on 25.08.2016.
@@ -16,29 +13,20 @@ import static UISuiteTest.ConstantUtils.constatntValues.*;
 
 public class HomePage {
 
-    @FindBy(xpath = "//div[contains(@class, 'title') and text()='Entity List')]")
+    @FindBy(xpath = "//a[contains(@onclick, 'FULLENTITYSCHEMANAMEFOREDITFULLTABLENAMEFOREDIT') and text() = 'Delete']")
+    private WebElement deleteFullEditedRecord;
+
+    @FindBy(xpath = "//a[contains(@onclick, 'ENTITYSCHEMANAMEFOREDITENTITYTABLENAMEFOREDIT') and text() = 'Delete']")
+    private WebElement deleteEditedEntityRecord;
+
+    @FindBy(xpath = "//div[contains(@class, 'title') and text()='Entity List']")
     private WebElement tableTitle;
+
+    @FindBy(css = "div[id*='entityTable'][class='bPageBlock brandSecondaryBrd apexDefaultPageBlock secondaryPalette']")
+    private WebElement tableEntityList;
 
     @FindBy(xpath = "//input[contains(@id,'CreateEntityButton')]")
     private WebElement createEntityButton;
-
-    @FindBy(xpath = "//a[contains(@id, 'entity-name-link') and text()='" + ENTITY_NAME + "']")
-    private WebElement newEntityName;
-
-    @FindBy(xpath = "//td[contains(@id, 'entity-schema-name') and text()='" + ENTITY_SCHEMA_NAME + "']")
-    private WebElement newSchemaName;
-
-    @FindBy(xpath = "//td[contains(@id, 'entityTable') and text()='" + ENTITY_TABLE_NAME + "']")
-    private WebElement newTableName;
-
-    @FindBy(xpath = "//input[contains(@id, 'fieldNameCreated')]")
-    private WebElement fieldName;
-
-    @FindBy(xpath = "//input[contains(@id, 'fieldColumnNameCreated')]")
-    private WebElement fieldColumnName;
-
-    @FindBy(xpath = "//input[contains(@id, 'field-length')]")
-    private WebElement fieldLengthValue;
 
     @FindBy(xpath = "//a[contains(@id,'entity-name-link')]")
     private List<WebElement> entityNameList;
@@ -49,84 +37,55 @@ public class HomePage {
     @FindBy(xpath = "//td[contains(@id, 'entity-schema-name')]/following-sibling::td[contains(@id, 'entityTable') and contains(@class, 'dataCell')]")
     private List<WebElement> tableNameList;
 
-    @FindBy(xpath = "//a[contains(@id,'entity-name-link')]")
-    private List<WebElement> deleteLinkList;
-
-
-
-    //@FindBy(xpath = "//a[contains(@id, entity-name-link) and text() = 'EntityName']")
     @FindBy(xpath = "//a[contains(@id, entity-name-link) and text() = 'EntityNameForEdit']")
-    private WebElement recordForSingleEdit;
+    private WebElement editEntityTableRecord;
+
+    @FindBy(xpath = "//a[contains(@id, entity-name-link) and text() = 'EntityNameForIncorrectEdit']")
+    private WebElement editEntityRecordWithIncorrectData;
 
     @FindBy(xpath = "//a[contains(@id, entity-name-link) and text() = 'FullEntityNameForEdit']")
-    private WebElement recordForFullEdit;
+    private WebElement editFullRecord;
 
     @FindBy(xpath = "//a[contains(@onclick, '" + idForEntityTable + "') and text() = 'Delete']")
     private WebElement deleteEntityRecord;
 
-    @FindBy(xpath = "//a[contains(@onclick, '" + idForFullRecord + "') and text() = 'Delete']")
-    private WebElement deleteFULLRecord;
-
-
-
-    @FindBy(xpath = "//a[contains(@name, 'entityTable')]")
-    private List<WebElement> testDeleteRecordLink;
-
-    @FindBy(xpath = "//tr[contains(@class, 'dataRow')]")
-    private List<WebElement> tableRowList;
+    @FindBy(xpath = "//a[contains(@onclick, 'FULLRECORDSCHEMAFULLRECORDTABLE') and text() = 'Delete']")
+    private WebElement deleteFullRecord;
 
     public HomePage() {
         PageFactory.initElements(driver, this);
     }
 
-    public WebElement getEditFullRecord(){
-        return this.recordForFullEdit;
-    }
-
-    public EditRecordPage goToEditFullRecord(){
-        getEditFullRecord().click();
-        return new EditRecordPage();
-    }
-
-
-    public WebElement getFullRecord(){
-        return this.deleteFULLRecord;
-    }
-
-    public List<WebElement> getTableRowList() {
-        return this.tableRowList;
-    }
-
-    public WebElement getDeleteFULLRecord(){
-        return this.deleteFULLRecord;
-    }
-
-    public ConfirmDesicionPage deleteFullRecord(){
-        getDeleteFULLRecord();
-        return new ConfirmDesicionPage();
-    }
+    public WebElement getEditEntityRecordWithIncorrectData() {return this.editEntityRecordWithIncorrectData; }
 
     public WebElement getDeleteEntityRecord() {
         return this.deleteEntityRecord;
     }
 
-    public ConfirmDesicionPage deleteRecord() {
-        getDeleteEntityRecord().click();
-        return new ConfirmDesicionPage();
+    public WebElement getEditEntityTableRecord() {
+        return this.editEntityTableRecord;
     }
 
-    public WebElement getRecordForSingleEdit() {
-        return this.recordForSingleEdit;
+    public WebElement getDeleteFullEditedRecord() {return  this.deleteFullEditedRecord; }
+
+    public WebElement getDeleteEditedEntityRecord() {return  this.deleteEditedEntityRecord; }
+
+    public WebElement getTableEntityList() {return this.tableEntityList; }
+
+    public WebElement getDeleteFullRecord(){
+        return this.deleteFullRecord;
     }
 
-    public EditRecordPage gotoEditEntityRecordPage() {
-        getRecordForSingleEdit().click();
-        return new EditRecordPage();
+    public WebElement getTableTitle() {
+        return this.tableTitle;
     }
 
-    public EditRecordPage gotoEditFullRecordPage() {
-        getFullRecord().click();
-        return new EditRecordPage();
+    public WebElement getCreateEntityButton() {
+        return this.createEntityButton;
+    }
+
+    public WebElement getEditFullRecord(){
+        return this.editFullRecord;
     }
 
     public List<WebElement> getTableNameList() {
@@ -141,34 +100,51 @@ public class HomePage {
         return this.entityNameList;
     }
 
-    public List<WebElement> getDeleteListLink() {
-        return this.testDeleteRecordLink;
-    }
-
-    public WebElement getTableTitle() {
-        return this.tableTitle;
-    }
-
-    public WebElement getCreateEntityButton() {
-        return this.createEntityButton;
-    }
-
-    public String getTitleText() {
+    public String getTableTitleText() {
         return getTableTitle().getText();
+    }
+
+    public void clickDeleteFullRecord(){
+        getDeleteFullRecord().click();
+    }
+
+    public ConfirmDesicionPage deleteFullRecordLink(){
+        clickDeleteFullRecord();
+        return new ConfirmDesicionPage();
+    }
+
+    public ConfirmDesicionPage deleteRecord() {
+        getDeleteEntityRecord().click();
+        return new ConfirmDesicionPage();
+    }
+
+    public EditRecordPage gotoEditEntityRecordPage() {
+        getEditEntityTableRecord().click();
+        return new EditRecordPage();
+    }
+
+    public ConfirmDesicionPage deleteEditedFullRecord(){
+        getDeleteFullEditedRecord().click();
+        return new ConfirmDesicionPage();
+    }
+
+    public ConfirmDesicionPage deleteEditedEntityRecord(){
+        getDeleteEditedEntityRecord().click();
+        return new ConfirmDesicionPage();
+    }
+
+    public EditRecordPage goToEditFullRecord(){
+        getEditFullRecord().click();
+        return new EditRecordPage();
+    }
+
+    public EditRecordPage goToEditRecordWithIncorrectData() {
+        getEditEntityRecordWithIncorrectData().click();
+        return new EditRecordPage();
     }
 
     public CreateEntityRecordPage createRecordButton() {
         getCreateEntityButton().click();
         return new CreateEntityRecordPage();
     }
-
-    public ConfirmDesicionPage CheckDeleteLink(List<WebElement> rows) throws InterruptedException {
-        for (WebElement elementRows : rows) {
-            List<WebElement> innerList = elementRows.findElements(By.xpath("//td"));
-            innerList.get(0).findElement(By.xpath("//span")).findElement(By.xpath("//a")).click();
-
-        }
-        return new ConfirmDesicionPage();
-    }
 }
-// if (element.findElement(By.xpath("//tr[contains(@class, 'dataRow')]//following-sibling::td[contains(@id, 'entityTable') and text() = 'ww']")).isDisplayed())

@@ -1,37 +1,37 @@
 package UISuiteTest.LogInData;
 
-interface IentityNameDB {
-    IentitySchemaNameDB setEntityNameDB(String entityNameDB);
+interface IEntityNameDB {
+    IEntitySchemaNameDB setEntityNameDB(String entityNameDB);
 }
 
-interface IentitySchemaNameDB {
-    IentityTableNameDB setEntitySchemaNameDB(String entitySchemaNameDB);
+interface IEntitySchemaNameDB {
+    IEntityTableNameDB setEntitySchemaNameDB(String entitySchemaNameDB);
 }
 
-interface IentityTableNameDB {
-    IfieldNameDB setEntityTableNameDB(String entityTableNameDB);
+interface IEntityTableNameDB {
+    IFieldNameDB setEntityTableNameDB(String entityTableNameDB);
 }
 
-interface IfieldNameDB {
-    IfieldColumnNameDB setFieldNameDB(String fieldNameDB);
+interface IFieldNameDB {
+    IFieldColumnNameDB setFieldNameDB(String fieldNameDB);
 }
 
-interface IfieldColumnNameDB {
-    IfieldDataType setFieldColumnNameDB(String fieldColumnNameDB);
+interface IFieldColumnNameDB {
+    IFieldDataType setFieldColumnNameDB(String fieldColumnNameDB);
 }
 
-interface IfieldDataType{
-    IfieldLengthValueDB setDataTypeDB(String fieldDataTypeDB);
+interface IFieldDataType {
+    IFieldLengthValueDB setDataTypeDB(String fieldDataTypeDB);
 }
 
-interface IfieldLengthValueDB {
+interface IFieldLengthValueDB {
     IEditDataBuildDB setLengthValueDB(String fieldLengthValueDB);
 }
 interface IEditDataBuildDB{
     DataForDB build();
 }
 
-public class DataForDB implements IentityNameDB, IentitySchemaNameDB, IentityTableNameDB, IfieldNameDB, IfieldColumnNameDB, IfieldDataType, IfieldLengthValueDB, IDataDB, IEditDataBuildDB{
+public class DataForDB implements IEntityNameDB, IEntitySchemaNameDB, IEntityTableNameDB, IFieldNameDB, IFieldColumnNameDB, IFieldDataType, IFieldLengthValueDB, IDataDB, IEditDataBuildDB{
     private String entityNameDB;
     private String entitySchemaNameDB;
     private String entityTableNameDB;
@@ -41,39 +41,38 @@ public class DataForDB implements IentityNameDB, IentitySchemaNameDB, IentityTab
     private String fieldLengthValueDB;
 
     public DataForDB() {
-
     }
 
-    public static IentityNameDB get() {
+    public static IEntityNameDB get() {
         return new DataForDB();
     }
 
-    public IentitySchemaNameDB setEntityNameDB(String entityNameDB) {
+    public IEntitySchemaNameDB setEntityNameDB(String entityNameDB) {
         this.entityNameDB = entityNameDB;
         return this;
     }
 
-    public IentityTableNameDB setEntitySchemaNameDB(String entitySchemaNameDB) {
+    public IEntityTableNameDB setEntitySchemaNameDB(String entitySchemaNameDB) {
         this.entitySchemaNameDB = entitySchemaNameDB;
         return this;
     }
 
-    public IfieldNameDB setEntityTableNameDB(String entityTableNameDB) {
+    public IFieldNameDB setEntityTableNameDB(String entityTableNameDB) {
         this.entityTableNameDB = entityTableNameDB;
         return this;
     }
 
-    public IfieldColumnNameDB setFieldNameDB(String fieldNameDB) {
+    public IFieldColumnNameDB setFieldNameDB(String fieldNameDB) {
         this.fieldNameDB = fieldNameDB;
         return this;
     }
 
-     public IfieldDataType setFieldColumnNameDB(String fieldColumnNameDB){
+     public IFieldDataType setFieldColumnNameDB(String fieldColumnNameDB){
         this.fieldColumnNameDB = fieldColumnNameDB;
         return this;
     }
 
-   public IfieldLengthValueDB setDataTypeDB(String fieldDataTypeDB) {
+   public IFieldLengthValueDB setDataTypeDB(String fieldDataTypeDB) {
        this.fieldDataTypeDB = fieldDataTypeDB;
        return this;
    }
@@ -86,7 +85,6 @@ public class DataForDB implements IentityNameDB, IentitySchemaNameDB, IentityTab
         return this;
     }
 
-    // get - - - - - - - - - -
     public String getEntityNameEdit() {
         return entityNameDB;
     }
@@ -112,25 +110,10 @@ public class DataForDB implements IentityNameDB, IentitySchemaNameDB, IentityTab
     }
 
     @Override
-    public String toString() {
-        return "DataForDB{" +
-                "entityNameDB='" + entityNameDB + '\'' +
-                ", entitySchemaNameDB='" + entitySchemaNameDB + '\'' +
-                ", entityTableNameDB='" + entityTableNameDB + '\'' +
-                ", fieldNameDB='" + fieldNameDB + '\'' +
-                ", fieldColumnNameDB='" + fieldColumnNameDB + '\'' +
-                ", fieldDataTypeDB=" + fieldDataTypeDB +
-                ", fieldLengthValueDB='" + fieldLengthValueDB + '\'' +
-                '}';
-    }
-
-    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-
         DataForDB dataForDB = (DataForDB) o;
-
         if (entityNameDB != null ? !entityNameDB.equals(dataForDB.entityNameDB) : dataForDB.entityNameDB != null)
             return false;
         if (entitySchemaNameDB != null ? !entitySchemaNameDB.equals(dataForDB.entitySchemaNameDB) : dataForDB.entitySchemaNameDB != null)
@@ -144,18 +127,18 @@ public class DataForDB implements IentityNameDB, IentitySchemaNameDB, IentityTab
         if (fieldDataTypeDB != null ? !fieldDataTypeDB.equals(dataForDB.fieldDataTypeDB) : dataForDB.fieldDataTypeDB != null)
             return false;
         return fieldLengthValueDB != null ? fieldLengthValueDB.equals(dataForDB.fieldLengthValueDB) : dataForDB.fieldLengthValueDB == null;
-
     }
 
     @Override
-    public int hashCode() {
-        int result = entityNameDB != null ? entityNameDB.hashCode() : 0;
-        result = 31 * result + (entitySchemaNameDB != null ? entitySchemaNameDB.hashCode() : 0);
-        result = 31 * result + (entityTableNameDB != null ? entityTableNameDB.hashCode() : 0);
-        result = 31 * result + (fieldNameDB != null ? fieldNameDB.hashCode() : 0);
-        result = 31 * result + (fieldColumnNameDB != null ? fieldColumnNameDB.hashCode() : 0);
-        result = 31 * result + (fieldDataTypeDB != null ? fieldDataTypeDB.hashCode() : 0);
-        result = 31 * result + (fieldLengthValueDB != null ? fieldLengthValueDB.hashCode() : 0);
-        return result;
+    public String toString() {
+        return "DataForDB{" +
+                "entityNameDB='" + entityNameDB + '\'' +
+                ", entitySchemaNameDB='" + entitySchemaNameDB + '\'' +
+                ", entityTableNameDB='" + entityTableNameDB + '\'' +
+                ", fieldNameDB='" + fieldNameDB + '\'' +
+                ", fieldColumnNameDB='" + fieldColumnNameDB + '\'' +
+                ", fieldDataTypeDB=" + fieldDataTypeDB +
+                ", fieldLengthValueDB='" + fieldLengthValueDB + '\'' +
+                '}';
     }
 }
