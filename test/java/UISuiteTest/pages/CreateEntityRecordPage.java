@@ -1,14 +1,10 @@
 package UISuiteTest.pages;
 
 import UISuiteTest.LogInData.CreateEntityData;
-import UISuiteTest.LogInData.CreateFieldData;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-
 import static UISuiteTest.ApplicationUtil.Application.driver;
-import static UISuiteTest.ConstantUtils.constatntValues.ENTITY_NAME;
 
 /**
  * Created by sriznych on 25.08.2016.
@@ -34,7 +30,6 @@ public class CreateEntityRecordPage extends HomePage {
     public CreateEntityRecordPage() {
         PageFactory.initElements(driver, this);
     }
-
 
     public WebElement getEntityName() {
         return this.entityName;
@@ -94,7 +89,6 @@ public class CreateEntityRecordPage extends HomePage {
         getEntityTableName().sendKeys(tableName);
     }
 
-
     public void clickSaveRecordButton() {
         getSaveRecordButton().click();
     }
@@ -130,10 +124,5 @@ public class CreateEntityRecordPage extends HomePage {
         createEntityRecord(createEntityData);
         return new CreateRecordPageValidation();
     }
-
-   /* public CreateRecordPageValidation setInvalidFieldData(CreateFieldData createFieldData){
-        createFieldRecord(createFieldData);
-        return new CreateRecordPageValidation();
-    }*/
 }
 

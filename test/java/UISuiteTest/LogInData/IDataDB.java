@@ -13,6 +13,4 @@ public interface IDataDB {
 	String getFieldColumnNameEdit();
 
 	String getFieldLengthValueEdit();
-
-
 }

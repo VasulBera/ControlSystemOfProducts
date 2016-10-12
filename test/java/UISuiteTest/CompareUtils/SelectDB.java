@@ -1,8 +1,8 @@
 package UISuiteTest;
 
 import IntegrationTests.HelpUtils.DBOperations;
-import UISuiteTest.LogInData.*;
-import org.junit.Assert;
+import UISuiteTest.LogInData.CreateEntityData;
+import UISuiteTest.LogInData.DataForDB;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ErrorCollector;
@@ -13,30 +13,23 @@ import java.io.InputStream;
 import java.sql.*;
 import java.util.Properties;
 
-import static UISuiteTest.ConstantUtils.constatntValues.*;
-import static org.hamcrest.core.Is.is;
-
 /**
  * Created by sriznych on 05.09.2016.
  */
+
 public class SelectDB {
 
     private static Statement statement = setupDBConnection();
     private static Connection connection;
     private static final String JDBCPropertyFile = "configAmazon.properties";
-    private static ResultSet rs;
-
-    private static String id_VAlue;
-
+    private static ResultSet resultSet;
 
     @Rule
     public ErrorCollector errors = new ErrorCollector();
 
-
     public static Statement setupDBConnection() {
         Properties prop = new Properties();
         try {
-            // InputStream input = getResourceAsStream(JDBCPropertyFile);
             InputStream input = DBOperations.class.getClassLoader().getResourceAsStream(JDBCPropertyFile);
             prop.load(input);
             StringBuilder str = new StringBuilder();
@@ -60,39 +53,35 @@ public class SelectDB {
         return statement;
     }
 
-    //=======================FROM ENTITY===============================
     public static CreateEntityData selectEntityTableFromAmazonDB(String idValue) {
         CreateEntityData createEntityData = new CreateEntityData();
         try {
             String sql = "SELECT name, table_name, schema_name FROM [EntityMetadata].[dbo].[entities] where id = '" + idValue + "'";
-            rs = statement.executeQuery(sql);
-            while (rs.next()) {
-                createEntityData.setEntityName(rs.getString("name"));
-                createEntityData.setEntityTableName(rs.getString("table_name"));
-                createEntityData.setEntitySchemaName(rs.getString("schema_name"));
+            resultSet = statement.executeQuery(sql);
+            while (resultSet.next()) {
+                createEntityData.setEntityName(resultSet.getString("name"));
+                createEntityData.setEntityTableName(resultSet.getString("table_name"));
+                createEntityData.setEntitySchemaName(resultSet.getString("schema_name"));
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return createEntityData;
     }
-    //=================================================================
 
-
-   public static DataForDB selectFullRecordFromAmazonDB(String idValue) {
-       DataForDB dataForDB = new DataForDB();
-       try {
-           String sql = "SELECT entities.name as nameEntity, entities.table_name, entities.schema_name, fields.name as nameField, fields.column_name as columnField, fields.type as typeField, fields.length as lengthField FROM [EntityMetadata].[dbo].[entities] inner join [EntityMetadata].[dbo].[fields]  on  entities.id = fields.entity_id where entities.id = '" + idValue +"'";
-          // String sql = "SELECT name, column_name, length FROM [EntityMetadata].[dbo].[fields] where id = '" + idValue +"'";
-            rs = statement.executeQuery(sql);
-            while (rs.next()) {
-                dataForDB.setEntityNameDB(rs.getString("nameEntity"));
-                dataForDB.setEntitySchemaNameDB(rs.getString("schema_name"));
-                dataForDB.setEntityTableNameDB(rs.getString("table_name"));
-                dataForDB.setFieldNameDB(rs.getString("nameField"));
-                dataForDB.setFieldColumnNameDB(rs.getString("columnField"));
-                dataForDB.setDataTypeDB(rs.getString("typeField"));
-                dataForDB.setLengthValueDB(rs.getString("lengthField"));
+    public static DataForDB selectFullRecordFromAmazonDB(String idValue) {
+        DataForDB dataForDB = new DataForDB();
+        try {
+            String sql = "SELECT entities.name as nameEntity, entities.table_name, entities.schema_name, fields.name as nameField, fields.column_name as columnField, fields.type as typeField, fields.length as lengthField FROM [EntityMetadata].[dbo].[entities] inner join [EntityMetadata].[dbo].[fields]  on  entities.id = fields.entity_id where entities.id = '" + idValue + "'";
+            resultSet = statement.executeQuery(sql);
+            while (resultSet.next()) {
+                dataForDB.setEntityNameDB(resultSet.getString("nameEntity"));
+                dataForDB.setEntitySchemaNameDB(resultSet.getString("schema_name"));
+                dataForDB.setEntityTableNameDB(resultSet.getString("table_name"));
+                dataForDB.setFieldNameDB(resultSet.getString("nameField"));
+                dataForDB.setFieldColumnNameDB(resultSet.getString("columnField"));
+                dataForDB.setDataTypeDB(resultSet.getString("typeField"));
+                dataForDB.setLengthValueDB(resultSet.getString("lengthField"));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -124,7 +113,7 @@ public class SelectDB {
             statement.executeQuery("SELECT * FROM fields WHERE id = '" + idFields + "'");
             ResultSet rs = statement.getResultSet();
             if (!rs.next()) {
-                System.out.println("Record with" + idEntities + " and " +  idFields + " IDs is not exist.");
+                System.out.println("Record with" + idEntities + " and " + idFields + " IDs is not exist.");
                 isRecord = true;
             } else {
                 System.out.println("Record with that ID is exist FFF.");
@@ -136,25 +125,7 @@ public class SelectDB {
     }
 
     @Test
-    public void checkOnlyEntity(){
-        System.out.println("--->FROM_DB" + selectFullRecordFromAmazonDB(idFieldFully));
-        /*System.out.println("--->REPOSITORY" +  CreateEntityDataRepository.get().getDataCreateEntity());
-        Assert.assertEquals("", selectEntityTableFromAmazonDB(idForEntityTable), CreateEntityDataRepository.get().getDataCreateEntity());*/
-    }
+    public void ff(){
 
-    @Test
-    public void isExist(){
-        System.out.println("--isExist>" + isExistEntity(idForEntityTable));
-    }
-  /*  @Test
-    public void checkField(){
-        System.out.println("-->From_DB" + selectFieldTableFromAmazonDB(idForFieldTable));
-        System.out.println("--->" +  CreateFieldDataRepository.get().getDataCreateFieldFully());
-        Assert.assertEquals("", selectFieldTableFromAmazonDB(idForFieldTable), CreateFieldDataRepository.get().getDataCreateFieldFully());
-    }*/
-
-    @Test
-    public void hh(){
-        System.out.println("---->" + ERROR_DUPLICATE_MESSAGE);
     }
 }

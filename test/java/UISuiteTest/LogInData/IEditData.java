@@ -12,7 +12,7 @@ public interface IEditData {
 
 	String getFieldColumnNameEdit();
 
+	String getFieldDataTypeEdit();
+
 	String getFieldLengthValueEdit();
-
-
 }

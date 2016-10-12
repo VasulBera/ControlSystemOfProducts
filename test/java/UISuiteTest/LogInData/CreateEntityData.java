@@ -20,31 +20,19 @@ interface ICreateEntityTableName {
 interface ICreateEntityDataBuild{
     CreateEntityData build();
 }
+
 public class CreateEntityData implements ICreateEntityName, ICreateEntitySchemaName, ICreateEntityTableName, ICreateEntityData, ICreateEntityDataBuild {
 
     private String entityName;
     private String entitySchemaName;
     private String entityTableName;
 
-    @Override
-    public String toString() {
-        return "CreateEntityData{" +
-                "entityName='" + entityName + '\'' +
-                ", entitySchemaName='" + entitySchemaName + '\'' +
-                ", entityTableName='" + entityTableName + '\'' +
-                '}';
-    }
-
     public CreateEntityData() {
     }
-
-    // static factory - - - - - - - - - -
 
     public static ICreateEntityName get() {
         return new CreateEntityData();
     }
-
-    // set - - - - - - - - - -
 
     public ICreateEntitySchemaName setEntityName(String entityName) {
         this.entityName = entityName;
@@ -90,10 +78,11 @@ public class CreateEntityData implements ICreateEntityName, ICreateEntitySchemaN
     }
 
     @Override
-    public int hashCode() {
-        int result = entityName != null ? entityName.hashCode() : 0;
-        result = 31 * result + (entitySchemaName != null ? entitySchemaName.hashCode() : 0);
-        result = 31 * result + (entityTableName != null ? entityTableName.hashCode() : 0);
-        return result;
+    public String toString() {
+        return "CreateEntityData{" +
+                "entityName='" + entityName + '\'' +
+                ", entitySchemaName='" + entitySchemaName + '\'' +
+                ", entityTableName='" + entityTableName + '\'' +
+                '}';
     }
 }

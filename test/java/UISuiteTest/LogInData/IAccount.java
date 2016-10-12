@@ -2,9 +2,7 @@ package UISuiteTest.LogInData;
 
 public interface IAccount {
 
-	String getUserName();
+    String getUserName();
 
-	String getPassword();
-
-
+    String getPassword();
 }

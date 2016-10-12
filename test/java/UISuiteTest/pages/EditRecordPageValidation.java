@@ -7,10 +7,10 @@ import org.openqa.selenium.support.PageFactory;
 import static UISuiteTest.ApplicationUtil.Application.driver;
 
 /**
- * Created by Salome on 31.08.2016.
+ * Created by sriznych on 07.10.2016.
  */
 
-public class CreateRecordPageValidation extends CreateEntityRecordPage {
+public class EditRecordPageValidation extends EditRecordPage{
 
     @FindBy(css = "div[class = 'message errorM3']")
     private WebElement validatorMessage;
@@ -18,10 +18,10 @@ public class CreateRecordPageValidation extends CreateEntityRecordPage {
     @FindBy(css = "input[type='submit'][value='Save']")
     private WebElement saveButton;
 
-    @FindBy(css = "input[type= 'button'][value='Create']")
+    @FindBy(css = "input[type= 'button'][value='Add']")
     private WebElement inputFieldRecord;
 
-    public CreateRecordPageValidation() {
+    public EditRecordPageValidation() {
         PageFactory.initElements(driver, this);
     }
 
@@ -41,12 +41,12 @@ public class CreateRecordPageValidation extends CreateEntityRecordPage {
         return getValidationMessage().getText();
     }
 
-    public CreateRecordPageValidation saveInvalidRecordButton() {
+    public EditRecordPageValidation saveEditedInvalidRecordButton() {
         getSaveButton().click();
-        return new CreateRecordPageValidation();
+        return new EditRecordPageValidation();
     }
 
-    public CreateFieldPage inputInvalidField() {
+    public CreateFieldPage inputEditedInvalidField() {
         getInputFieldRecord().click();
         return new CreateFieldPage();
     }

@@ -45,5 +45,4 @@ public class Account implements IUserName, IPassword, IAccount, IAccountBuild {
     public String getPassword() {
         return password;
     }
-
 }
