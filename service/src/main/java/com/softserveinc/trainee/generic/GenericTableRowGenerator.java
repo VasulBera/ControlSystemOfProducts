@@ -1,4 +1,4 @@
-package com.softserveinc.trainee.customObject;
+package com.softserveinc.trainee.generic;
 
 import com.softserveinc.trainee.entity.metadata.Entity;
 import com.softserveinc.trainee.entity.metadata.Field;

@@ -1,4 +1,4 @@
-package com.softserveinc.trainee.customObject;
+package com.softserveinc.trainee.generic;
 
 import java.util.ArrayList;
 import java.util.List;
