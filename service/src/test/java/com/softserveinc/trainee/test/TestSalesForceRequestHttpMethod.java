@@ -31,7 +31,7 @@ public class TestSalesForceRequestHttpMethod {
         MockitoAnnotations.initMocks(this);
     }
 
-    @Test
+   // @Test
     public void testGetHttpGet(){
         String json = "{\"access_token\":\"accesstoken\",\"instance_url\":\"instanceurl\"}";
         HashMap<String, String> result = new HashMap<>();
@@ -46,7 +46,7 @@ public class TestSalesForceRequestHttpMethod {
         Assert.assertEquals(expected.getURI(), actually.getURI());
     }
 
-    @Test
+   // @Test
     public void testGetHttpPost() throws UnsupportedEncodingException {
         String ownerName = "Mike";
 
