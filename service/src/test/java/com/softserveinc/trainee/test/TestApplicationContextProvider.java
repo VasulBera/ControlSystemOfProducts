@@ -12,7 +12,7 @@ public class TestApplicationContextProvider {
 
     @Test
     public void testGetApplicationContext(){
-       // ApplicationContext actually = applicationContextProvider.getApplicationContext();
+        ApplicationContext actually = applicationContextProvider.getApplicationContext();
         Assert.assertNull(actually);
     }
 
