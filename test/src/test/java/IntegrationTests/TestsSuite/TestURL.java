@@ -53,7 +53,7 @@ public class TestURL {
     @Test
     @UseDataProvider("dataForURL")
     public void verifyValidID(String testData) {
-        errors.checkThat("Status code incorrect", expect().statusCode(HttpStatus.SC_OK).when().then().get(testData), is(true));
+        expect().when().get(testData).then().statusCode(HttpStatus.SC_OK).getClass();
     }
 
     /**
@@ -65,10 +65,10 @@ public class TestURL {
      *using HTTP GET method and " " (empty String) as id values verify that status code is equals '200' (HttpStatus.SC_OK)
      */
 
-   // @Test
+    @Test
     @UseDataProvider("emptyIdString")
     public void verifyBaseURL(String testData) {
-        errors.checkThat("Status code incorrect", expect().statusCode(HttpStatus.SC_OK).when().then().get(testData), is(true));
+       expect().statusCode(HttpStatus.SC_OK).when().then().get(testData);
     }
 
     /**
@@ -80,15 +80,15 @@ public class TestURL {
      *using HTTP GET method and alhabetical symbols as id values verify that status code is equals '400' (HttpStatus.SC_NOT_FOUND)
      */
 
-  //  @Test
+    @Test
     @UseDataProvider("alphabeticalSymbols")
     public void verifyAlphabeticalSymbolsForID(String testData) {
-        errors.checkThat("Status code incorrect", expect().statusCode(HttpStatus.SC_NOT_FOUND).when().get(testData), is(true));
+       expect().statusCode(HttpStatus.SC_NOT_FOUND).when().get(testData);
     }
 
     /**
-     * The verifysCyrillicSymbolsForID(String) was created for verify correct id values for URL
-     * The verifysCyrillicSymbolsForID(String) test use data provider "cyrillicSymbols".
+     * The verifyCyrillicSymbolsForID(String) was created for verify correct id values for URL
+     * The verifyCyrillicSymbolsForID(String) test use data provider "cyrillicSymbols".
      *
      * @param testData represent cyrillic symbols from data provider
      *Steps to reproduce
@@ -97,8 +97,8 @@ public class TestURL {
 
    // @Test
     @UseDataProvider("cyrillicSymbols")
-    public void verifysCyrillicSymbolsForID(String testData) {
-        errors.checkThat("Status code incorrect", expect().statusCode(HttpStatus.SC_NOT_FOUND).when().get(testData), is(true));
+    public void verifyCyrillicSymbolsForID(String testData) {
+       expect().statusCode(HttpStatus.SC_NOT_FOUND).when().get(testData);
     }
 
     /**
@@ -113,7 +113,7 @@ public class TestURL {
    // @Test
     @UseDataProvider("numberSymbols")
     public void verifyINumericValuesForID(String testData) {
-        errors.checkThat("Status code incorrect", expect().statusCode(HttpStatus.SC_NOT_FOUND).when().then().get(testData), is(true));
+       expect().statusCode(HttpStatus.SC_NOT_FOUND).when().then().get(testData);
     }
 
     /**
@@ -128,8 +128,7 @@ public class TestURL {
     //@Test
     @UseDataProvider("specialCharacters")
     public void verifySpecialCharactersForID(String testData) {
-        errors.checkThat("Status code incorrect", expect().statusCode(HttpStatus.SC_NOT_FOUND).when().then().get(testData), is(true));
-
+        expect().statusCode(HttpStatus.SC_NOT_FOUND).when().then().get(testData);
     }
 
     /**
