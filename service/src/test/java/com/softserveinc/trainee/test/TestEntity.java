@@ -17,6 +17,9 @@ import java.util.List;
 
 public class TestEntity {
 
+    public static void main(String[] args) {
+        System.out.println("---->");
+    }
     private static Entity entity;
 
     @BeforeClass

@@ -27,6 +27,9 @@ dependencies {
 
 }
 
+task getResponse(type: Test, dependsOn: testClasses) {
+    include '**/*TestGetResp*'
+}
 task UIfirefox(type: Test, dependsOn: testClasses) {
     include '**/*fireFoxDriver*'
 }

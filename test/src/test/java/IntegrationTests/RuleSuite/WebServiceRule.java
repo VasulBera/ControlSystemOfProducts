@@ -19,7 +19,7 @@ public class WebServiceRule extends ExternalResource {
     public void before() {
 
         String baseHost = System.getProperty("server.host");
-        RestAssured.baseURI = (baseHost == null) ? "http://localhost" : baseHost;
+        RestAssured.baseURI = (baseHost == null) ? "http://52.34.34.95" : baseHost;
 
         String port = System.getProperty("server.port");
         RestAssured.port = (port == null) ? 8080 : Integer.valueOf(port);

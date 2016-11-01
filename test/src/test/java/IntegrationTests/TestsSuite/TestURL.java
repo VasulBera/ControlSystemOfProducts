@@ -65,7 +65,7 @@ public class TestURL {
      *using HTTP GET method and " " (empty String) as id values verify that status code is equals '200' (HttpStatus.SC_OK)
      */
 
-    @Test
+   // @Test
     @UseDataProvider("emptyIdString")
     public void verifyBaseURL(String testData) {
         errors.checkThat("Status code incorrect", expect().statusCode(HttpStatus.SC_OK).when().then().get(testData), is(true));
@@ -80,7 +80,7 @@ public class TestURL {
      *using HTTP GET method and alhabetical symbols as id values verify that status code is equals '400' (HttpStatus.SC_NOT_FOUND)
      */
 
-    @Test
+  //  @Test
     @UseDataProvider("alphabeticalSymbols")
     public void verifyAlphabeticalSymbolsForID(String testData) {
         errors.checkThat("Status code incorrect", expect().statusCode(HttpStatus.SC_NOT_FOUND).when().get(testData), is(true));
@@ -95,7 +95,7 @@ public class TestURL {
      *using HTTP GET method and cyrillic symbols as id values verify that status code is equals '400' (HttpStatus.SC_NOT_FOUND)
      */
 
-    @Test
+   // @Test
     @UseDataProvider("cyrillicSymbols")
     public void verifysCyrillicSymbolsForID(String testData) {
         errors.checkThat("Status code incorrect", expect().statusCode(HttpStatus.SC_NOT_FOUND).when().get(testData), is(true));
@@ -110,7 +110,7 @@ public class TestURL {
      *using HTTP GET method and cyrillic symbols as id values verify that status code is equals '400' (HttpStatus.SC_NOT_FOUND)
      */
 
-    @Test
+   // @Test
     @UseDataProvider("numberSymbols")
     public void verifyINumericValuesForID(String testData) {
         errors.checkThat("Status code incorrect", expect().statusCode(HttpStatus.SC_NOT_FOUND).when().then().get(testData), is(true));
@@ -125,7 +125,7 @@ public class TestURL {
      *using HTTP GET method and special characters as id values verify that status code is equals '400' (HttpStatus.SC_NOT_FOUND)
      */
 
-    @Test
+    //@Test
     @UseDataProvider("specialCharacters")
     public void verifySpecialCharactersForID(String testData) {
         errors.checkThat("Status code incorrect", expect().statusCode(HttpStatus.SC_NOT_FOUND).when().then().get(testData), is(true));
