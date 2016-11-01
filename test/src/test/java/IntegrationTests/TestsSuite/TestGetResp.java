@@ -30,7 +30,7 @@ public class TestGetResp {
     @Test
     public void verifyValidID() {
 
-        expect().when().get().then().statusCode(HttpStatus.SC_OK);
+        expect().when().get("9").then().statusCode(HttpStatus.SC_OK);
     }
 
 }
