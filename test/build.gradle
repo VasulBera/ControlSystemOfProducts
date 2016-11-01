@@ -27,6 +27,10 @@ dependencies {
 
 }
 
+task TestBuilder(type: Test, dependsOn: testClasses) {
+    include '**/*TestBuilder*'
+}
+
 task getResponse(type: Test, dependsOn: testClasses) {
     include '**/*TestGetResp*'
 }

@@ -75,11 +75,11 @@ public class TestPutMethod {
     public void verifyEditOption() {
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
         Entities builder = new BaseBuilder().
-                BuildId(ID_ENTITIES).
+              //  BuildId(ID_ENTITIES).
                 BuildName(NAME_ENTITIES_EDITED).
                 BuildSchemaName(SHEMA_NAME_ENTITIES_EDITED).
                 BuildTableName(TABLE_NAME_ENTITIES_EDITED).
-                BuildFieldList(ID_FIELDS, NAME_FIELDS_EDITED, COLUMN_NAME_FIELDS_EDITED, TYPE_FIELDS_EDITED, LENGTH_FIELDS_EDITED).
+                BuildFieldList( NAME_FIELDS_EDITED, COLUMN_NAME_FIELDS_EDITED, TYPE_FIELDS_EDITED, LENGTH_FIELDS_EDITED).
                 build();
 
         given().contentType(ContentType.JSON).body(gson.toJson(builder)).when().put().then().statusCode(HttpStatus.SC_OK);
@@ -107,7 +107,7 @@ public class TestPutMethod {
     @Test
     public void ediRecordInEntitiesTable() {
         Entities builder = new BaseBuilder().
-                BuildId(ID_ENTITIES).
+               // BuildId(ID_ENTITIES).
                 BuildName(NAME_ENTITIES_EDITED_ONLY).
                 BuildSchemaName(SHEMA_NAME_ENTITIES_EDITED_ONLY).
                 BuildTableName(TABLE_NAME_ENTITIES_EDITED_ONLY).
@@ -140,11 +140,11 @@ public class TestPutMethod {
     @Test
     public void editRecordWithSpecialSymbols() {
         Entities builder = new BaseBuilder().
-                BuildId(ID_ENTITIES).
+               // BuildId(ID_ENTITIES).
                 BuildName(NAME_ENTITIES_PUT_SC).
                 BuildSchemaName(SHEMA_NAME_ENTITIES_PUT_SC).
                 BuildTableName(TABLE_NAME_ENTITIES_PUT_SC).
-                BuildFieldList(ID_FIELDS_PUT_SC, NAME_ENTITIES_PUT_SC, COLUMN_NAME_FIELDS_PUT_SC,
+                BuildFieldList( NAME_ENTITIES_PUT_SC, COLUMN_NAME_FIELDS_PUT_SC,
                         TYPE_FIELDS_PUT_SC, LENGTH_FIELDS_PUT_SC).
                 build();
 

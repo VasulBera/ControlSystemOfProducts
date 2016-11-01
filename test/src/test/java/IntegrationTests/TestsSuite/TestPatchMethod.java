@@ -74,11 +74,11 @@ public class TestPatchMethod {
     public void checkPatchOptionEntitiesTable() {
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
         Entities builder = new BaseBuilder().
-                BuildId(ID_ENTITIES).
+               // BuildId(ID_ENTITIES).
                 BuildName(NAME_ENTITIES_PATCH).
                 BuildSchemaName(SHEMA_NAME_ENTITIES_PATCH).
                 BuildTableName(TABLE_NAME_ENTITIES_PATCH).
-                BuildFieldList(ID_FIELDS, NAME_FIELDS, COLUMN_NAME_FIELDS, TYPE_FIELDS, LENGTH_FIELDS).
+                BuildFieldList( NAME_FIELDS, COLUMN_NAME_FIELDS, TYPE_FIELDS, LENGTH_FIELDS).
                 build();
 
         given().contentType(ContentType.JSON).body(gson.toJson(builder)).patch(ID_ENTITIES).then().statusCode(HttpStatus.SC_OK);
@@ -107,11 +107,11 @@ public class TestPatchMethod {
     public void checkPatchOptionFieldsTable() {
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
         Entities builder = new BaseBuilder().
-                BuildId(ID_ENTITIES).
+               // BuildId(ID_ENTITIES).
                 BuildName(NAME_ENTITIES).
                 BuildSchemaName(SHEMA_NAME_ENTITIES).
                 BuildTableName(TABLE_NAME_ENTITIES).
-                BuildFieldList("FIELDSID", NAME_FIELDS_PATCH, COLUMN_NAME_FIELDS_PATCH, TYPE_FIELDS_PATCH, LENGTH_FIELDS_PATCH).
+                BuildFieldList( NAME_FIELDS_PATCH, COLUMN_NAME_FIELDS_PATCH, TYPE_FIELDS_PATCH, LENGTH_FIELDS_PATCH).
                 build();
 
         given().contentType(ContentType.JSON).body(gson.toJson(builder)).patch(ID_ENTITIES).then().statusCode(HttpStatus.SC_OK);
@@ -141,11 +141,11 @@ public class TestPatchMethod {
     public void checkInvalidPatchOptionFieldsTable() {
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
         Entities builder = new BaseBuilder().
-                BuildId(ID_ENTITIES).
+                //BuildId(ID_ENTITIES).
                 BuildName(NAME_ENTITIES_PATCH_SC).
                 BuildSchemaName(SHEMA_NAME_ENTITIES_PATCH_SC).
                 BuildTableName(TABLE_NAME_ENTITIES_PATCH_SC).
-                BuildFieldList(ID_FIELDS_PATCH_SC, NAME_FIELDS_PATCH_SC, COLUMN_NAME_FIELDS_PATCH_SC, TYPE_FIELDS_PATCH_SC, LENGTH_FIELDS_PATCH_SC).
+                BuildFieldList( NAME_FIELDS_PATCH_SC, COLUMN_NAME_FIELDS_PATCH_SC, TYPE_FIELDS_PATCH_SC, LENGTH_FIELDS_PATCH_SC).
                 build();
         given().contentType(ContentType.JSON).body(gson.toJson(builder)).patch(ID_ENTITIES).then().statusCode(HttpStatus.SC_BAD_REQUEST);
         errors.checkThat("Record with" + ID_ENTITIES + "was created", DBOperations.isExist(ID_ENTITIES, ID_FIELDS_PATCH_SC), is(true));

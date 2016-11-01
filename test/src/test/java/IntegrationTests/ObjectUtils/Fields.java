@@ -11,7 +11,7 @@ import org.apache.commons.lang3.builder.EqualsBuilder;
 
 public class Fields {
 
-    private String id;
+   // private String id;
     private String name;
     private String ColumnName;
     private DataType type;
@@ -33,7 +33,7 @@ public class Fields {
         this.length = length;
     }
 
-    public void setId(String id) { this.id = id;}
+  //  public void setId(String id) { this.id = id;}
 
     public String getName() {
         return name;
@@ -51,7 +51,7 @@ public class Fields {
         return length;
     }
 
-    public String getId() { return id; }
+  //  public String getId() { return id; }
 
     /**Creates a new Fields object.
      *@param  'id_Internal' display id field in 'dbo.fields', 'id_Internal' - a variable of type String;
@@ -61,8 +61,8 @@ public class Fields {
      *@param  length_Internal display length field in 'dbo.fields', 'length_Internal' - a variable of type Integer; ;
      */
 
-    public Fields(String id_Internal, String name_Internal, String ColumnName_Internal, DataType type_Internal, Integer length_Internal) {
-        this.id = id_Internal;
+    public Fields( String name_Internal, String ColumnName_Internal, DataType type_Internal, Integer length_Internal) {
+       // this.id = id_Internal;
         this.name = name_Internal;
         this.ColumnName = ColumnName_Internal;
         this.type = type_Internal;
@@ -80,7 +80,7 @@ public class Fields {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Fields other = (Fields) o;
-        return new EqualsBuilder().append(getId(), other.getId()).
+        return new EqualsBuilder().
                 append(getName(), other.getName()).append(getColumnName(), other.getColumnName()).
                 append(getType(), other.getType()).append(getLength(), other.getLength()).build();
 
@@ -89,7 +89,6 @@ public class Fields {
     @Override
     public String toString() {
         return "Fields{" +
-                "Id_Internal='" + id + '\'' +
                 ", name='" + name + '\'' +
                 ", ColumnName='" + ColumnName + '\'' +
                 ", type='" + type + '\'' +

@@ -66,12 +66,12 @@ public class TestPostMethod {
     public void verifyCreateRecordsOption() {
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
         Entities builder = new BaseBuilder().
-                BuildId(ID_ENTITIES).
+               // BuildId(ID_ENTITIES).
                 BuildName(NAME_ENTITIES).
                 BuildSchemaName(SHEMA_NAME_ENTITIES).
                 BuildTableName(TABLE_NAME_ENTITIES).
-                BuildFieldList(ID_FIELDS, NAME_FIELDS, COLUMN_NAME_FIELDS, TYPE_FIELDS, LENGTH_FIELDS).
-                BuildFieldList(ID_FIELDS_S, NAME_FIELDS_S, COLUMN_NAME_FIELDS_S, TYPE_FIELDS_S, LENGTH_FIELDS_S).
+                BuildFieldList( NAME_FIELDS, COLUMN_NAME_FIELDS, TYPE_FIELDS, LENGTH_FIELDS).
+                BuildFieldList( NAME_FIELDS_S, COLUMN_NAME_FIELDS_S, TYPE_FIELDS_S, LENGTH_FIELDS_S).
                 build();
 
         given().contentType(ContentType.JSON).body(gson.toJson(builder)).post().then().statusCode(HttpStatus.SC_OK);
@@ -98,7 +98,7 @@ public class TestPostMethod {
     public void createRecordOnlyInEntitiesTable() {
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
         Entities builder = new BaseBuilder().
-                BuildId(ID_ENTITIES).
+               // BuildId(ID_ENTITIES).
                 BuildName(NAME_ENTITIES_ONLY).
                 BuildSchemaName(SHEMA_NAME_ENTITIES_ONLY).
                 BuildTableName(TABLE_NAME_ENTITIES_ONLY).
@@ -131,11 +131,11 @@ public class TestPostMethod {
     @Test
     public void verifyValidMaxLength() {
         Entities base = new BaseBuilder().
-                BuildId(ID_ETITIES_RANDOM_VALID).
+                //BuildId(ID_ETITIES_RANDOM_VALID).
                 BuildName(NAME_ETITIES_RANDOM_VALID).
                 BuildSchemaName(SHEMA_NAME_ETITIES_RANDOM_VALID).
                 BuildTableName(TABLE_NAME_ETITIES_RANDOM_VALID).
-                BuildFieldList(ID_FIELDS_RANDOM_VALID, NAME_FIELDS_RANDOM_VALID, COLUMN_NAME_FIELDS_RANDOM_VALID, INT, LENGTH_FIELDS_RANDOM_VALID).
+                BuildFieldList( NAME_FIELDS_RANDOM_VALID, COLUMN_NAME_FIELDS_RANDOM_VALID, INT, LENGTH_FIELDS_RANDOM_VALID).
                 build();
 
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
@@ -159,11 +159,11 @@ public class TestPostMethod {
     @Test
     public void verifyInValidMaxLength() {
         Entities base = new BaseBuilder().
-                BuildId(ID_ETITIES_INVALID).
+                //BuildId(ID_ETITIES_INVALID).
                 BuildName(NAME_ETITIES_INVALID).
                 BuildSchemaName(SHEMA_NAME_ETITIES_INVALID).
                 BuildTableName(TABLE_NAME_ETITIES_INVALID).
-                BuildFieldList(ID_FIELDS_INVALID, NAME_FIELDS_INVALID, COLUMN_NAME_FIELDS_INVALID, INT, LENGTH_FIELDS_NVALID).
+                BuildFieldList(NAME_FIELDS_INVALID, COLUMN_NAME_FIELDS_INVALID, INT, LENGTH_FIELDS_NVALID).
                 build();
 
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
@@ -185,11 +185,11 @@ public class TestPostMethod {
     @Test
     public void createRecordWithSpecialCharacters() {
         Entities base = new BaseBuilder().
-                BuildId(ID_ENTITIES_SC).
+               // BuildId(ID_ENTITIES_SC).
                 BuildName(NAME_ENTITIES_SC).
                 BuildSchemaName(SHEMA_NAME_ENTITIES_SC).
                 BuildTableName(TABLE_NAME_ENTITIES_SC).
-                BuildFieldList(ID_FIELDS_SC, NAME_FIELDS_SC, COLUMN_NAME_FIELDS_SC, TYPE_FIELDS_SC, LENGTH_FIELDS_SC).
+                BuildFieldList(NAME_FIELDS_SC, COLUMN_NAME_FIELDS_SC, TYPE_FIELDS_SC, LENGTH_FIELDS_SC).
                 build();
 
         Gson gson = new GsonBuilder().setPrettyPrinting().create();

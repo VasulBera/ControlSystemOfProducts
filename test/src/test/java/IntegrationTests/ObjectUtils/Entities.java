@@ -13,15 +13,15 @@ import java.util.List;
 
 public class Entities {
 
-    private String id;
+    //private String id;
     private String name;
     private String schemaName;
     private String tableName;
     private List<Fields> fieldList;
 
-    public void setId(String Id) {
+    /*public void setId(String Id) {
         this.id = Id;
-    }
+    }*/
 
     public void setName(String name) {
         this.name = name;
@@ -39,9 +39,9 @@ public class Entities {
         this.fieldList = fieldList;
     }
 
-    public String getId() {
+    /*public String getId() {
         return id;
-    }
+    }*/
 
     public String getName() {
         return name;
@@ -72,7 +72,7 @@ public class Entities {
 
         Entities other = (Entities) o;
 
-        return new EqualsBuilder().append(getId(), other.getId())
+        return new EqualsBuilder()//.append(getId(), other.getId())
                 .append(getName(), other.getName())
                 .append(getSchemaName(), other.getSchemaName())
                 .append(getTableName(), other.getTableName())
@@ -83,7 +83,7 @@ public class Entities {
     @Override
     public String toString() {
         return "Entities{" +
-                "id='" + id + '\'' +
+               // "id='" + id + '\'' +
                 ", name='" + name + '\'' +
                 ", schemaName='" + schemaName + '\'' +
                 ", tableName='" + tableName + '\'' +

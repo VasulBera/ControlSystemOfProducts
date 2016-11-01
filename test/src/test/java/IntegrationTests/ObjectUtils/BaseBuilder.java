@@ -10,16 +10,16 @@ import java.util.List;
 
 public class BaseBuilder {
 
-    private String Id_B;
+   // private String Id_B;
     private String name_B;
     private String schemaName_B;
     private String tableName_B;
     private List<Fields> fieldList_B = new ArrayList<>();
 
-    public BaseBuilder BuildId(String Id_B) {
+  /*  public BaseBuilder BuildId(String Id_B) {
         this.Id_B = Id_B;
         return this;
-    }
+    }*/
 
     public BaseBuilder BuildName(String name_B) {
         this.name_B = name_B;
@@ -36,14 +36,14 @@ public class BaseBuilder {
         return this;
     }
 
-    public BaseBuilder BuildFieldList(String id_fields, String name_fields, String columnName_fields, DataType type_fields, Integer length_fields) {
-        this.fieldList_B.add(new Fields(id_fields, name_fields, columnName_fields, type_fields, length_fields));
+    public BaseBuilder BuildFieldList( String name_fields, String columnName_fields, DataType type_fields, Integer length_fields) {
+        this.fieldList_B.add(new Fields(name_fields, columnName_fields, type_fields, length_fields));
         return this;
     }
 
     public Entities build() {
         Entities base = new Entities();
-        base.setId(Id_B);
+        //base.setId(Id_B);
         base.setName(name_B);
         base.setSchemaName(schemaName_B);
         base.setTableName(tableName_B);

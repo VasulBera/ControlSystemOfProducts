@@ -23,15 +23,15 @@ public interface TestDataForTests {
 
     public static Entities testData_Id_BarvinokGoods() {
         Entities base = new BaseBuilder().
-                BuildId("BARVINOKGOODS").
+               // BuildId("BARVINOKGOODS").
                 BuildName("Good_shop").
                 BuildSchemaName("Barvinok").
                 BuildTableName("goods").
-                BuildFieldList("BARVINOKGOODSBARCODE", "bar_code", "BAR_CODE", NVARCHAR, 45).
-                BuildFieldList("BARVINOKGOODSPRICE", "price", "PRICE", NVARCHAR, 45).
-                BuildFieldList("BARVINOKGOODSPROVIDER", "provider", "PROVIDER", NVARCHAR, 45).
-                BuildFieldList("BARVINOKGOODSQUANTITY", "quantity", "QUANTITY", INT, 0).
-                BuildFieldList("BARVINOKGOODSTYPE", "type", "TYPE", NVARCHAR, 45).
+                BuildFieldList("bar_code", "BAR_CODE", NVARCHAR, 45).
+                BuildFieldList("price", "PRICE", NVARCHAR, 45).
+                BuildFieldList("provider", "PROVIDER", NVARCHAR, 45).
+                BuildFieldList("quantity", "QUANTITY", INT, 0).
+                BuildFieldList("type", "TYPE", NVARCHAR, 45).
                 build();
         return base;
     }
@@ -44,14 +44,14 @@ public interface TestDataForTests {
 
     public static Entities testData_Id_AdidasShoes() {
         Entities base = new BaseBuilder().
-                BuildId("ADIDASSHOES").
+                //BuildId("ADIDASSHOES").
                 BuildName("Shoes_male").
                 BuildSchemaName("Adidas").
                 BuildTableName("shoes").
-                BuildFieldList("ADIDASSHOESCOLOR", "color", "COLOR", NVARCHAR, 45).
-                BuildFieldList("ADIDASSHOESDATA", "date", "DATE", DATE, 0).
-                BuildFieldList("ADIDASSHOESPRICE", "price", "PRICE", NVARCHAR, 45).
-                BuildFieldList("ADIDASSHOESTYPE", "type", "TYPE", NVARCHAR, 45).
+                BuildFieldList("color", "COLOR", NVARCHAR, 45).
+                BuildFieldList("date", "DATE", DATE, 0).
+                BuildFieldList("price", "PRICE", NVARCHAR, 45).
+                BuildFieldList("type", "TYPE", NVARCHAR, 45).
                 build();
         return base;
     }
@@ -64,11 +64,11 @@ public interface TestDataForTests {
 
     public static Entities getValuesForCheckPutMethod() {
         Entities base = new BaseBuilder().
-                BuildId("ENTITIESID").
+               // BuildId("ENTITIESID").
                 BuildName("NameEdited").
                 BuildSchemaName("SchemaNameEdited").
                 BuildTableName("TableNameEdited").
-                BuildFieldList("FIELDSID", "FIELDNameEdited", "FIELDColumnNameEdited", NVARCHAR, 46).build();
+                BuildFieldList("FIELDNameEdited", "FIELDColumnNameEdited", NVARCHAR, 46).build();
         return base;
     }
 
@@ -80,12 +80,12 @@ public interface TestDataForTests {
 
     public static Entities getValuesForCheckPostMethod() {
         Entities base = new BaseBuilder().
-                BuildId("ENTITIESID").
+               // BuildId("ENTITIESID").
                 BuildName("NameEntities").
                 BuildSchemaName("SchemaNameEntities").
                 BuildTableName("TableNameEntities").
-                BuildFieldList("FIELDSID", "NameFields", "ColumnNameFields", INT, 100).
-                BuildFieldList("FIELDSID_Price","NameFields_Price", "ColumnNameFieldsPrice", FLOAT, 200 ).build();
+                BuildFieldList("NameFields", "ColumnNameFields", INT, 100).
+                BuildFieldList("NameFields_Price", "ColumnNameFieldsPrice", FLOAT, 200 ).build();
         return base;
     }
 
@@ -97,7 +97,7 @@ public interface TestDataForTests {
 
     public static Entities getValuesFromEntitiesForPutMethod() {
         Entities base = new BaseBuilder().
-                BuildId("ENTITIESID").
+               // BuildId("ENTITIESID").
                 BuildName("NameEntities_ONLY").
                 BuildSchemaName("SchemaNameEntities_ONLY").
                 BuildTableName("TableNameEntities_ONLY").
@@ -113,11 +113,11 @@ public interface TestDataForTests {
 
     public static Entities getValuesForCheckDeleteOption() {
         Entities base = new BaseBuilder().
-                BuildId("TESTID").
+               // BuildId("TESTID").
                 BuildName("TestName").
                 BuildSchemaName("TestSchemaName").
                 BuildTableName("TestTableName").
-                BuildFieldList("InternalId", "Internal_Name", "InternalColumnName", INT, 50).build();
+                BuildFieldList("Internal_Name", "InternalColumnName", INT, 50).build();
         return base;
     }
 
@@ -129,11 +129,11 @@ public interface TestDataForTests {
 
     public static Entities getValuesForCheckPatchMethodE() {
         Entities base = new BaseBuilder().
-                BuildId("ENTITIESID").
+                //BuildId("ENTITIESID").
                 BuildName("NamePatch").
                 BuildSchemaName("SchemaPatchName").
                 BuildTableName("TablePatchName").
-                BuildFieldList("FIELDSID", "NameFields", "Column_NameFields", INT, 100).build();
+                BuildFieldList("NameFields", "Column_NameFields", INT, 100).build();
         return base;
     }
 
@@ -145,11 +145,11 @@ public interface TestDataForTests {
 
     public static Entities getValuesForCheckPatchMethodF() {
         Entities base = new BaseBuilder().
-                BuildId("ENTITIESID").
+                //BuildId("ENTITIESID").
                 BuildName("NameEntities").
                 BuildSchemaName("SchemaNameEntities").
                 BuildTableName("TableNameEntities").
-                BuildFieldList("FIELDSID", "FieldNamePatch", "FieldColumnNamePatch", DATE, 300).build();
+                BuildFieldList("FieldNamePatch", "FieldColumnNamePatch", DATE, 300).build();
         return base;
     }
 
@@ -161,11 +161,11 @@ public interface TestDataForTests {
 
     public static Entities getValuesForCheckPatchMethodFSC() {
         Entities base = new BaseBuilder().
-                BuildId("ENTITIESID").
+                //BuildId("ENTITIESID").
                 BuildName("@@@").
                 BuildSchemaName("$$$").
                 BuildTableName("^^^").
-                BuildFieldList("%%%", ";;;", "{}{}{}", BIT, 3).build();
+                BuildFieldList( ";;;", "{}{}{}", BIT, 3).build();
         return base;
     }
 
@@ -178,13 +178,24 @@ public interface TestDataForTests {
 
     public static Entities getValuesForVerifyMaxFieldLength() {
         Entities base = new BaseBuilder().
-                BuildId(ID_ETITIES_RANDOM_VALID).
+              //  BuildId(ID_ETITIES_RANDOM_VALID).
                 BuildName(NAME_ETITIES_RANDOM_VALID).
                 BuildSchemaName(SHEMA_NAME_ETITIES_RANDOM_VALID).
                 BuildTableName(TABLE_NAME_ETITIES_RANDOM_VALID).
-                BuildFieldList((ID_ETITIES_RANDOM_VALID + NAME_FIELDS_RANDOM_VALID).toUpperCase(), NAME_FIELDS_RANDOM_VALID, COLUMN_NAME_FIELDS_RANDOM_VALID, INT, LENGTH_FIELDS_RANDOM_VALID).build();
+                BuildFieldList(NAME_FIELDS_RANDOM_VALID, COLUMN_NAME_FIELDS_RANDOM_VALID, INT, LENGTH_FIELDS_RANDOM_VALID).build();
         return base;
     }
+
+    public static Entities getForPostCheck() {
+        Entities base = new BaseBuilder().
+                //  BuildId(ID_ETITIES_RANDOM_VALID).
+                        BuildName("Name").
+                        BuildSchemaName("Schema").
+                        BuildTableName("Table").
+                        build();
+        return base;
+    }
+
 
 }
 
