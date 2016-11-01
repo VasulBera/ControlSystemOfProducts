@@ -84,8 +84,8 @@ public interface TestDataForTests {
                 BuildName("NameEntities").
                 BuildSchemaName("SchemaNameEntities").
                 BuildTableName("TableNameEntities").
-                BuildFieldList("NameFields", "ColumnNameFields", INT, 100).
-                BuildFieldList("NameFields_Price", "ColumnNameFieldsPrice", FLOAT, 200 ).build();
+                BuildFieldList("NameFields", "Column_NameFields", NVARCHAR, 100).
+                BuildFieldList("NameFields_Price", "Column_NameFields_Price", NVARCHAR, 100 ).build();
         return base;
     }
 
