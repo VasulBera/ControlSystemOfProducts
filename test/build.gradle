@@ -27,6 +27,10 @@ dependencies {
 
 }
 
+task deleteTestRecord(type: Test, dependsOn: testClasses) {
+    include '**/*DeleteTestRecord*'
+}
+
 task TestBuilder(type: Test, dependsOn: testClasses) {
     include '**/*TestBuilder*'
 }

@@ -72,11 +72,10 @@ public class TestPostMethod {
                 BuildSchemaName(SHEMA_NAME_ENTITIES).
                 BuildTableName(TABLE_NAME_ENTITIES).
                 BuildFieldList(NAME_FIELDS, COLUMN_NAME_FIELDS, DATE.NVARCHAR, LENGTH_FIELDS).
-                BuildFieldList(NAME_FIELDS_S, COLUMN_NAME_FIELDS_S, DATE.NVARCHAR, LENGTH_FIELDS_S).
+              //  BuildFieldList(NAME_FIELDS_S, COLUMN_NAME_FIELDS_S, DATE.NVARCHAR, LENGTH_FIELDS_S).
                 build();
 
         given().contentType(ContentType.JSON).body(gson.toJson(builder)).post().then().statusCode(HttpStatus.SC_OK);
-
         Entities responseForCheckPost = ResponseUtils.getResponse("SCHEMANAMEENTITIESTABLENAMEENTITIES");
         System.out.println("responseForCheckPost-->" + responseForCheckPost);
         Entities testDataForCheckPost = TestDataForTests.getValuesForCheckPostMethod();
@@ -135,7 +134,7 @@ public class TestPostMethod {
    // @Test
     public void verifyValidMaxLength() {
         Entities base = new BaseBuilder().
-                //BuildId(ID_ETITIES_RANDOM_VALID).
+               // BuildId(ID_ETITIES_RANDOM_VALID).
                 BuildName(NAME_ETITIES_RANDOM_VALID).
                 BuildSchemaName(SHEMA_NAME_ETITIES_RANDOM_VALID).
                 BuildTableName(TABLE_NAME_ETITIES_RANDOM_VALID).
@@ -144,7 +143,7 @@ public class TestPostMethod {
 
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
         given().contentType(ContentType.JSON).body(gson.toJson(base)).post().then().statusCode(HttpStatus.SC_OK);
-        Entities responseValid = ResponseUtils.getResponse(ID_ETITIES_RANDOM_VALID);
+        Entities responseValid = ResponseUtils.getResponse("");
         Entities testDataForCheckValid = TestDataForTests.getValuesForVerifyMaxFieldLength();
         errors.checkThat(responseValid.equals(testDataForCheckValid), is(true));
     }
@@ -172,7 +171,7 @@ public class TestPostMethod {
 
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
         given().contentType(ContentType.JSON).body(gson.toJson(base)).post().then().statusCode(500);
-       // errors.checkThat("Record with" + ID_ETITIES_INVALID + " was created", DBOperations.isExist(ID_ETITIES_INVALID), is(true));
+        //errors.checkThat("Record with" + ID_ETITIES_INVALID + " was created", DBOperations.isExist(), is(true));
     }
 
     /**
@@ -208,9 +207,10 @@ public class TestPostMethod {
      */
 
  // @AfterClass
-    public static void deleteAllChanges() {
-        DBOperations.deleteRecord("TESTIDINTERNAL_NAME", "TESTID");
-        DBOperations.deleteRecord((ID_ETITIES_RANDOM_VALID + NAME_FIELDS_RANDOM_VALID).toUpperCase(), ID_ETITIES_RANDOM_VALID);
+    @Test
+    public void deleteAllChanges() {
+        DBOperations.deleteRecord("SCHEMANAMEENTITIESTABLENAMEENTITIESCOLUMN_NAMEFIELDS", "SCHEMANAMEENTITIESTABLENAMEENTITIES");
+       // DBOperations.deleteRecord((ID_ETITIES_RANDOM_VALID + NAME_FIELDS_RANDOM_VALID).toUpperCase(), ID_ETITIES_RANDOM_VALID);
 
     }
 }

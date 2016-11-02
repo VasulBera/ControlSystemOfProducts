@@ -12,7 +12,7 @@ import static org.apache.commons.lang3.RandomStringUtils.randomNumeric;
  */
 
 public abstract class RandomConstantValues {
-    public static final String ID_ETITIES_RANDOM_VALID = randomAlphabetic(2);
+   // public static final String ID_ETITIES_RANDOM_VALID = randomAlphabetic(2);
     public static final String NAME_ETITIES_RANDOM_VALID = randomAlphabetic(1);
     public static final String SHEMA_NAME_ETITIES_RANDOM_VALID = randomAlphabetic(1);
     public static final String TABLE_NAME_ETITIES_RANDOM_VALID = randomAlphabetic(1);

@@ -18,7 +18,7 @@ public class DBOperations {
 
     private static Statement statement = setupDBConnection();
     private static Connection connection;
-    private static final String JDBCPropertyFile = "config.properties";
+    private static final String JDBCPropertyFile = "configAmazon.properties";
 
     /**
      * Open a connection to 'Customer' DB, create a connection object.
