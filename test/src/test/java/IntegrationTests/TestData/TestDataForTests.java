@@ -180,10 +180,12 @@ public interface TestDataForTests {
     public static Entities getValuesForVerifyMaxFieldLength() {
         Entities base = new BaseBuilder().
               //  BuildId(ID_ETITIES_RANDOM_VALID).
-                BuildName(NAME_ETITIES_RANDOM_VALID).
-                BuildSchemaName(SHEMA_NAME_ETITIES_RANDOM_VALID).
-                BuildTableName(TABLE_NAME_ETITIES_RANDOM_VALID).
-                BuildFieldList(NAME_FIELDS_RANDOM_VALID, COLUMN_NAME_FIELDS_RANDOM_VALID, INT, LENGTH_FIELDS_RANDOM_VALID).build();
+                BuildName("ghhhhhhhhhhhgfyhfygtffffffffffffffffffhjhhhhhhhhhhhhhhhhhhhhhhhhffffffffffffffffffffffffffffffffffffffffffffffffffffffff1234567").
+                BuildSchemaName("ghhhhhhhhhhhgfyhfygtffffffffffffffffffhjhhhhhhhhhhhhhhhhhhhhhhhhffffffffffffffffffffffffffffffffffffffffffffffffffffffff1234567").
+                BuildTableName("ghhhhhhhhhhhgfyhfygtffffffffffffffffffhjhhhhhhhhhhhhhhhhhhhhhhhhffffffffffffffffffffffffffffffffffffffffffffffffffffffff1234567").
+                BuildFieldList("ghhhhhhhhhhhgfyhfygtffffffffffffffffffhjhhhhhhhhhhhhhhhhhhhhhhhhffffffffffffffffffffffffffffffffffffffffffffffffffffffff1234567",
+                        "ghhhhhhhhhhhgfyhfygtffffffffffffffffffhjhhhhhhhhhhhhhhhhhhhhhhhhffffffffffffffffffffffffffffffffffffffffffffffffffffffff1234567",
+                        NVARCHAR, 777).build();
         return base;
     }
 
