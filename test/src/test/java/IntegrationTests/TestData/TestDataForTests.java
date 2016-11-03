@@ -64,10 +64,9 @@ public interface TestDataForTests {
 
     public static Entities getValuesForCheckPutMethod() {
         Entities base = new BaseBuilder().
-               // BuildId("ENTITIESID").
-                BuildName("NameEdited").
-                BuildSchemaName("SchemaNameEdited").
-                BuildTableName("TableNameEdited").
+                BuildName("Name").
+                BuildSchemaName("Schema").
+                BuildTableName("Table").
                 BuildFieldList("FIELDNameEdited", "FIELDColumnNameEdited", NVARCHAR, 46).build();
         return base;
     }
@@ -99,9 +98,9 @@ public interface TestDataForTests {
     public static Entities getValuesFromEntitiesForPutMethod() {
         Entities base = new BaseBuilder().
                // BuildId("ENTITIESID").
-                BuildName("NameEntities_ONLY").
-                BuildSchemaName("SchemaNameEntities_ONLY").
-                BuildTableName("TableNameEntities_ONLY").
+                BuildName("EditedEntityName").
+                BuildSchemaName("EntitySchema").
+                BuildTableName("EntityTable").
                 build();
         return base;
     }
@@ -134,7 +133,7 @@ public interface TestDataForTests {
                 BuildName("NamePatch").
                 BuildSchemaName("SchemaPatchName").
                 BuildTableName("TablePatchName").
-                BuildFieldList("NameFields", "Column_NameFields", INT, 100).build();
+                BuildFieldList("NameFields", "Column_NameFields", NVARCHAR, 100).build();
         return base;
     }
 
@@ -150,7 +149,7 @@ public interface TestDataForTests {
                 BuildName("NameEntities").
                 BuildSchemaName("SchemaNameEntities").
                 BuildTableName("TableNameEntities").
-                BuildFieldList("FieldNamePatch", "FieldColumnNamePatch", DATE, 300).build();
+                BuildFieldList("FieldNamePatch", "FieldColumnNamePatch", NVARCHAR, 100).build();
         return base;
     }
 

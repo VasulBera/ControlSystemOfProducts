@@ -70,7 +70,7 @@ import static org.hamcrest.core.Is.is;
         List<Entities> testDataList = new ArrayList(asList(testData_Id_AdidasShoes(), testData_Id_BarvinokGoods()));
         System.out.println("resp--->" + ResponseList);
         System.out.println("testD-->" + testDataList);
-        errors.checkThat("Response is not correct", ResponseList.equals(testDataList), is(true));
+         errors.checkThat("Response is not correct", ResponseList.equals(testDataList), is(true));
     }
 
     /**
@@ -85,6 +85,7 @@ import static org.hamcrest.core.Is.is;
      * @see TestDataForTests
      * - compare test data and response
      */
+
     @Test
     @UseDataProvider("validID")
     public void verifyGetMethodWithIDs(String idValue, Entities testData) {
@@ -105,7 +106,7 @@ import static org.hamcrest.core.Is.is;
     @Test
     @UseDataProvider("dataForURL")
     public void verifyValidID(String testData) {
-        errors.checkThat("Status code incorrect", expect().statusCode(HttpStatus.SC_OK).when().then().get(testData), is(true));
+        expect().statusCode(HttpStatus.SC_OK).when().then().get(testData);
     }
 
     /**
@@ -120,7 +121,7 @@ import static org.hamcrest.core.Is.is;
     @Test
     @UseDataProvider("emptyIdString")
     public void verifyBaseURL(String testData) {
-        errors.checkThat("Status code incorrect", expect().statusCode(HttpStatus.SC_OK).when().then().get(testData), is(true));
+       expect().statusCode(HttpStatus.SC_OK).when().then().get(testData);
     }
 
     /**
@@ -135,7 +136,7 @@ import static org.hamcrest.core.Is.is;
     @Test
     @UseDataProvider("alphabeticalSymbols")
     public void verifyAlphabeticalSymbolsForID(String testData) {
-        errors.checkThat("Status code incorrect", expect().statusCode(HttpStatus.SC_NOT_FOUND).when().get(testData), is(true));
+        expect().statusCode(HttpStatus.SC_NOT_FOUND).when().get(testData);
     }
 
     /**
@@ -150,7 +151,7 @@ import static org.hamcrest.core.Is.is;
     @Test
     @UseDataProvider("cyrillicSymbols")
     public void verifysCyrillicSymbolsForID(String testData) {
-        errors.checkThat("Status code incorrect", expect().statusCode(HttpStatus.SC_NOT_FOUND).when().get(testData), is(true));
+       expect().statusCode(HttpStatus.SC_NOT_FOUND).when().get(testData);
     }
 
     /**
@@ -165,7 +166,7 @@ import static org.hamcrest.core.Is.is;
     @Test
     @UseDataProvider("numberSymbols")
     public void verifyINumericValuesForID(String testData) {
-        errors.checkThat("Status code incorrect", expect().statusCode(HttpStatus.SC_NOT_FOUND).when().then().get(testData), is(true));
+        expect().statusCode(HttpStatus.SC_NOT_FOUND).when().then().get(testData);
     }
 
     /**
@@ -180,7 +181,7 @@ import static org.hamcrest.core.Is.is;
     @Test
     @UseDataProvider("specialCharacters")
     public void verifySpecialCharactersForID(String testData) {
-        errors.checkThat("Status code incorrect", expect().statusCode(HttpStatus.SC_NOT_FOUND).when().then().get(testData), is(true));
+       expect().statusCode(HttpStatus.SC_NOT_FOUND).when().then().get(testData);
 
     }
 

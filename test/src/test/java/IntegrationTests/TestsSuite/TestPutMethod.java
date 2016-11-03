@@ -3,6 +3,7 @@ package IntegrationTests.TestsSuite;
 import IntegrationTests.HelpUtils.DBOperations;
 import IntegrationTests.HelpUtils.ResponseUtils;
 import IntegrationTests.ObjectUtils.BaseBuilder;
+import IntegrationTests.ObjectUtils.DataType;
 import IntegrationTests.ObjectUtils.Entities;
 import IntegrationTests.RuleSuite.WebServiceRule;
 import IntegrationTests.TestData.TestDataForTests;
@@ -10,10 +11,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.jayway.restassured.http.ContentType;
 import org.apache.http.HttpStatus;
-import org.junit.After;
-import org.junit.ClassRule;
-import org.junit.Rule;
-import org.junit.Test;
+import org.junit.*;
 import org.junit.rules.ErrorCollector;
 
 import static IntegrationTests.ConstantsUtils.ConstantValues.*;
@@ -48,13 +46,14 @@ public class TestPutMethod {
 
     /**
      * createRecord() creates record before every tests
+     *
      * @see DBOperations
-     * */
+     */
 
-   // @Before
-    @Test
-    public void createRecord() {
-        DBOperations.createRecord();
+    @BeforeClass
+    public static void createRecord() {
+        DBOperations.createRecord2();
+        DBOperations.createRecord3();
     }
 
     /**
@@ -75,19 +74,17 @@ public class TestPutMethod {
     public void verifyEditOption() {
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
         Entities builder = new BaseBuilder().
-              //  BuildId(ID_ENTITIES).
-                BuildName(NAME_ENTITIES_EDITED).
-                BuildSchemaName(SHEMA_NAME_ENTITIES_EDITED).
-                BuildTableName(TABLE_NAME_ENTITIES_EDITED).
-                BuildFieldList( NAME_FIELDS_EDITED, COLUMN_NAME_FIELDS_EDITED, TYPE_FIELDS_EDITED, LENGTH_FIELDS_EDITED).
+                BuildName("Name").
+                BuildSchemaName("Schema").
+                BuildTableName("Table").
+                BuildFieldList(NAME_FIELDS_EDITED, COLUMN_NAME_FIELDS_EDITED, DataType.NVARCHAR, LENGTH_FIELDS_EDITED).
                 build();
 
         given().contentType(ContentType.JSON).body(gson.toJson(builder)).when().put().then().statusCode(HttpStatus.SC_OK);
-        Entities responseForCheckEdit = ResponseUtils.getResponse(ID_ENTITIES);
+        System.out.println("-->" + builder);
+        Entities responseForCheckEdit = ResponseUtils.getResponse("SCHEMATABLE");
         Entities testDataForCheckEdit = TestDataForTests.getValuesForCheckPutMethod();
-        System.out.println("resp" + responseForCheckEdit);
-        System.out.println("test" + testDataForCheckEdit);
-        errors.checkThat("Response with id " + ID_ENTITIES + " is incorrect!!!", testDataForCheckEdit.equals(responseForCheckEdit), is(true));
+        errors.checkThat("Response with id " + "SCHEMATABLE" + " is incorrect!!!", testDataForCheckEdit.equals(responseForCheckEdit), is(true));
     }
 
     /**
@@ -106,18 +103,18 @@ public class TestPutMethod {
 
     @Test
     public void ediRecordInEntitiesTable() {
-        Entities builder = new BaseBuilder().
-               // BuildId(ID_ENTITIES).
-                BuildName(NAME_ENTITIES_EDITED_ONLY).
-                BuildSchemaName(SHEMA_NAME_ENTITIES_EDITED_ONLY).
-                BuildTableName(TABLE_NAME_ENTITIES_EDITED_ONLY).
+       Entities builder = new BaseBuilder().
+                BuildName("EditedEntityName").
+                BuildSchemaName("EntitySchema").
+                BuildTableName("EntityTable").
                 build();
 
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
         given().contentType(ContentType.JSON).body(gson.toJson(builder)).when().put().then().statusCode(HttpStatus.SC_OK);
-        Entities response = ResponseUtils.getResponse(ID_ENTITIES);
+
+        Entities response = ResponseUtils.getResponse("ENTITYSCHEMAENTITYTABLE");
         Entities testDataOnly = TestDataForTests.getValuesFromEntitiesForPutMethod();
-       // errors.checkThat("Response and testData is not equal" + testDataOnly.equals(response), is(true));
+        errors.checkThat("Response and testData is not equal", testDataOnly.equals(response), is(true));
     }
 
     /**
@@ -125,6 +122,7 @@ public class TestPutMethod {
      * Steps to reproduce:
      * <ol>
      * <li> create new object of type Entities(using ConstantValues class for definition field's values)
+     *
      * @see Entities
      * @see IntegrationTests.ConstantsUtils.ConstantValues
      * <li> using HTTP PUT method edit new record and verify that status code is 400((HttpStatus.SC_BAD_REQUEST)
@@ -134,33 +132,34 @@ public class TestPutMethod {
      * <li> verify that object was not edited
      * @see DBOperations
      * </ol>
-     *
      */
 
     @Test
     public void editRecordWithSpecialSymbols() {
         Entities builder = new BaseBuilder().
-               // BuildId(ID_ENTITIES).
                 BuildName(NAME_ENTITIES_PUT_SC).
                 BuildSchemaName(SHEMA_NAME_ENTITIES_PUT_SC).
                 BuildTableName(TABLE_NAME_ENTITIES_PUT_SC).
-                BuildFieldList( NAME_ENTITIES_PUT_SC, COLUMN_NAME_FIELDS_PUT_SC,
+                BuildFieldList(NAME_ENTITIES_PUT_SC, COLUMN_NAME_FIELDS_PUT_SC,
                         TYPE_FIELDS_PUT_SC, LENGTH_FIELDS_PUT_SC).
                 build();
 
+        String idEntityValue = (SHEMA_NAME_ENTITIES_PUT_SC + TABLE_NAME_ENTITIES_PUT_SC).toUpperCase();
+        String idFieldValue = (idEntityValue + COLUMN_NAME_FIELDS_PUT_SC).toUpperCase();
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
-        given().contentType(ContentType.JSON).body(gson.toJson(builder)).when().put().then().statusCode(HttpStatus.SC_BAD_REQUEST);
-        errors.checkThat("Record with" + ID_ENTITIES + "was created", DBOperations.isExist(ID_FIELDS_PUT_SC, ID_ENTITIES), is(true));
+        given().contentType(ContentType.JSON).body(gson.toJson(builder)).when().put().then().statusCode(500);
+        errors.checkThat("Record with" + "" + "was created", DBOperations.isExist(idFieldValue, idEntityValue), is(true));
     }
 
     /**
      * The deleteRecord() method delete all changes after every test
+     *
      * @see DBOperations
-     * */
+     */
 
-   //@After
-    @Test
-    public void deleteRecord() {
-       DBOperations.deleteRecord(ID_FIELDS, ID_ENTITIES);
+    @AfterClass
+    public static void deleteRecord() {
+        DBOperations.deleteRecord("SCHEMATABLEFIELDCOLUMNNAMEEDITED", "SCHEMATABLE");
+        DBOperations.deleteRecord("", "ENTITYSCHEMAENTITYTABLE");
     }
 }
