@@ -15,6 +15,7 @@ import org.junit.*;
 import org.junit.rules.ErrorCollector;
 
 import static IntegrationTests.ConstantsUtils.ConstantValues.*;
+import static IntegrationTests.ConstantsUtils.ConstantValues.*;
 import static com.jayway.restassured.RestAssured.given;
 import static org.hamcrest.core.Is.is;
 
@@ -22,6 +23,7 @@ import static org.hamcrest.core.Is.is;
  * @author Solomiia Riznychok
  * @version 1.0
  * @since 2016-18-07
+ *
  * The TestPutMethod class was created for testing HTTP PUT method.
  */
 
@@ -45,15 +47,15 @@ public class TestPutMethod {
     public ErrorCollector errors = new ErrorCollector();
 
     /**
-     * createRecord() creates record before every tests
+     * createRecord() method creates record before all tests running
      *
      * @see DBOperations
      */
 
     @BeforeClass
     public static void createRecord() {
-        DBOperations.createRecord2();
-        DBOperations.createRecord3();
+        DBOperations.createFullRecord();
+        DBOperations.createRecordIntoEntitiesTable();
     }
 
     /**
@@ -82,9 +84,9 @@ public class TestPutMethod {
 
         given().contentType(ContentType.JSON).body(gson.toJson(builder)).when().put().then().statusCode(HttpStatus.SC_OK);
         System.out.println("-->" + builder);
-        Entities responseForCheckEdit = ResponseUtils.getResponse("SCHEMATABLE");
+        Entities responseForCheckEdit = ResponseUtils.getResponse(ID_VALUE_FOR_VERIFY_METHOD);
         Entities testDataForCheckEdit = TestDataForTests.getValuesForCheckPutMethod();
-        errors.checkThat("Response with id " + "SCHEMATABLE" + " is incorrect!!!", testDataForCheckEdit.equals(responseForCheckEdit), is(true));
+        errors.checkThat("Response with id " + ID_VALUE_FOR_VERIFY_METHOD + " is incorrect!!!", testDataForCheckEdit.equals(responseForCheckEdit), is(true));
     }
 
     /**
@@ -103,16 +105,14 @@ public class TestPutMethod {
 
     @Test
     public void ediRecordInEntitiesTable() {
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
        Entities builder = new BaseBuilder().
                 BuildName("EditedEntityName").
                 BuildSchemaName("EntitySchema").
                 BuildTableName("EntityTable").
                 build();
-
-        Gson gson = new GsonBuilder().setPrettyPrinting().create();
         given().contentType(ContentType.JSON).body(gson.toJson(builder)).when().put().then().statusCode(HttpStatus.SC_OK);
-
-        Entities response = ResponseUtils.getResponse("ENTITYSCHEMAENTITYTABLE");
+        Entities response = ResponseUtils.getResponse(ID_VALUE_FIELD_TABLE_FOR_VERIFY_PUT_METHOD);
         Entities testDataOnly = TestDataForTests.getValuesFromEntitiesForPutMethod();
         errors.checkThat("Response and testData is not equal", testDataOnly.equals(response), is(true));
     }
@@ -136,6 +136,7 @@ public class TestPutMethod {
 
     @Test
     public void editRecordWithSpecialSymbols() {
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
         Entities builder = new BaseBuilder().
                 BuildName(NAME_ENTITIES_PUT_SC).
                 BuildSchemaName(SHEMA_NAME_ENTITIES_PUT_SC).
@@ -143,12 +144,8 @@ public class TestPutMethod {
                 BuildFieldList(NAME_ENTITIES_PUT_SC, COLUMN_NAME_FIELDS_PUT_SC,
                         TYPE_FIELDS_PUT_SC, LENGTH_FIELDS_PUT_SC).
                 build();
-
-        String idEntityValue = (SHEMA_NAME_ENTITIES_PUT_SC + TABLE_NAME_ENTITIES_PUT_SC).toUpperCase();
-        String idFieldValue = (idEntityValue + COLUMN_NAME_FIELDS_PUT_SC).toUpperCase();
-        Gson gson = new GsonBuilder().setPrettyPrinting().create();
         given().contentType(ContentType.JSON).body(gson.toJson(builder)).when().put().then().statusCode(500);
-        errors.checkThat("Record with" + "" + "was created", DBOperations.isExist(idFieldValue, idEntityValue), is(true));
+        errors.checkThat("Record was created", DBOperations.isExist(INVALID_ID_FIELD_TABLE_SC_VALUE_FOR_VERIFY_PUT_METHOD, INVALID_ID_ENTITY_TABLE_SC_VALUE_FOR_VERIFY_PUT_METHOD), is(true));
     }
 
     /**
@@ -157,9 +154,9 @@ public class TestPutMethod {
      * @see DBOperations
      */
 
-    @AfterClass
+   @AfterClass
     public static void deleteRecord() {
-        DBOperations.deleteRecord("SCHEMATABLEFIELDCOLUMNNAMEEDITED", "SCHEMATABLE");
-        DBOperations.deleteRecord("", "ENTITYSCHEMAENTITYTABLE");
+        DBOperations.deleteRecord(EDITED_ID_VALUE_FOR_VERIFY_PUT_METHOD, ID_VALUE_FOR_VERIFY_METHOD);
+        DBOperations.deleteRecord("", ID_VALUE_FIELD_TABLE_FOR_VERIFY_PUT_METHOD);
     }
 }

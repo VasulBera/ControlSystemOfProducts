@@ -17,6 +17,7 @@ import org.junit.Test;
 import org.junit.rules.ErrorCollector;
 
 import static IntegrationTests.ConstantsUtils.ConstantValues.*;
+import static IntegrationTests.ConstantsUtils.ConstantValues.*;
 import static IntegrationTests.ConstantsUtils.RandomConstantValues.*;
 import static IntegrationTests.ObjectUtils.DataType.DATE;
 import static com.jayway.restassured.RestAssured.given;
@@ -50,16 +51,20 @@ public class TestPostMethod {
 
     /**
      * The verifyCreateRecordsOption() verify HTTP POST method.
-     * Steps to reproduce
-     * - create new object of type Entities(using ConstantValues class for definition field's values)
+     * Steps to reproduce:
+     *
+     *     <p><ul>
+     *     <li> create new object of type Entities(using ConstantValues class for definition field's values);
+     *     <li> using HTTP POST method create new record and verify that status code is 200((HttpStatus.SC_OK);
+     *     <li> using getResponse(String) method get newly created record with id 'ID_ENTITIES';
+     *     <li> create new object of type Entities(using test data from getValuesForPostMethod() method for definition field's values);
+     *     <li> verify objects;
+     *     <ul/><p>
      *
      * @see Entities
      * @see IntegrationTests.ConstantsUtils.ConstantValues
-     * - using HTTP POST method create new record and verify that status code is 200((HttpStatus.SC_OK)
-     * - using getResponse(String) method get newly created record with id 'ID_ENTITIES'
-     * - create new object of type Entities(using test data from getValuesForPostMethod() method for definition field's values)
      * @see TestDataForTests
-     * - verify objects
+     * -
      */
 
     @Test
@@ -72,9 +77,9 @@ public class TestPostMethod {
                 BuildFieldList(NAME_FIELDS, COLUMN_NAME_FIELDS, DATE.NVARCHAR, LENGTH_FIELDS).
                 build();
         given().contentType(ContentType.JSON).body(gson.toJson(builder)).post().then().statusCode(HttpStatus.SC_OK);
-        Entities responseForCheckPost = ResponseUtils.getResponse("SCHEMANAMEENTITIESTABLENAMEENTITIES");
+        Entities responseForCheckPost = ResponseUtils.getResponse(ID_VALUE_FOR_VERIFY_POST_METHOD);
         Entities testDataForCheckPost = TestDataForTests.getValuesForCheckPostMethod();
-        errors.checkThat("Response with id " + "SCHEMANAMEENTITIESTABLENAMEENTITIES" + " is incorrect!!!", responseForCheckPost.equals(testDataForCheckPost), is(true));
+        errors.checkThat("Response with id " + ID_VALUE_FOR_VERIFY_POST_METHOD + " is incorrect!!!", responseForCheckPost.equals(testDataForCheckPost), is(true));
     }
 
     /**
@@ -100,9 +105,11 @@ public class TestPostMethod {
                 BuildTableName(TABLE_NAME_ENTITIES_ONLY).
                 build();
         given().contentType(ContentType.JSON).body(gson.toJson(builder)).post().then().statusCode(HttpStatus.SC_OK);
-        Entities responseFromEntities = ResponseUtils.getResponse("SCHEMANAMEENTITIES_ONLYTABLENAMEENTITIES_ONLY");
-        Entities testDataForEntities = TestDataForTests.getValuesFromEntitiesForPutMethod();
-        errors.checkThat("Response with id " + "SCHEMANAMEENTITIES_ONLYTABLENAMEENTITIES_ONLY" + " is incorrect", responseFromEntities.equals(testDataForEntities), is(true));
+        Entities responseFromEntities = ResponseUtils.getResponse(ID_ENTITY_TABLE_VALUE_FOR_VERIFY_POST_METHOD);
+        Entities testDataForEntities = TestDataForTests.getValuesFromEntityTableForCheckPostMethod();
+        System.out.println("response-->" + responseFromEntities);
+        System.out.println("testData-->" + testDataForEntities);
+        errors.checkThat("Response with id " + ID_ENTITY_TABLE_VALUE_FOR_VERIFY_POST_METHOD + " is incorrect", responseFromEntities.equals(testDataForEntities), is(true));
     }
 
     /**
@@ -129,7 +136,7 @@ public class TestPostMethod {
                 BuildFieldList(NAME_FIELDS_RANDOM_VALID, COLUMN_NAME_FIELDS_RANDOM_VALID, DATE.NVARCHAR, LENGTH_FIELDS_RANDOM_VALID).
                 build();
         given().contentType(ContentType.JSON).body(gson.toJson(base)).post().then().statusCode(HttpStatus.SC_OK);
-        Entities responseValid = ResponseUtils.getResponse("GHHHHHHHHHHHGFYHFYGTFFFFFFFFFFFFFFFFFFHJHHHHHHHHHHHHHHHHHHHHHHHHFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF1234567GHHHHHHHHHHHGFYHFYGTFFFFFFFFFFFFFFFFFFHJHHHHHHHHHHHHHHHHHHHHHHHHFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF1234567");
+        Entities responseValid = ResponseUtils.getResponse(ID_ENTITY_TABLE_FOR_VERIFY_VALID_MAX_LENGTH_POST_METHOD);
         Entities testDataForCheckValid = TestDataForTests.getValuesForVerifyMaxFieldLength();
         errors.checkThat(responseValid.equals(testDataForCheckValid), is(true));
     }
@@ -148,16 +155,14 @@ public class TestPostMethod {
     @Test
     public void verifyInValidMaxLength() {
         Entities base = new BaseBuilder().
-                        BuildName(NAME_ETITIES_INVALID).
-                        BuildSchemaName(SHEMA_NAME_ETITIES_INVALID).
-                        BuildTableName(TABLE_NAME_ETITIES_INVALID).
-                        BuildFieldList(NAME_FIELDS_INVALID, COLUMN_NAME_FIELDS_INVALID, DATE.NVARCHAR, LENGTH_FIELDS_NVALID).
-                        build();
-
+                BuildName(NAME_ETITIES_INVALID).
+                BuildSchemaName(SHEMA_NAME_ETITIES_INVALID).
+                BuildTableName(TABLE_NAME_ETITIES_INVALID).
+                BuildFieldList(NAME_FIELDS_INVALID, COLUMN_NAME_FIELDS_INVALID, DATE.NVARCHAR, LENGTH_FIELDS_NVALID).
+                build();
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
         given().contentType(ContentType.JSON).body(gson.toJson(base)).post().then().statusCode(500);
-        String verifyID = (SHEMA_NAME_ETITIES_INVALID + TABLE_NAME_ETITIES_INVALID).toUpperCase();
-        errors.checkThat("Record with" + ID_ETITIES_INVALID + " was created", DBOperations.isExist(verifyID, " "), is(true));
+        errors.checkThat("Record with" + ID_ETITIES_INVALID + " was created", DBOperations.isExist(INVALID_ID_VALUE_FOR_VERIFY_POST_METHOD, " "), is(true));
     }
 
     /**
@@ -173,7 +178,6 @@ public class TestPostMethod {
 
     @Test
     public void createRecordWithSpecialCharacters() {
-
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
         Entities builder = new BaseBuilder().
                 BuildName(NAME_ENTITIES_SC).
@@ -183,8 +187,7 @@ public class TestPostMethod {
                 build();
 
         given().contentType(ContentType.JSON).body(gson.toJson(builder)).post().then().statusCode(500);
-        String verifyID = (SHEMA_NAME_ENTITIES_SC + TABLE_NAME_ENTITIES_SC).toUpperCase();
-        errors.checkThat("Record with" + ID_ENTITIES_SC + "was created", DBOperations.isExist(verifyID, " "), is(true));
+        errors.checkThat("Record with" + ID_ENTITIES_SC + "was created", DBOperations.isExist(INVALID_ID_SC_VALUE_FOR_VERIFY_POST_METHOD, " "), is(true));
     }
 
     /**
@@ -195,9 +198,8 @@ public class TestPostMethod {
 
     @AfterClass
     public static void deleteAllChanges() {
-        DBOperations.deleteRecord("SCHEMANAMEENTITIESTABLENAMEENTITIESCOLUMN_NAMEFIELDS", "SCHEMANAMEENTITIESTABLENAMEENTITIES");
-        DBOperations.deleteRecord("GHHHHHHHHHHHGFYHFYGTFFFFFFFFFFFFFFFFFFHJHHHHHHHHHHHHHHHHHHHHHHHHFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF1234567GHHHHHHHHHHHGFYHFYGTFFFFFFFFFFFFFFFFFFHJHHHHHHHHHHHHHHHHHHHHHHHHFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF1234567GHHHHHHHHHHHGFYHFYGTFFFFFFFFFFFFFFFFFFHJHHHHHHHHHHHHHHHHHHHHHHHHFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF1234567",
-                "GHHHHHHHHHHHGFYHFYGTFFFFFFFFFFFFFFFFFFHJHHHHHHHHHHHHHHHHHHHHHHHHFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF1234567GHHHHHHHHHHHGFYHFYGTFFFFFFFFFFFFFFFFFFHJHHHHHHHHHHHHHHHHHHHHHHHHFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF1234567");
-        DBOperations.deleteRecord(" ", "SCHEMANAMEENTITIES_ONLYTABLENAMEENTITIES_ONLY");
+        DBOperations.deleteRecord(ID_VALUE_FIELD_TABLE_FOR_VERIFY_POST_METHOD, ID_VALUE_FOR_VERIFY_POST_METHOD);
+        DBOperations.deleteRecord(ID_FIELD_TABLE_VALUE_FOR_VERIFY_VALID_MAX_LENGTH_POST_METHOD, ID_ENTITY_TABLE_FOR_VERIFY_VALID_MAX_LENGTH_POST_METHOD);
+        DBOperations.deleteRecord(" ", ID_ENTITY_TABLE_VALUE_FOR_VERIFY_POST_METHOD);
     }
 }

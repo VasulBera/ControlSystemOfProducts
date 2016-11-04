@@ -10,12 +10,15 @@ import com.tngtech.java.junit.dataprovider.DataProvider;
 import com.tngtech.java.junit.dataprovider.DataProviderRunner;
 import com.tngtech.java.junit.dataprovider.UseDataProvider;
 import org.apache.http.HttpStatus;
+import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ErrorCollector;
 import org.junit.runner.RunWith;
 
+import static IntegrationTests.ConstantsUtils.ConstantValues.ID_FIELD_TABLE_VALUE_FOR_VERIFY_PATCH_METHOD;
+import static IntegrationTests.ConstantsUtils.ConstantValues.ID_VALUE_FOR_VERIFY_METHOD;
 import static IntegrationTests.ConstantsUtils.ConstantValues.*;
 import static com.jayway.restassured.RestAssured.given;
 import static org.hamcrest.core.Is.is;
@@ -54,9 +57,9 @@ public class TestDeleteMethod {
      * @see DBOperations
      */
 
-    @Test
-    public void createRecordForTest() {
-        DBOperations.createRecord();
+    @BeforeClass
+    public static void createRecordForTest() {
+        DBOperations.createFullRecord();
     }
 
     /**
@@ -74,8 +77,8 @@ public class TestDeleteMethod {
     @Test
     public void checkDeleteOptionWithExistID() {
         given().contentType(ContentType.JSON)
-                .when().delete(ID_ENTITIES).then().statusCode(204);
-        errors.checkThat("Record with" + ID_ENTITIES + " and " + ID_FIELDS + "  Ids was not deleted", DBOperations.isExist(ID_ENTITIES, ID_FIELDS), is(true));
+                .when().delete(ID_VALUE_FOR_VERIFY_METHOD).then().statusCode(204);
+        errors.checkThat("Record with" + ID_VALUE_FOR_VERIFY_METHOD + " and " + ID_FIELD_TABLE_VALUE_FOR_VERIFY_PATCH_METHOD + "  Ids was not deleted", DBOperations.isExist(ID_VALUE_FOR_VERIFY_METHOD, ID_FIELD_TABLE_VALUE_FOR_VERIFY_PATCH_METHOD), is(true));
     }
 
     /**
@@ -105,13 +108,35 @@ public class TestDeleteMethod {
     @DataProvider
     public static Object[][] nonExistentID() {
         return new Object[][]{
-                {" ", " "}, {"***", "---"}, {"FAIL_ID", "FAIL_ID"},
+                {"***", "---"},
+                {"FAIL_ID", "FAIL_ID"},
                 {"FAIL_ENTITIES_ID", "FAIL_FIELDS_ID"},
                 {"111", "222"}
         };
     }
 
     @Test
+    @UseDataProvider("emptyID")
+    public void deleteRecordWithEmptyID(String idFields, String idEntities) {
+        given().contentType(ContentType.JSON)
+                .when().delete(idFields).then().statusCode(HttpStatus.SC_METHOD_NOT_ALLOWED);
+        errors.checkThat("Record was not deleted", DBOperations.isExist(idFields, idEntities), is(true));
+    }
+
+    /**
+     * The nonExistentID() data provider storage test data, allows to run deleteNONExistenID(String) test over and over again using different values.
+     *
+     * @return non-existen  ids values
+     */
+
+    @DataProvider
+    public static Object[][] emptyID() {
+        return new Object[][]{
+                {" ", " "},
+        };
+    }
+
+   @Test
     @UseDataProvider("fields")
     public void deleteWITHNOTID(String idFields, String idEntities) {
         given().contentType(ContentType.JSON)
@@ -128,13 +153,13 @@ public class TestDeleteMethod {
     @DataProvider
     public static Object[][] fields() {
         return new Object[][]{
-                {NAME_ENTITIES, ID_ENTITIES},
-                {SHEMA_NAME_ENTITIES, ID_ENTITIES},
-                {TABLE_NAME_ENTITIES, ID_ENTITIES},
-                {ID_FIELDS, ID_ENTITIES},
-                {NAME_FIELDS, ID_ENTITIES},
-                {TABLE_NAME_ENTITIES, ID_ENTITIES},
-                {COLUMN_NAME_FIELDS, ID_ENTITIES}
+                {NAME_ENTITIES, ID_VALUE_FOR_VERIFY_METHOD},
+                {SHEMA_NAME_ENTITIES, ID_VALUE_FOR_VERIFY_METHOD},
+                {TABLE_NAME_ENTITIES, ID_VALUE_FOR_VERIFY_METHOD},
+                {ID_FIELDS, ID_VALUE_FOR_VERIFY_METHOD},
+                {NAME_FIELDS, ID_VALUE_FOR_VERIFY_METHOD},
+                {TABLE_NAME_ENTITIES, ID_VALUE_FOR_VERIFY_METHOD},
+                {COLUMN_NAME_FIELDS, ID_VALUE_FOR_VERIFY_METHOD}
         };
     }
 }

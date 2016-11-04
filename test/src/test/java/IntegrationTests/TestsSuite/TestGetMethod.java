@@ -30,8 +30,8 @@ import static org.hamcrest.core.Is.is;
  * The TestGetMethod class was created for testing HTTP method GET.
  */
 
- @RunWith(DataProviderRunner.class)
- public class TestGetMethod {
+@RunWith(DataProviderRunner.class)
+public class TestGetMethod {
 
     private static final String BARVINOKGOODS_ID = "BARVINOKGOODS";
     private static final String ADIDASSHOES_ID = "ADIDASSHOES";
@@ -68,9 +68,7 @@ import static org.hamcrest.core.Is.is;
     public void verifyGetMethodWithoutIDs() {
         List<Entities> ResponseList = ResponseUtils.getResponseList();
         List<Entities> testDataList = new ArrayList(asList(testData_Id_AdidasShoes(), testData_Id_BarvinokGoods()));
-        System.out.println("resp--->" + ResponseList);
-        System.out.println("testD-->" + testDataList);
-         errors.checkThat("Response is not correct", ResponseList.equals(testDataList), is(true));
+        errors.checkThat("Response is not correct", ResponseList.equals(testDataList), is(true));
     }
 
     /**
@@ -90,7 +88,6 @@ import static org.hamcrest.core.Is.is;
     @UseDataProvider("validID")
     public void verifyGetMethodWithIDs(String idValue, Entities testData) {
         Entities response = ResponseUtils.getResponse(idValue);
-        System.out.println("response-->" + response);
         errors.checkThat("Response with id " + idValue + " is incorrect!!!", response.equals(testData), is(true));
     }
 
@@ -99,8 +96,8 @@ import static org.hamcrest.core.Is.is;
      * The verifyValidID(String) test use data provider "dataForURL".
      *
      * @param testData represent correct id values
-     *steps to reproduce
-     *using HTTP GET method and correct id values verify that status code is equals '200' (HttpStatus.SC_OK)
+     *                 steps to reproduce
+     *                 using HTTP GET method and correct id values verify that status code is equals '200' (HttpStatus.SC_OK)
      */
 
     @Test
@@ -114,14 +111,14 @@ import static org.hamcrest.core.Is.is;
      * The verifyBaseURL(String) test use data provider "emptyIdString".
      *
      * @param testData represent " " (empty String) value
-     *Steps to reproduce
-     *using HTTP GET method and " " (empty String) as id values verify that status code is equals '200' (HttpStatus.SC_OK)
+     *                 Steps to reproduce
+     *                 using HTTP GET method and " " (empty String) as id values verify that status code is equals '200' (HttpStatus.SC_OK)
      */
 
     @Test
     @UseDataProvider("emptyIdString")
     public void verifyBaseURL(String testData) {
-       expect().statusCode(HttpStatus.SC_OK).when().then().get(testData);
+        expect().statusCode(HttpStatus.SC_OK).when().then().get(testData);
     }
 
     /**
@@ -129,8 +126,8 @@ import static org.hamcrest.core.Is.is;
      * The verifyAlphabeticalSymbolsForID(String) test use data provider "alphabeticalSymbols".
      *
      * @param testData represent alhabetical symbols ()
-     *Steps to reproduce
-     *using HTTP GET method and alhabetical symbols as id values verify that status code is equals '400' (HttpStatus.SC_NOT_FOUND)
+     *                 Steps to reproduce
+     *                 using HTTP GET method and alhabetical symbols as id values verify that status code is equals '400' (HttpStatus.SC_NOT_FOUND)
      */
 
     @Test
@@ -144,14 +141,14 @@ import static org.hamcrest.core.Is.is;
      * The verifysCyrillicSymbolsForID(String) test use data provider "cyrillicSymbols".
      *
      * @param testData represent cyrillic symbols from data provider
-     *Steps to reproduce
-     *using HTTP GET method and cyrillic symbols as id values verify that status code is equals '400' (HttpStatus.SC_NOT_FOUND)
+     *                 Steps to reproduce
+     *                 using HTTP GET method and cyrillic symbols as id values verify that status code is equals '400' (HttpStatus.SC_NOT_FOUND)
      */
 
     @Test
     @UseDataProvider("cyrillicSymbols")
     public void verifysCyrillicSymbolsForID(String testData) {
-       expect().statusCode(HttpStatus.SC_NOT_FOUND).when().get(testData);
+        expect().statusCode(HttpStatus.SC_NOT_FOUND).when().get(testData);
     }
 
     /**
@@ -159,8 +156,8 @@ import static org.hamcrest.core.Is.is;
      * The verifysCyrillicSymbolsForID(String) test use data provider "cyrillicSymbols".
      *
      * @param testData represent cyrillic symbols from data provider
-     *Steps to reproduce
-     *using HTTP GET method and cyrillic symbols as id values verify that status code is equals '400' (HttpStatus.SC_NOT_FOUND)
+     *                 Steps to reproduce
+     *                 using HTTP GET method and cyrillic symbols as id values verify that status code is equals '400' (HttpStatus.SC_NOT_FOUND)
      */
 
     @Test
@@ -174,14 +171,14 @@ import static org.hamcrest.core.Is.is;
      * The verifySpecialCharactersForID(String) test use data provider "specialCharacters".
      *
      * @param testData represent special characters from data provider.
-     *Steps to reproduce
-     *using HTTP GET method and special characters as id values verify that status code is equals '400' (HttpStatus.SC_NOT_FOUND)
+     *                 Steps to reproduce
+     *                 using HTTP GET method and special characters as id values verify that status code is equals '400' (HttpStatus.SC_NOT_FOUND)
      */
 
     @Test
     @UseDataProvider("specialCharacters")
     public void verifySpecialCharactersForID(String testData) {
-       expect().statusCode(HttpStatus.SC_NOT_FOUND).when().then().get(testData);
+        expect().statusCode(HttpStatus.SC_NOT_FOUND).when().then().get(testData);
 
     }
 
@@ -282,16 +279,4 @@ import static org.hamcrest.core.Is.is;
                 {"%"}, {"^"}, {":"}, {"&"}, {"|"}, {"<"}, {">"}, {";"}
         };
     }
-
-
-
-
-
-
-
-
-
-
-
-
 }

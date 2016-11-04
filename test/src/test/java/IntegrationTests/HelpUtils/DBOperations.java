@@ -1,7 +1,5 @@
 package IntegrationTests.HelpUtils;
 
-import org.junit.Test;
-
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
@@ -9,7 +7,6 @@ import java.sql.*;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Properties;
-
 
 /**
  * @author Solomiia Riznychok
@@ -33,7 +30,6 @@ public class DBOperations {
     public static Statement setupDBConnection() {
         Properties prop = new Properties();
         try {
-            // InputStream input = getResourceAsStream(JDBCPropertyFile);
             InputStream input = DBOperations.class.getClassLoader().getResourceAsStream(JDBCPropertyFile);
             prop.load(input);
             StringBuilder str = new StringBuilder();
@@ -83,51 +79,43 @@ public class DBOperations {
     }
 
     /**
-     * Creates record in DB
+     * The createFullRecord() method creates record in EntityMetadata DB using dbo.entities and dbo.field tables
      */
 
-    public static void createRecord() {
-        //  if (isExist("ENTITIESID", "FIELDSID")) {
-        try {
-            statement.execute(" INSERT INTO entities (id, name, schema_name, table_name) VALUES ('SCHEMANAMEENTITIESTABLENAMEENTITIES', 'NameEntities','SchemaNameEntities' , 'TableNameEntities');");
-            statement.execute(" INSERT INTO fields (id, name, column_name, type, length, entity_id) VALUES ('SCHEMANAMEENTITIESTABLENAMEENTITIESCOLUMN_NAMEFIELDS', 'NameFields', 'Column_NameFields', 'INT', " +
-                    "100, 'SCHEMANAMEENTITIESTABLENAMEENTITIES')");
-        } catch (SQLException e) {
-            e.printStackTrace();
+    public static void createFullRecord() {
+
+        SimpleDateFormat simpleDateFormater = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+        if (isExist("SCHEMATABLE", "SCHEMATABLECOLUMN_NAMEFIELDS")) {
+            try {
+                statement.execute("INSERT INTO entities (id, name, schema_name, table_name, full_upload_data, created_date)  VALUES ('SCHEMATABLE', 'Name','Schema', 'Table', '0', '" + simpleDateFormater.format(Calendar.getInstance().getTime()) + "');");
+                statement.execute("INSERT INTO fields (id, name, column_name, type, length, is_unique, entity_id, created_date) VALUES ('SCHEMATABLECOLUMN_NAMEFIELDS', 'NameFields'," +
+                        " 'Column_NameFields', 'NVARCHAR', 100, '0', 'SCHEMATABLE', '" + simpleDateFormater.format(Calendar.getInstance().getTime()) + "')");
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            System.out.println("Record was created");
+        } else {
+            System.out.println("Record was not created");
         }
-        System.out.println("Record was created");
-        /*} else {
-            System.out.println("Record was not created");*/
-        //  }
     }
 
-    public static void createRecord2() {
-       // if (isExist("ENTITIESID", "FIELDSID")) {
-        SimpleDateFormat simpleDateFormater = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-        try {
-            statement.execute("INSERT INTO entities (id, name, schema_name, table_name, full_upload_data, created_date)  VALUES ('SCHEMATABLE', 'Name','Schema', 'Table', '0', '" + simpleDateFormater.format(Calendar.getInstance().getTime()) + "');");
-            statement.execute("INSERT INTO fields (id, name, column_name, type, length, is_unique, entity_id, created_date) VALUES ('SCHEMATABLECOLUMN_NAMEFIELDS', 'NameFields'," +
-                    " 'Column_NameFields', 'NVARCHAR', 100, '0', 'SCHEMATABLE', '"  + simpleDateFormater.format(Calendar.getInstance().getTime()) + "')");
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        System.out.println("Record was created");
-        /*} else {
-            System.out.println("Record was not created");*/
-        //  }
-    }
+    /**
+     * The createRecordIntoEntitiesTable() method creates record in EntityMetadata DB using dbo.entities table
+     */
 
-    public static void createRecord3() {
+    public static void createRecordIntoEntitiesTable() {
         SimpleDateFormat simpleDateFormater = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-        try {
-            statement.execute("INSERT INTO entities (id, name, schema_name, table_name, full_upload_data, created_date)  VALUES ('ENTITYSCHEMAENTITYTABLE', 'EntityName','EntitySchema', 'EntityTable', '0', '" + simpleDateFormater.format(Calendar.getInstance().getTime()) + "');");
-        } catch (SQLException e) {
-            e.printStackTrace();
+
+        if (isExist("ENTITYSCHEMAENTITYTABLE", " ")) {
+            try {
+                statement.execute("INSERT INTO entities (id, name, schema_name, table_name, full_upload_data, created_date)  VALUES ('ENTITYSCHEMAENTITYTABLE', 'EntityName','EntitySchema', 'EntityTable', '0', '" + simpleDateFormater.format(Calendar.getInstance().getTime()) + "');");
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            System.out.println("Record was created");
+        } else {
+            System.out.println("Record was not created");
         }
-        System.out.println("Record was created");
-        /*} else {
-            System.out.println("Record was not created");*/
-        //  }
     }
 
     /**

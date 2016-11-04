@@ -13,8 +13,7 @@ import org.apache.http.HttpStatus;
 import org.junit.*;
 import org.junit.rules.ErrorCollector;
 
-import java.sql.SQLException;
-
+import static IntegrationTests.ConstantsUtils.ConstantValues.*;
 import static IntegrationTests.ConstantsUtils.ConstantValues.*;
 import static com.jayway.restassured.RestAssured.given;
 import static org.hamcrest.core.Is.is;
@@ -51,9 +50,9 @@ public class TestPatchMethod {
      * @see DBOperations
      */
 
-    @Test
-    public void createRecord() {
-        DBOperations.createRecord2();
+    @BeforeClass
+    public static void createRecord() {
+        DBOperations.createFullRecord();
     }
 
     /**
@@ -77,15 +76,12 @@ public class TestPatchMethod {
                 BuildName(NAME_ENTITIES_PATCH).
                 BuildSchemaName(SHEMA_NAME_ENTITIES_PATCH).
                 BuildTableName(TABLE_NAME_ENTITIES_PATCH).
-                BuildFieldList( NAME_FIELDS, COLUMN_NAME_FIELDS, TYPE_FIELDS, LENGTH_FIELDS).
+                BuildFieldList(NAME_FIELDS, COLUMN_NAME_FIELDS, TYPE_FIELDS, LENGTH_FIELDS).
                 build();
-
-        given().contentType(ContentType.JSON).body(gson.toJson(builder)).patch("SCHEMATABLE").then().statusCode(HttpStatus.SC_OK);
-        Entities response = ResponseUtils.getResponse("SCHEMATABLE");
+        given().contentType(ContentType.JSON).body(gson.toJson(builder)).patch(ID_VALUE_FOR_VERIFY_METHOD).then().statusCode(HttpStatus.SC_OK);
+        Entities response = ResponseUtils.getResponse(ID_VALUE_FOR_VERIFY_METHOD);
         Entities testDataForCheckPatch = TestDataForTests.getValuesForCheckPatchMethodE();
-        System.out.println("resp" + response);
-        System.out.println("tets" + testDataForCheckPatch);
-        errors.checkThat("Response with id " + "SCHEMATABLE" + " is incorrect", testDataForCheckPatch.equals(response), is(true));
+        errors.checkThat("Response with id " + ID_VALUE_FOR_VERIFY_METHOD + " is incorrect", testDataForCheckPatch.equals(response), is(true));
     }
 
     /**
@@ -109,15 +105,13 @@ public class TestPatchMethod {
                 BuildName(NAME_ENTITIES).
                 BuildSchemaName(SHEMA_NAME_ENTITIES).
                 BuildTableName(TABLE_NAME_ENTITIES).
-                BuildFieldList( NAME_FIELDS_PATCH, COLUMN_NAME_FIELDS_PATCH, TYPE_FIELDS_PATCH, LENGTH_FIELDS_PATCH).
+                BuildFieldList(NAME_FIELDS_PATCH, COLUMN_NAME_FIELDS_PATCH, TYPE_FIELDS_PATCH, LENGTH_FIELDS_PATCH).
                 build();
 
-        given().contentType(ContentType.JSON).body(gson.toJson(builder)).patch("SCHEMATABLE").then().statusCode(HttpStatus.SC_OK);
-        Entities response = ResponseUtils.getResponse("SCHEMATABLE");
+        given().contentType(ContentType.JSON).body(gson.toJson(builder)).patch(ID_VALUE_FOR_VERIFY_METHOD).then().statusCode(HttpStatus.SC_OK);
+        Entities response = ResponseUtils.getResponse(ID_VALUE_FOR_VERIFY_METHOD);
         Entities testDataForCheckPatch = TestDataForTests.getValuesForCheckPatchMethodF();
-        System.out.println("resp" + response);
-        System.out.println("tets" + testDataForCheckPatch);
-       // errors.checkThat("Response with id " + "SCHEMATABLECOLUMN_NAMEFIELDS" + " is incorrect", testDataForCheckPatch.equals(response), is(true));
+        // errors.checkThat("Response with id " + "SCHEMATABLECOLUMN_NAMEFIELDS" + " is incorrect", testDataForCheckPatch.equals(response), is(true));
     }
 
     /**
@@ -139,14 +133,13 @@ public class TestPatchMethod {
     public void checkInvalidPatchOptionFieldsTable() {
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
         Entities builder = new BaseBuilder().
-                //BuildId(ID_ENTITIES).
                 BuildName(NAME_ENTITIES_PATCH_SC).
                 BuildSchemaName(SHEMA_NAME_ENTITIES_PATCH_SC).
                 BuildTableName(TABLE_NAME_ENTITIES_PATCH_SC).
-                BuildFieldList( NAME_FIELDS_PATCH_SC, COLUMN_NAME_FIELDS_PATCH_SC, TYPE_FIELDS_PATCH_SC, LENGTH_FIELDS_PATCH_SC).
+                BuildFieldList(NAME_FIELDS_PATCH_SC, COLUMN_NAME_FIELDS_PATCH_SC, TYPE_FIELDS_PATCH_SC, LENGTH_FIELDS_PATCH_SC).
                 build();
-        given().contentType(ContentType.JSON).body(gson.toJson(builder)).patch(ID_ENTITIES).then().statusCode(404);
-        errors.checkThat("Record with" + ID_ENTITIES + "was created", DBOperations.isExist(ID_ENTITIES, ID_FIELDS_PATCH_SC), is(true));
+        given().contentType(ContentType.JSON).body(gson.toJson(builder)).patch(INVALID_ENTITIES_SC_ID_VALUE_FOR_VERIFY_PATCH_METHOD).then().statusCode(HttpStatus.SC_NOT_FOUND);
+        errors.checkThat("Record with was created", DBOperations.isExist(INVALID_ENTITIES_SC_ID_VALUE_FOR_VERIFY_PATCH_METHOD, INVALID_FIELD_SC_ID_VALUE_FOR_VERIFY_PATCH_METHOD), is(true));
     }
 
     /**
@@ -155,9 +148,9 @@ public class TestPatchMethod {
      * @see DBOperations
      */
 
-  //  @After
-    public void deleteRecord() throws SQLException {
-        DBOperations.deleteRecord(ID_FIELDS, ID_ENTITIES);
+    @AfterClass
+    public static void deleteRecord() {
+        DBOperations.deleteRecord(ID_FIELD_TABLE_VALUE_FOR_VERIFY_PATCH_METHOD, ID_VALUE_FOR_VERIFY_METHOD);
     }
 }
 
