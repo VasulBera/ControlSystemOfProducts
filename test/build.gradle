@@ -27,6 +27,10 @@ dependencies {
 
 }
 
+task runIntegrationTests(type: Test, dependsOn: testClasses) {
+    include '**/*TestSuiteClass*'
+}
+
 task deleteTestRecord(type: Test, dependsOn: testClasses) {
     include '**/*DeleteTestRecord*'
 }
