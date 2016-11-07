@@ -17,8 +17,8 @@ import static org.hamcrest.core.Is.is;
 
 public class SmokeTest {
 
-    @ClassRule
-    public static SetPropertyBrowserRule ruleProperty = new SetPropertyBrowserRule();
+  /*  @ClassRule
+    public static SetPropertyBrowserRule ruleProperty = new SetPropertyBrowserRule();*/
 
     @ClassRule
     public static OpenBrowserRule ruleBrowser = new OpenBrowserRule();
@@ -26,8 +26,8 @@ public class SmokeTest {
     @Rule
     public LogInRule ruleLogIn = new LogInRule();
 
-    @Rule
-    public ErrorCollector errors = new ErrorCollector();
+  /*  @Rule
+    public ErrorCollector errors = new ErrorCollector();*/
 
     @Test
     public void SmokeTest() {
