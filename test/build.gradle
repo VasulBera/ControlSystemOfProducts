@@ -31,6 +31,15 @@ task runIntegrationTests(type: Test, dependsOn: testClasses) {
     include '**/*TestSuiteClass*'
 }
 
+task runSmokeUITest(type: Test, dependsOn: testClasses) {
+    include '**/*SmokeTest*'
+}
+
+configure(runSmokeUITest) {
+    group = 'UI suite tests'
+    description = 'Run smoke test for UI suite test'
+}
+
 task deleteTestRecord(type: Test, dependsOn: testClasses) {
     include '**/*DeleteTestRecord*'
 }
