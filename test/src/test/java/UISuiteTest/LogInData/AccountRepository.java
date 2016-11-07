@@ -24,7 +24,7 @@ public class AccountRepository {
     public Account getDataAccount() {
         return Account.get().
                 setUserName("sriznuchok@gmail.com").
-                setPassword("1a4b9c16dd").
+                setPassword("1a4b9c16ddd").
                 build();
     }
 }

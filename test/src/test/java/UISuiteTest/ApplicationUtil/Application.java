@@ -32,9 +32,9 @@ public class Application {
     }
 
     private void initChromeBrowser() {
+        System.setProperty("webdriver.chrome.driver", "D://11//chromedriver.exe");
         if (driver == null) {
             driver = new ChromeDriver();
-            System.setProperty("webdriver.chrome.driver", "D:\\11\\chromedriver.exe");
             driver.manage().timeouts()
                     .implicitlyWait(applicationSources.getImplicitTimeOut(), TimeUnit.SECONDS);
         }
