@@ -32,6 +32,6 @@ public class SmokeTest {
     @Test
     public void SmokeTest() {
        // errors.checkThat("Table is not present", homePage.getTableEntityList().isDisplayed(), is(true));
-        //errors.checkThat("Title is not right", homePage.getTableTitleText().equals("Entity List"), is(true));
+        errors.checkThat("Title is not right", homePage.getTableTitleText().equals("Entity List777"), is(true));
     }
 }
