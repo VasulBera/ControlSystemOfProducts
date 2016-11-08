@@ -10,6 +10,7 @@ import UISuiteTest.pages.HomePage;
 import com.tngtech.java.junit.dataprovider.DataProvider;
 import com.tngtech.java.junit.dataprovider.DataProviderRunner;
 import com.tngtech.java.junit.dataprovider.UseDataProvider;
+import org.junit.AfterClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -99,7 +100,7 @@ public class TestCreateRecordOption {
     }
 
     @AfterClass
-    public static void deleteAllChange() {
+    public static  void deleteAllChange() {
         updatedHomePage = application.loadChrome().successLogin(AccountRepository.get().getDataAccount()).gotoHomePage().deleteRecord().confirmDeleteRecord().deleteFullRecordLink().confirmDeleteRecord();
         errors.checkThat("Record was not deleted", CheckListRecord(updatedHomePage.getEntityNameList(), "EntityName"), is(false));
         errors.checkThat("Record was not deleted", CheckListRecord(updatedHomePage.getSchemaNameList(), "EntitySchemaName"), is(false));
