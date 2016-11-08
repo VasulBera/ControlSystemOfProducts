@@ -98,8 +98,8 @@ public class TestCreateRecordOption {
         errors.checkThat("Record was created", CheckListRecord(homePage.getEntityNameList(), idRecord), is(false));
     }
 
-    @Test
-    public void deleteAllChange() {
+    @AfterClass
+    public static void deleteAllChange() {
         updatedHomePage = application.loadChrome().successLogin(AccountRepository.get().getDataAccount()).gotoHomePage().deleteRecord().confirmDeleteRecord().deleteFullRecordLink().confirmDeleteRecord();
         errors.checkThat("Record was not deleted", CheckListRecord(updatedHomePage.getEntityNameList(), "EntityName"), is(false));
         errors.checkThat("Record was not deleted", CheckListRecord(updatedHomePage.getSchemaNameList(), "EntitySchemaName"), is(false));
