@@ -31,6 +31,15 @@ task runIntegrationTests(type: Test, dependsOn: testClasses) {
     include '**/*TestSuiteClass*'
 }
 
+task runCreateRecordTest(type: Test, dependsOn: testClasses) {
+    include '**/*TestCreateRecordOption*'
+}
+
+configure(runCreateRecordTest) {
+    group = 'UI suite tests'
+    description = 'Run smoke test for UI suite test'
+}
+
 task runSmokeUITest(type: Test, dependsOn: testClasses) {
     include '**/*SmokeTest*'
 }

@@ -8,12 +8,13 @@ import UISuiteTest.pages.*;
 import com.tngtech.java.junit.dataprovider.DataProvider;
 import com.tngtech.java.junit.dataprovider.DataProviderRunner;
 import com.tngtech.java.junit.dataprovider.UseDataProvider;
+import org.junit.*;
 import org.junit.AfterClass;
-import org.junit.ClassRule;
-import org.junit.Rule;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.rules.ErrorCollector;
 import org.junit.runner.RunWith;
+import org.testng.annotations.*;
 
 import static UISuiteTest.CompareUtils.CompareUtil.CheckListRecord;
 import static UISuiteTest.ConstantUtils.ConstantValues.*;
@@ -45,8 +46,8 @@ public class TestEditRecordOption {
     @ClassRule
     public static ErrorCollector errors = new ErrorCollector();
 
-    @Test
-    public void createRecordForEditOption() {
+    @BeforeClass
+    public static  void createRecordForEditOption() {
         CreateEntityRecordPage createRecord = homePage.createRecordButton().setEntityData(CreateEntityDataRepository.get().getDataCreateEntityForEdit()).saveRecordButton().
                 setEntityData(CreateEntityDataRepository.get().getDataCreateFullRecordForDelete()).inputFieldRecord().setFieldData(CreateFieldDataRepository.get().getDataCreateFullRecordForEdit()).
                 saveRecordButton().setEntityData(CreateEntityDataRepository.get().dataForIncorrectEntityRecordEdit()).saveRecordButton();
