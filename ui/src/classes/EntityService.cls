@@ -20,6 +20,7 @@ public class EntityService {
         if(entity.tableName.length() > 128){
             result += 'Entity table name length can be less then 128 symbols. Pleas check your data! <br/>';
         }
+        Integer amountUniqueField = 0;
         for(Field field: entity.fieldList){
             if(String.isEmpty(field.ColumnName)){
                 result += 'Field \"' + field.name + '\" has empty name. Pleas check your data! <br/>';
@@ -59,6 +60,12 @@ public class EntityService {
             if(count > 1){
                 result += 'Field \"' + field.name + '\" column name has duplicate value. Pleas check your data! <br/>';
             }
+            if(field.unique){
+                amountUniqueField++;
+            }
+        }
+        if(amountUniqueField != 1){
+            result += 'You can have just one field as unique, please check your data <br/>';
         }
         System.debug(result);
         return result.removeEnd('<br/>');

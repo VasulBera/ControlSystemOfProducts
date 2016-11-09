@@ -321,6 +321,10 @@
                                 <apex:inputField value="{!f.Length__c}" id="field-length"/>
                              </apex:column>
                              
+                             <apex:column headerValue="Unique">
+                                <apex:inputField value="{!f.isUnique__c}" id="field-unique"/>
+                             </apex:column>
+                             
                           </apex:pageBlockTable>
 
                          </apex:pageBlock>

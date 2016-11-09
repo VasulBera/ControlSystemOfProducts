@@ -1,0 +1,135 @@
+<apex:page controller="ResourceController">
+<apex:includeScript value="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js" />
+<apex:includeScript value="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"/>
+<apex:stylesheet value="https://cdn.datatables.net/1.10.12/css/jquery.dataTables.min.css" />
+<style>
+.wraper{display: flex;}
+.wraper:hover{background: #7fb1ff; color: #FFF}
+.header{font-weight: bold; width: 100px; height: 20px; text-align: center; border: 1px solid black; padding-top: 7px;margin-left: -1px; background: rgba(0, 0, 0, 0.14);}
+.body{width: 100px; text-align: center; border: 1px solid black; margin-top: -1px; margin-left: -1px;}
+.number-of-row{display: flex; margin-bottom: 5px;}
+.chosen-entity{display: flex; margin-left: 20px; margin-top: 20px; margin-bottom: -20px;}
+.bPageHeader{min-width: 1840px;}
+div.dataTables_wrapper {
+        width: 1600px;
+        margin: 0 auto;
+    }
+tbody td{text-align: center}
+th{text-align: center;}
+#dataTable tbody tr:hover{background: #ccf9ab; color: white; /*height: 40px; transition: height ease 0.3s;*/}
+#dataTable tbody tr{height: 40px; /*transition: height ease 0.3s;*/}
+.my-button{width: 40px; height: 40px;}
+.save-btn{height: 31px; font-size: large; color: #CCC;}
+.save-btn:hover{color: #474ade;}
+</style>
+<script>
+    $( document ).ready( function(){
+    
+        $('#dataTable').DataTable({
+            "paging":   false,
+            "scrollX": true
+        });
+        
+    })
+    
+    function setEntityId(){
+        setEntityId();
+    }
+    
+    function setRowCount(){
+        setRowCount();
+    }
+    
+    function removeInput(element){
+         console.log('in remove');
+         if($($(element).children()).length){
+         console.log($($(element).children()));
+             $($(element).children()).remove();
+         }
+    }
+    
+    function addInput(element){
+    if(!$($(element).children()).length){
+        var value = $(element).html();
+        $(element).html('');
+        $(element).append( "<input style='width: 100%; height: 100%;' value='" + value +"'></input>" );
+        $($(element).children()).focus();
+        $($(element).children()).change(function(){
+           var changedValue = $($(element).children()).val();
+           $(element).html(changedValue);
+           createJson(element);
+        });
+        $($(element).children()).blur(function(){
+            $($(element).children()).remove();
+            $(element).html(value);
+        })
+    }
+}
+    
+    function createJson(element){
+        var json = '{"columns":[';
+        var array = $($(element).parent()).children();
+        for(var i = 0; i < array.length; i++){
+            json += '"' +  $(array[i]).html() + '",';
+        }
+        json = json.substring(0, json.length-1);
+        json += ']}';
+        $('[id$=hidenInput]').val(json);
+        setStringValue();
+    }
+
+</script>
+    <div class="chosen-entity">
+        <div style="margin-top: 2px; margin-right: 8px;">Please choose object: </div>
+        <apex:form >
+            <apex:selectList value="{!entityName}" onchange="setEntityId()" size="1" style="width:120px; margin-bottom: 20px; ">
+                  <apex:selectOptions value="{!entitiesOptions}"/>       
+            </apex:selectList>
+            <apex:actionFunction action="{!setEntityId}" name="setEntityId"/>
+        </apex:form>
+    </div>
+    <div style="display: flex; margin-left: 20px; margin-top: 10px;">
+    <div style="margin-right:26px; margin-top: 2px;">Elements on page: </div>
+    <apex:form >
+        <apex:selectList value="{!MAX_VALUE}" onchange="setRowCount()" size="1">
+            <apex:selectOptions value="{!countRow}"/>
+            <apex:actionFunction action="{!setRowCount}" name="setRowCount"/>
+        </apex:selectList>
+    </apex:form>
+    </div>
+     <table id="dataTable" class="cell-border" cellspacing="0" width="100%">
+         <thead>
+            <tr>
+                <apex:repeat value="{!entity.fieldList}" var="f">
+                  <th>{!f.name}</th>          
+                </apex:repeat>
+            </tr>
+        </thead>
+        <tfoot>
+            <tr>
+                <apex:repeat value="{!entity.fieldList}" var="f">
+                  <th>{!f.name}</th>          
+                </apex:repeat>
+            </tr>
+        </tfoot>
+        <tbody>
+           <apex:repeat value="{!lines}" var="l">
+               <tr>
+                     <apex:repeat value="{!l.columns}" var="s" >
+                         <td onclick="addInput(this)" tabindex="1">{!s}</td>   
+                     </apex:repeat>
+              </tr> 
+             </apex:repeat>
+        </tbody>
+     </table>
+     <apex:form >
+         <apex:inputHidden value="{!jsonChanged}" id="hidenInput"/>
+         <apex:actionFunction name="setStringValue" action="{!sendJson}" rerender="myHiddenField"/>
+     </apex:form>
+     <apex:form >
+         <apex:commandButton styleClass="my-button" disabled="{!FirstLinesDisable}" value="<<" action="{!getFirstLine}"/>
+         <apex:commandButton styleClass="my-button" disabled="{!previusLinesDisable}" value="<" action="{!getPreviusLines}"/>
+         <apex:commandButton styleClass="my-button" disabled="{!nextLinesDisable}" value=">" action="{!getNextLines}"/>
+         <apex:commandButton styleClass="my-button" disabled="{!LastLinesDisable}" value=">>" action="{!getLastLine}"/>
+     </apex:form>
+</apex:page>
