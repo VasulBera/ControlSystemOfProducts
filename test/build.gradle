@@ -108,7 +108,7 @@ task SmokeTest(type: Test, dependsOn: testClasses) {
     include '**/*SmokeTest*'
 }
 
-task generatePropertyFile(type: com.softserveinc.trainee.gradle.tasks.setupPropertyFile)
+task generatePropertyFile(type: com.softserveinc.trainee.gradle.tasks.GeneratePropertyFile)
 
 tasks.withType(Test) {
     testLogging {
