@@ -108,6 +108,8 @@ task SmokeTest(type: Test, dependsOn: testClasses) {
     include '**/*SmokeTest*'
 }
 
+task generatePropertyFile(type: com.softserveinc.trainee.gradle.tasks.setupPropertyFile)
+
 tasks.withType(Test) {
     testLogging {
         events 'started', 'passed', 'skipped'
