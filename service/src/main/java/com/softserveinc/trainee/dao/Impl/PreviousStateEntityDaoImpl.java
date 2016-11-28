@@ -48,4 +48,10 @@ public class PreviousStateEntityDaoImpl implements PreviousStateEntityDao{
         }
         return entityManager.merge(previousStateEntity);
     }
+	
+	@Override
+    public void deleteEntity(String id) {
+        PreviousStateEntity entity = entityManager.find(PreviousStateEntity.class, id);
+        if(entity != null) entityManager.remove(entity);
+    }
 }

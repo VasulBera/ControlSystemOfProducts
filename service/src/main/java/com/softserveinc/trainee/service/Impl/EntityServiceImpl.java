@@ -2,7 +2,9 @@ package com.softserveinc.trainee.service.Impl;
 
 import com.softserveinc.trainee.applicationConfig.FieldComparator;
 import com.softserveinc.trainee.dao.EntityDao;
+import com.softserveinc.trainee.dao.PreviousStateEntityDao;
 import com.softserveinc.trainee.entity.metadata.*;
+import com.softserveinc.trainee.entity.administration.*;
 import com.softserveinc.trainee.service.EntityService;
 import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 import org.slf4j.Logger;
@@ -18,6 +20,9 @@ public class EntityServiceImpl implements EntityService {
 
     @Autowired
     EntityDao entityDao;
+	
+	@Autowired
+	PreviousStateEntityDao previousStateEntityDao;
 
     private static final Logger LOGGER = LoggerFactory.getLogger(EntityServiceImpl.class);
 
@@ -101,6 +106,8 @@ public class EntityServiceImpl implements EntityService {
 
     public void deleteEntity(String id){
         entityDao.deleteEntity(id);
+		previousStateEntityDao.deleteEntity(id);
+		
     }
 
 

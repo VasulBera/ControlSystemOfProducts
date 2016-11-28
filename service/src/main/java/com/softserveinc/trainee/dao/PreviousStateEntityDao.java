@@ -13,6 +13,9 @@ public interface PreviousStateEntityDao {
 
     @Transactional("transactionManagerAdministration")
     public PreviousStateEntity updatePreviousStateEntity(PreviousStateEntity entity);
+	
+	@Transactional("transactionManagerAdministration")
+	public void deleteEntity(String id);
 
 
 }

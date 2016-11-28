@@ -45,6 +45,8 @@ public class DataLoaderExecutor implements JobExecutor {
         }finally {
             requestTaskDao.updateRequestTask(requestJob);
         }
+		System.out.println("Before");
         requestSender.sendRequest(requestJob);
+		System.out.println("After");
     }
 }

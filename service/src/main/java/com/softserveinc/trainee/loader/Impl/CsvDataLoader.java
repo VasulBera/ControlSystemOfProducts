@@ -49,7 +49,7 @@ public class CsvDataLoader implements DataLoader{
     }
 
     private void fullLoadData(Entity entity)throws IOException {
-        InputStream input = new FileInputStream("C:\\Users\\vberv\\Desktop\\" + entity.getFileName());
+        InputStream input = new FileInputStream("C:\\Users\\Administrator\\Desktop\\" + entity.getFileName());
         BufferedReader reader = new BufferedReader(new InputStreamReader(input));
         //BufferedReader reader = dataSource.getReader(entity.getFileName());
         Iterable<CSVRecord> records = CSVFormat.EXCEL.parse(reader);

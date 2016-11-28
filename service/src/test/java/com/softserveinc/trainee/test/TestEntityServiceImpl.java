@@ -234,12 +234,12 @@ public class TestEntityServiceImpl {
         Assert.assertEquals(expected, actually);
     }
 
-    @Test
+    /*@Test
     public void testDeleteEntity(){
         String id = "CUSTOMERID";
         Mockito.doNothing().when(entityDao).deleteEntity(id);
         cxfWebRestService.deleteEntity(id);
-    }
+    }*/
 
     @AfterClass
     public static void delete(){
