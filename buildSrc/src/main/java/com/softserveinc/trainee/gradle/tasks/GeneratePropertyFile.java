@@ -35,8 +35,7 @@ public class GeneratePropertyFile extends DefaultTask {
 
         FileInputStream in = null;
         try {
-            in = new FileInputStream("C:\Users\Administrator\.jenkins\workspace\tryTry\service\src\main\resources" +
-                    "database.properties");
+            in = new FileInputStream("C:\Users\Administrator\.jenkins\workspace\tryTry\service\src\main\resources\database.properties");
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
@@ -54,8 +53,7 @@ public class GeneratePropertyFile extends DefaultTask {
 
         FileOutputStream out = null;
         try {
-            out = new FileOutputStream("C:\Users\Administrator\.jenkins\workspace\tryTry\service\src\main\resources" +
-                    "database.properties");
+            out = new FileOutputStream("C:\Users\Administrator\.jenkins\workspace\tryTry\service\src\main\resources\database.properties");
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
