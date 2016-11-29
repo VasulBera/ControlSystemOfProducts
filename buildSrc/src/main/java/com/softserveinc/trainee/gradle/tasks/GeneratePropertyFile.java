@@ -35,7 +35,7 @@ public class GeneratePropertyFile extends DefaultTask {
 
         FileInputStream in = null;
         try {
-            in = new FileInputStream("C:\\Program Files (x86)\\Jenkins\\jobs\\mainCompile_ControlSystemOfProduct\\workspace\\service\\src\\main\\resources\\" +
+            in = new FileInputStream("http://localhost:8822/job/tryTry/ws/service/src/main/resources/" +
                     "database.properties");
         } catch (FileNotFoundException e) {
             e.printStackTrace();
@@ -54,7 +54,7 @@ public class GeneratePropertyFile extends DefaultTask {
 
         FileOutputStream out = null;
         try {
-            out = new FileOutputStream("C:\\Program Files (x86)\\Jenkins\\jobs\\mainCompile_ControlSystemOfProduct\\workspace\\service\\src\\main\\resources\\" +
+            out = new FileOutputStream("http://localhost:8822/job/tryTry/ws/service/src/main/resources/" +
                     "database.properties");
         } catch (FileNotFoundException e) {
             e.printStackTrace();
