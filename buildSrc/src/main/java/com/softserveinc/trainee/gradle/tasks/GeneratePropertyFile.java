@@ -59,8 +59,14 @@ public class GeneratePropertyFile extends DefaultTask {
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
-        fromGitProperties.setProperty("password", localProperties.getProperty("password"));
-        fromGitProperties.setProperty("login", localProperties.getProperty("login"));
+        
+        fromGitProperties.setProperty("javax.persistence.jdbc.user", localProperties.getProperty("javax.persistence.jdbc.user"));
+        fromGitProperties.setProperty("javax.persistence.jdbc.password", localProperties.getProperty("javax.persistence.jdbc.password"));
+        fromGitProperties.setProperty("administration.javax.persistence.jdbc.user", localProperties.getProperty("administration.javax.persistence.jdbc.user
+"));
+        fromGitProperties.setProperty("administration.javax.persistence.jdbc.password", localProperties.getProperty("administration.javax.persistence.jdbc.password
+"));
+        
         try {
             fromGitProperties.store(out, null);
         } catch (IOException e) {
