@@ -35,7 +35,7 @@ FileInputStream local = null;
 
         FileInputStream in = null;
         try {
-            in = new FileInputStream("C:\Program Files(x86)\Jenkins\workspace\jobExporter\service\src\main\resources\database.properties");
+            in = new FileInputStream("C:\\Program Files(x86)\\Jenkins\\workspace\\jobExporter\\service\\src\\main\\resources\\database.properties");
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
@@ -54,7 +54,7 @@ FileInputStream local = null;
         FileOutputStream out = null;
 
         try {
-            out = new FileOutputStream("C:\Program Files(x86)\Jenkins\workspace\jobExporter\service\src\main\resources\database.properties");
+            out = new FileOutputStream("C:\Program Files(x86)\\Jenkins\\workspace\\jobExporter\\service\\src\\main\\resources\\database.properties");
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
