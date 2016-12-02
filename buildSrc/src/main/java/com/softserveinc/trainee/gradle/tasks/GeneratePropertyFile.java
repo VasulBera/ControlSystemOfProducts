@@ -15,26 +15,60 @@ public class GeneratePropertyFile extends DefaultTask {
 
     @TaskAction
     public void setupPropertyFile() {
+FileInputStream local = null;
+        try {
+            local = new FileInputStream("C:\\localCredentialFile.properties");
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        Properties localProperties = new Properties();
+        try {
+            localProperties.load(local);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        try {
+            local.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        FileInputStream in = null;
+        try {
+            in = new FileInputStream("http:\\localhost:8811\\job\\jobExporter\\ws\\service\\src\\main\\resources\\database.properties");
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        Properties fromGitProperties = new Properties();
+        try {
+            fromGitProperties.load(in);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        try {
+            in.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
         FileOutputStream out = null;
-        Properties fromGitProperties = new Properties();
 
         try {
-            out = new FileOutputStream("C:\\Program Files (x86)\\Jenkins\\workspace\\jobExporter\\service\\src\\main\\database.properties");
+            out = new FileOutputStream("http:\\localhost:8811\\job\\jobExporter\\ws\\service\\src\\main\\resources\\database.properties");
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
 
-        fromGitProperties.setProperty("javax.persistence.jdbc.driver", "com.microsoft.sqlserver.jdbc.SQLServerDriver");
-        fromGitProperties.setProperty("javax.persistence.jdbc.url", "jdbc:sqlserver://localhost:1433;databaseName=EntityMetadata");
-        fromGitProperties.setProperty("javax.persistence.jdbc.user", "sa");
-        fromGitProperties.setProperty("javax.persistence.jdbc.password", "zippyZippy_1");
+        fromGitProperties.setProperty("javax.persistence.jdbc.driver", fromGitProperties.getProperty("javax.persistence.jdbc.driver"));
+        fromGitProperties.setProperty("javax.persistence.jdbc.url", fromGitProperties.getProperty("javax.persistence.jdbc.url"));
+        fromGitProperties.setProperty("javax.persistence.jdbc.user", fromGitProperties.getProperty("javax.persistence.jdbc.user"));
+        fromGitProperties.setProperty("javax.persistence.jdbc.password", fromGitProperties.getProperty("javax.persistence.jdbc.password"));
 
 
-        fromGitProperties.setProperty("administration.javax.persistence.jdbc.driver", "com.microsoft.sqlserver.jdbc.SQLServerDriver");
-        fromGitProperties.setProperty("administration.javax.persistence.jdbc.url", "jdbc:sql:server://localhost:1433;databaseName=Administration");
-        fromGitProperties.setProperty("administration.javax.persistence.jdbc.user", "sa");
-        fromGitProperties.setProperty("administration.javax.persistence.jdbc.password","zippyZippy_1");
+        fromGitProperties.setProperty("administration.javax.persistence.jdbc.driver",fromGitProperties.getProperty("administration.javax.persistence.jdbc.driver"));
+        fromGitProperties.setProperty("administration.javax.persistence.jdbc.url", fromGitProperties.getProperty("administration.javax.persistence.jdbc.url"));
+        fromGitProperties.setProperty("administration.javax.persistence.jdbc.user", fromGitProperties.getProperty("administration.javax.persistence.jdbc.user"));
+        fromGitProperties.setProperty("administration.javax.persistence.jdbc.password",fromGitProperties.getProperty("administration.javax.persistence.jdbc.password"));
 
                 try {
             fromGitProperties.store(out, null);
