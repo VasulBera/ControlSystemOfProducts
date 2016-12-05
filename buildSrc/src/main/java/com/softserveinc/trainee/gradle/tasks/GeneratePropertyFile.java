@@ -59,16 +59,16 @@ FileInputStream local = null;
             e.printStackTrace();
         }
 
-        fromGitProperties.setProperty("javax.persistence.jdbc.driver", fromGitProperties.getProperty("javax.persistence.jdbc.driver"));
-        fromGitProperties.setProperty("javax.persistence.jdbc.url", fromGitProperties.getProperty("javax.persistence.jdbc.url"));
-        fromGitProperties.setProperty("javax.persistence.jdbc.user", fromGitProperties.getProperty("javax.persistence.jdbc.user"));
-        fromGitProperties.setProperty("javax.persistence.jdbc.password", fromGitProperties.getProperty("javax.persistence.jdbc.password"));
+               fromGitProperties.setProperty("javax.persistence.jdbc.driver", localProperties.getProperty("javax.persistence.jdbc.driver"));
+        fromGitProperties.setProperty("javax.persistence.jdbc.url", localProperties.getProperty("javax.persistence.jdbc.url"));
+        fromGitProperties.setProperty("javax.persistence.jdbc.user", localProperties.getProperty("javax.persistence.jdbc.user"));
+        fromGitProperties.setProperty("javax.persistence.jdbc.password", localProperties.getProperty("javax.persistence.jdbc.password"));
 
 
-        fromGitProperties.setProperty("administration.javax.persistence.jdbc.driver",fromGitProperties.getProperty("administration.javax.persistence.jdbc.driver"));
-        fromGitProperties.setProperty("administration.javax.persistence.jdbc.url", fromGitProperties.getProperty("administration.javax.persistence.jdbc.url"));
-        fromGitProperties.setProperty("administration.javax.persistence.jdbc.user", fromGitProperties.getProperty("administration.javax.persistence.jdbc.user"));
-        fromGitProperties.setProperty("administration.javax.persistence.jdbc.password",fromGitProperties.getProperty("administration.javax.persistence.jdbc.password"));
+        fromGitProperties.setProperty("administration.javax.persistence.jdbc.driver",localProperties.getProperty("administration.javax.persistence.jdbc.driver"));
+        fromGitProperties.setProperty("administration.javax.persistence.jdbc.url", localProperties.getProperty("administration.javax.persistence.jdbc.url"));
+        fromGitProperties.setProperty("administration.javax.persistence.jdbc.user", localProperties.getProperty("administration.javax.persistence.jdbc.user"));
+        fromGitProperties.setProperty("administration.javax.persistence.jdbc.password",localProperties.getProperty("administration.javax.persistence.jdbc.password"));
 
                 try {
             fromGitProperties.store(out, null);
