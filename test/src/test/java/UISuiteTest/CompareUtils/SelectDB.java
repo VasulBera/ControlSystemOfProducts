@@ -21,7 +21,7 @@ public class SelectDB {
 
     private static Statement statement = setupDBConnection();
     private static Connection connection;
-    private static final String JDBCPropertyFile = "configAmazon.properties";
+    private static final String entityMetadataFile = "EntityMetadataDB.properties";
     private static ResultSet resultSet;
 
     @Rule
@@ -30,7 +30,7 @@ public class SelectDB {
     public static Statement setupDBConnection() {
         Properties prop = new Properties();
         try {
-            InputStream input = DBOperations.class.getClassLoader().getResourceAsStream(JDBCPropertyFile);
+            InputStream input = DBOperations.class.getClassLoader().getResourceAsStream(entityMetadataFile);
             prop.load(input);
             StringBuilder str = new StringBuilder();
             str.append(prop.getProperty("dburl"));

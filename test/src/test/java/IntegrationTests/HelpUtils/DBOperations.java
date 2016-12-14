@@ -17,9 +17,12 @@ import java.util.Properties;
 
 public class DBOperations {
 
-    private static Statement statement = setupDBConnection();
     private static Connection connection;
-    private static final String JDBCPropertyFile = "configAmazon.properties";
+    private static final String metaDataPropertyFile = "EntityMetadataDB.properties";
+    private static final String customTablesDBPropertyFile = "CustomTablesDB.properties";
+    private static Statement statement;
+    private static ResultSet resultSet;
+    private static  String uploadRequestJobResult;
 
     /**
      * Open a connection to 'Customer' DB, create a connection object.
@@ -27,10 +30,10 @@ public class DBOperations {
      * @return the statement object.
      */
 
-    public static Statement setupDBConnection() {
+    public static Connection setupDBConnection(String customPropertyFile) {
         Properties prop = new Properties();
         try {
-            InputStream input = DBOperations.class.getClassLoader().getResourceAsStream(JDBCPropertyFile);
+            InputStream input = DBOperations.class.getClassLoader().getResourceAsStream(customPropertyFile);
             prop.load(input);
             StringBuilder str = new StringBuilder();
             str.append(prop.getProperty("dburl"));
@@ -42,7 +45,6 @@ public class DBOperations {
             str.append(";password=");
             str.append(prop.getProperty("password"));
             connection = DriverManager.getConnection(String.valueOf(str));
-            statement = connection.createStatement();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -50,7 +52,7 @@ public class DBOperations {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return statement;
+        return connection;
     }
 
     /**
@@ -63,6 +65,7 @@ public class DBOperations {
     public static boolean isExist(String idEntities, String idFields) {
         Boolean isRecord = false;
         try {
+            statement = setupDBConnection(metaDataPropertyFile).createStatement();
             statement.executeQuery("SELECT * FROM entities WHERE id = '" + idEntities + "'");
             statement.executeQuery("SELECT * FROM fields WHERE id = '" + idFields + "'");
             ResultSet rs = statement.getResultSet();
@@ -87,6 +90,7 @@ public class DBOperations {
         SimpleDateFormat simpleDateFormater = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
         if (isExist("SCHEMATABLE", "SCHEMATABLECOLUMN_NAMEFIELDS")) {
             try {
+                statement = setupDBConnection(metaDataPropertyFile).createStatement();
                 statement.execute("INSERT INTO entities (id, name, schema_name, table_name, full_upload_data, created_date)  VALUES ('SCHEMATABLE', 'Name','Schema', 'Table', '0', '" + simpleDateFormater.format(Calendar.getInstance().getTime()) + "');");
                 statement.execute("INSERT INTO fields (id, name, column_name, type, length, is_unique, entity_id, created_date) VALUES ('SCHEMATABLECOLUMN_NAMEFIELDS', 'NameFields'," +
                         " 'Column_NameFields', 'NVARCHAR', 100, '0', 'SCHEMATABLE', '" + simpleDateFormater.format(Calendar.getInstance().getTime()) + "')");
@@ -108,6 +112,7 @@ public class DBOperations {
 
         if (isExist("ENTITYSCHEMAENTITYTABLE", " ")) {
             try {
+                statement = setupDBConnection(metaDataPropertyFile).createStatement();
                 statement.execute("INSERT INTO entities (id, name, schema_name, table_name, full_upload_data, created_date)  VALUES ('ENTITYSCHEMAENTITYTABLE', 'EntityName','EntitySchema', 'EntityTable', '0', '" + simpleDateFormater.format(Calendar.getInstance().getTime()) + "');");
             } catch (SQLException e) {
                 e.printStackTrace();
@@ -125,6 +130,7 @@ public class DBOperations {
     public static void deleteRecord(String fieldsId, String entitiesId) {
         if (isExist(fieldsId, entitiesId)) {
             try {
+                statement = setupDBConnection(metaDataPropertyFile).createStatement();
                 statement.execute("DELETE FROM fields WHERE id = '" + fieldsId + "'");
                 statement.execute("DELETE FROM entities WHERE id = '" + entitiesId + "'");
             } catch (SQLException e) {
@@ -135,4 +141,62 @@ public class DBOperations {
             System.out.println("Record is not exist");
         }
     }
+
+    public static boolean isTableExist(String tableName) {
+        Boolean isTable = false;
+        try {
+            DatabaseMetaData metaData = setupDBConnection(customTablesDBPropertyFile).getMetaData();
+            ResultSet resultSet;
+            resultSet = metaData.getTables(null, null, tableName, null);
+            if (resultSet.next()) {
+                System.out.println("Table exist");
+                isTable = true;
+            } else {
+                System.out.println("Table NOT  exist");
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return isTable;
+    }
+
+    public static boolean isColumnExist(String tableName, String columnName) {
+        Boolean isTable = false;
+        try {
+            DatabaseMetaData metaData = setupDBConnection(customTablesDBPropertyFile).getMetaData();
+            ResultSet resultSet;
+            resultSet = metaData.getColumns(null, null, tableName, columnName);
+            if (resultSet.next()) {
+                System.out.println("Column exist");
+                isTable = true;
+            } else {
+                System.out.println("Column NOT  exist");
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return isTable;
+    }
+
+    public static String getRecordFromCustomTablesDB() {
+
+        try {
+            statement = setupDBConnection(metaDataPropertyFile).createStatement();
+            String sql = "SELECT * FROM [CustomTables].[client].[CARSS]";
+            resultSet = statement.executeQuery(sql);
+            while (resultSet.next()) {
+                uploadRequestJobResult = resultSet.getString("JJJoo");
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return uploadRequestJobResult;
+    }
 }
+
+
+
+

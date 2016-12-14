@@ -125,4 +125,23 @@ public abstract class ConstantValues {
     public static final String INVALID_FIELD_SC_ID_VALUE_FOR_VERIFY_PATCH_METHOD = (INVALID_ENTITIES_SC_ID_VALUE_FOR_VERIFY_PATCH_METHOD + COLUMN_NAME_FIELDS_PATCH_SC).toUpperCase();
     public static final String ID_FIELD_TABLE_VALUE_FOR_VERIFY_PATCH_METHOD = "SCHEMATABLECOLUMN_NAMEFIELDS";
 
+    public static final String SMOKE_VERIFY_ENTITY_NAME = "EntityNameSmoke";
+    public static final String SMOKE_VERIFY_SCHEMA_NAME = "EntitySchemaSmoke";
+    public static final String SMOKE_VERIFY_TABLE_NAME = "EntityTableSmoke";
+    public static final String SMOKE_VERIFY_FIELD_NAME = "FieldNameSmoke";
+    public static final String SMOKE_VERIFY_COLUMN_NAME = "ColumnSmoke";
+    public static final Integer SMOKE_VERIFY_LENGTH = 3000;
+    public static final String SMOKE_ID_VALUE = "ENTITYSCHEMASMOKEENTITYTABLESMOKE";
+
+    public static final String ID_VALUE_ENTITY_VALUE_SMOKE_VERIFY = "ENTITYSCHEMASMOKEENTITYTABLESMOKE";
+    public static final String ID_VALUE_FIELD_VALUE_SMOKE_VERIFY = "withENTITYSCHEMASMOKEENTITYTABLESMOKECOLUMNSMOKE";
+
+    public static final String SMOKE_VERIFY_ENTITY_NAME_UPLOAD = "EntityNameSmoke";
+    public static final String SMOKE_VERIFY_SCHEMA_NAME_UPLOAD = "client";
+    public static final String SMOKE_VERIFY_TABLE_NAME_UPLOAD = "CARS";
+    public static final String SMOKE_VERIFY_FIELD_NAME_UPLOAD = "Kind";
+    public static final String SMOKE_VERIFY_COLUMN_NAME_UPLOAD = "Speed";
+    public static final Integer SMOKE_VERIFY_LENGTH_UPLOAD = 3000;
+   // public static final String SMOKE_ID_VALUE = "ENTITYSCHEMASMOKEENTITYTABLESMOKE";
+
 }
