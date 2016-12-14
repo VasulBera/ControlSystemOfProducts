@@ -84,6 +84,7 @@ public class CreateFieldPage extends CreateEntityRecordPage {
         clickFieldLength();
         clearFieldLengthValue();
         setFieldLength(createFieldData.getFieldLengthValue());
+        clickUniqueCheckBox();
     }
 
     public CreateFieldPage setFieldData(CreateFieldData createFieldData) {

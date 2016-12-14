@@ -134,7 +134,7 @@ public class TestPutMethod {
      * </ol>
      */
 
-    @Test
+  @Test
     public void editRecordWithSpecialSymbols() {
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
         Entities builder = new BaseBuilder().
@@ -144,7 +144,7 @@ public class TestPutMethod {
                 BuildFieldList(NAME_ENTITIES_PUT_SC, COLUMN_NAME_FIELDS_PUT_SC,
                         TYPE_FIELDS_PUT_SC, LENGTH_FIELDS_PUT_SC).
                 build();
-        given().contentType(ContentType.JSON).body(gson.toJson(builder)).when().put().then().statusCode(500);
+        given().contentType(ContentType.JSON).body(gson.toJson(builder)).when().put().then().statusCode(400);
         errors.checkThat("Record was created", DBOperations.isExist(INVALID_ID_FIELD_TABLE_SC_VALUE_FOR_VERIFY_PUT_METHOD, INVALID_ID_ENTITY_TABLE_SC_VALUE_FOR_VERIFY_PUT_METHOD), is(true));
     }
 
@@ -154,7 +154,7 @@ public class TestPutMethod {
      * @see DBOperations
      */
 
-   @AfterClass
+    @AfterClass
     public static void deleteRecord() {
         DBOperations.deleteRecord(EDITED_ID_VALUE_FOR_VERIFY_PUT_METHOD, ID_VALUE_FOR_VERIFY_METHOD);
         DBOperations.deleteRecord("", ID_VALUE_FIELD_TABLE_FOR_VERIFY_PUT_METHOD);

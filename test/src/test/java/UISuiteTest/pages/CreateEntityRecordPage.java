@@ -12,6 +12,9 @@ import static UISuiteTest.ApplicationUtil.Application.driver;
 
 public class CreateEntityRecordPage extends HomePage {
 
+    @FindBy(xpath =  "//input[contains(@id,'field-unique')]")
+    private WebElement uniqueCheckBox;
+
     @FindBy(xpath = "//input[contains(@id,'entity-name')]")
     private WebElement entityName;
 
@@ -26,6 +29,8 @@ public class CreateEntityRecordPage extends HomePage {
 
     @FindBy(css = "input[type='submit'][value='Save']")
     private WebElement saveRecordButton;
+
+    public WebElement getUniqueCheckBox() {return  this.uniqueCheckBox; }
 
     public CreateEntityRecordPage() {
         PageFactory.initElements(driver, this);
@@ -53,6 +58,10 @@ public class CreateEntityRecordPage extends HomePage {
 
     public void clickFieldRecordButton() {
         getCreateFieldRecordButton().click();
+    }
+
+    public void clickUniqueCheckBox(){
+        getUniqueCheckBox().click();
     }
 
     public void clearEntityName() {

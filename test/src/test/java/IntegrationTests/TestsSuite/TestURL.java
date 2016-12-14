@@ -42,21 +42,6 @@ public class TestURL {
     public ErrorCollector errors = new ErrorCollector();
 
     /**
-     * The verifyValidID(String) was created for verify correct id values in URL
-     * The verifyValidID(String) test use data provider "dataForURL".
-     *
-     * @param testData represent correct id values
-     *steps to reproduce
-     *using HTTP GET method and correct id values verify that status code is equals '200' (HttpStatus.SC_OK)
-     */
-
-    @Test
-    @UseDataProvider("dataForURL")
-    public void verifyValidID(String testData) {
-        expect().when().get(testData).then().statusCode(HttpStatus.SC_OK).getClass();
-    }
-
-    /**
      * The verifyBaseURL(String) was created for verify base URL
      * The verifyBaseURL(String) test use data provider "emptyIdString".
      *
@@ -68,7 +53,7 @@ public class TestURL {
     @Test
     @UseDataProvider("emptyIdString")
     public void verifyBaseURL(String testData) {
-       expect().statusCode(HttpStatus.SC_OK).when().then().get(testData);
+       expect().statusCode(404).when().then().get(testData);
     }
 
     /**
@@ -137,13 +122,6 @@ public class TestURL {
      * @return correct id values
      */
 
-    @DataProvider
-    public static Object[][] dataForURL() {
-        return new Object[][]{
-                {"ADIDASSHOES"},
-                {"BARVINOKGOODS"}
-        };
-    }
 
     /**
      * The emptyIdString() data provider storage test data, allows to run verifyBaseURL(String) test over and over again using different values.

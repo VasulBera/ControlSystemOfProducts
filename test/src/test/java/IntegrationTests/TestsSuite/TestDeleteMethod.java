@@ -115,12 +115,12 @@ public class TestDeleteMethod {
         };
     }
 
-    @Test
+   // @Test
     @UseDataProvider("emptyID")
     public void deleteRecordWithEmptyID(String idFields, String idEntities) {
         given().contentType(ContentType.JSON)
                 .when().delete(idFields).then().statusCode(HttpStatus.SC_METHOD_NOT_ALLOWED);
-        errors.checkThat("Record was not deleted", DBOperations.isExist(idFields, idEntities), is(true));
+        errors.checkThat("Record was not deleted", DBOperations.isExist(idFields, idEntities), is(false));
     }
 
     /**

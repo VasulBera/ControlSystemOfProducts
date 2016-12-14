@@ -161,7 +161,7 @@ public class TestPostMethod {
                 BuildFieldList(NAME_FIELDS_INVALID, COLUMN_NAME_FIELDS_INVALID, DATE.NVARCHAR, LENGTH_FIELDS_NVALID).
                 build();
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
-        given().contentType(ContentType.JSON).body(gson.toJson(base)).post().then().statusCode(500);
+        given().contentType(ContentType.JSON).body(gson.toJson(base)).post().then().statusCode(400);
         errors.checkThat("Record with" + ID_ETITIES_INVALID + " was created", DBOperations.isExist(INVALID_ID_VALUE_FOR_VERIFY_POST_METHOD, " "), is(true));
     }
 
@@ -186,7 +186,7 @@ public class TestPostMethod {
                 BuildFieldList(NAME_FIELDS_SC, COLUMN_NAME_FIELDS_SC, DATE.NVARCHAR, LENGTH_FIELDS_SC).
                 build();
 
-        given().contentType(ContentType.JSON).body(gson.toJson(builder)).post().then().statusCode(500);
+        given().contentType(ContentType.JSON).body(gson.toJson(builder)).post().then().statusCode(400);
         errors.checkThat("Record with" + ID_ENTITIES_SC + "was created", DBOperations.isExist(INVALID_ID_SC_VALUE_FOR_VERIFY_POST_METHOD, " "), is(true));
     }
 

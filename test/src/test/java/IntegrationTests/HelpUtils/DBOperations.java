@@ -184,10 +184,10 @@ public class DBOperations {
 
         try {
             statement = setupDBConnection(metaDataPropertyFile).createStatement();
-            String sql = "SELECT * FROM [CustomTables].[client].[CARSS]";
+            String sql = "SELECT * FROM [CustomTables].[client].[CARS_temporary]";
             resultSet = statement.executeQuery(sql);
             while (resultSet.next()) {
-                uploadRequestJobResult = resultSet.getString("JJJoo");
+                uploadRequestJobResult = resultSet.getString("jj");
             }
 
         } catch (SQLException e) {

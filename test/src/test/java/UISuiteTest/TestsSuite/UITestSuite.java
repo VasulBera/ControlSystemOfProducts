@@ -14,6 +14,6 @@ import org.junit.runners.Suite;
         TestCreateRecordOption.class
 })
 
-public class UITestSite {
+public class UITestSuite {
 }
 

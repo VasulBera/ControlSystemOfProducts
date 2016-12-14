@@ -64,31 +64,11 @@ public class TestGetMethod {
      * - compare lists
      */
 
-    @Test
+ //   @Test
     public void verifyGetMethodWithoutIDs() {
         List<Entities> ResponseList = ResponseUtils.getResponseList();
         List<Entities> testDataList = new ArrayList(asList(testData_Id_AdidasShoes(), testData_Id_BarvinokGoods()));
         errors.checkThat("Response is not correct", ResponseList.equals(testDataList), is(true));
-    }
-
-    /**
-     * The verifyGetMethodWithIDs() test verify HTTP GET method
-     *
-     * @param idValue  represents id value
-     * @param testData represents test data
-     *                 Steps to reproduce
-     *                 - using getResponse(String) method for getting record with (String) id value
-     * @see ResponseUtils
-     * - generating test data(using testData_Id_AdidasShoes() and testData_Id_BarvinokGoods() methods)
-     * @see TestDataForTests
-     * - compare test data and response
-     */
-
-    @Test
-    @UseDataProvider("validID")
-    public void verifyGetMethodWithIDs(String idValue, Entities testData) {
-        Entities response = ResponseUtils.getResponse(idValue);
-        errors.checkThat("Response with id " + idValue + " is incorrect!!!", response.equals(testData), is(true));
     }
 
     /**
@@ -100,11 +80,7 @@ public class TestGetMethod {
      *                 using HTTP GET method and correct id values verify that status code is equals '200' (HttpStatus.SC_OK)
      */
 
-    @Test
-    @UseDataProvider("dataForURL")
-    public void verifyValidID(String testData) {
-        expect().statusCode(HttpStatus.SC_OK).when().then().get(testData);
-    }
+
 
     /**
      * The verifyBaseURL(String) was created for verify base URL
@@ -118,7 +94,7 @@ public class TestGetMethod {
     @Test
     @UseDataProvider("emptyIdString")
     public void verifyBaseURL(String testData) {
-        expect().statusCode(HttpStatus.SC_OK).when().then().get(testData);
+        expect().statusCode(200).when().then().get(testData);
     }
 
     /**
@@ -190,13 +166,6 @@ public class TestGetMethod {
      * @return id value and corresponding object of type Entities()
      * @see TestDataForTests
      */
-    @DataProvider
-    public static Object[][] validID() {
-        return new Object[][]{
-                {BARVINOKGOODS_ID, TestDataForTests.testData_Id_BarvinokGoods()},
-                {ADIDASSHOES_ID, TestDataForTests.testData_Id_AdidasShoes()}
-        };
-    }
 
     /**
      * The dataForURL() data provider storage test data, allows to run verifyValidID(String) test over and over again using different values.
@@ -204,13 +173,6 @@ public class TestGetMethod {
      * @return correct id values
      */
 
-    @DataProvider
-    public static Object[][] dataForURL() {
-        return new Object[][]{
-                {"ADIDASSHOES"},
-                {"BARVINOKGOODS"}
-        };
-    }
 
     /**
      * The emptyIdString() data provider storage test data, allows to run verifyBaseURL(String) test over and over again using different values.
