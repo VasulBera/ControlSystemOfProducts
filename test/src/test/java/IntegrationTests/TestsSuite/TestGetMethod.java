@@ -91,7 +91,7 @@ public class TestGetMethod {
      *                 using HTTP GET method and " " (empty String) as id values verify that status code is equals '200' (HttpStatus.SC_OK)
      */
 
-    @Test
+  //  @Test
     @UseDataProvider("emptyIdString")
     public void verifyBaseURL(String testData) {
         expect().statusCode(200).when().then().get(testData);
