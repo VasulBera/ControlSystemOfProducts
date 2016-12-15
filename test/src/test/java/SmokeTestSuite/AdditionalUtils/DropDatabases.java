@@ -15,11 +15,12 @@ import java.util.Properties;
  * Created by Salome on 14.12.2016.
  */
 
-public class LastDBOperation {
+public class DropDatabases {
 
     private static Statement statement;
     private static Connection connection;
     private static final String customTablesDB = "CustomTablesDB.properties";
+    private static final String entityMetadataDB = "EntityMetadataDB.properties";
     private static ResultSet resultSet;
 
     private String idValue;
@@ -30,10 +31,10 @@ public class LastDBOperation {
     @Rule
     public ErrorCollector errors = new ErrorCollector();
 
-    public static Connection setupDBConnection() {
+    public static Connection setupDBConnection(String propertyFile) {
         Properties prop = new Properties();
         try {
-            InputStream input = DBOperations.class.getClassLoader().getResourceAsStream(customTablesDB);
+            InputStream input = DBOperations.class.getClassLoader().getResourceAsStream(propertyFile);
             prop.load(input);
             StringBuilder str = new StringBuilder();
             str.append(prop.getProperty("dburl"));
@@ -57,15 +58,31 @@ public class LastDBOperation {
     }
 
     @Test
-    public void selectCustomTablesDB() {
+    public void dropCustomTablesDB() {
 
         try {
-            statement = setupDBConnection().createStatement();
-                String sql = "ALTER DATABASE CustomTables SET SINGLE_USER WITH ROLLBACK IMMEDIATE;";
+            statement = setupDBConnection(customTablesDB).createStatement();
+                String sql = "use master\n" +
+                        "IF EXISTS (SELECT name FROM master.dbo.sysdatabases WHERE name = N'CustomTables')\n" +
+                        "DROP DATABASE [CustomTables] ;";
                 statement.executeQuery(sql);
             } catch (SQLException e) {
                 e.printStackTrace();
             }
+    }
+
+    @Test
+    public void dropEntityMetadataDB() {
+        try {
+            statement = setupDBConnection(entityMetadataDB).createStatement();
+            String sql = " use master\n" +
+
+                        "IF EXISTS (SELECT name FROM master.dbo.sysdatabases WHERE name = N'EntityMetadata')\n" +
+                         "DROP DATABASE [EntityMetadata] ;";
+            statement.executeQuery(sql);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 
     }
 }
