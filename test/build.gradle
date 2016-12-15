@@ -112,6 +112,14 @@ task DropDatabases(type: Test, dependsOn: testClasses) {
     include '**/*DropDatabases*'
 }
 
+task TestApplyMetadataRequestJob(type: Test, dependsOn: testClasses) {
+    include '**/*ApplyMetadataRequestJob*'
+}
+
+task TestUploadMetadataRequestJob(type: Test, dependsOn: testClasses) {
+    include '**/*UploadMetadataRequestJob*'
+}
+
 task generatePropertyFile(type: com.softserveinc.trainee.gradle.tasks.GeneratePropertyFile)
 
 tasks.withType(Test) {
