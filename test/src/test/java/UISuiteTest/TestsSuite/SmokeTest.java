@@ -26,7 +26,7 @@ public class SmokeTest {
    @Rule
     public ErrorCollector errors = new ErrorCollector();
 
-    @Test
+   // @Test
     public void SmokeTest() {
         errors.checkThat("Table is not present", homePage.getTableEntityList().isDisplayed(), is(true));
         errors.checkThat("Title is not right", homePage.getTableTitleText().equals("Entity List"), is(true));
