@@ -14,7 +14,8 @@ import java.util.Properties;
 
 public class SqlRunner extends DefaultTask{
 
-    private static final String PATH_TO_STORED_PROCEDURE = "service/src/main/resources/SqlScripts";
+  //  private static final String PATH_TO_STORED_PROCEDURE = "service/src/main/resources/SqlScripts";
+  private static final String PATH_TO_STORED_PROCEDURE = "service/src/main/resources/SqlScriptDropDB";
     private static final String PATH_TO_DATABASE_PROPERTIES = "service/src/main/resources/database.properties";
     private static final String MS_SQL_SERVER_ADDRES = "jdbc:sqlserver://localhost;";
     private static final String USERNAME_KEY_PROPERTIES = "javax.persistence.jdbc.user";

@@ -121,7 +121,7 @@ task TestUploadMetadataRequestJob(type: Test, dependsOn: testClasses) {
 }
 
 task generatePropertyFile(type: com.softserveinc.trainee.gradle.tasks.GeneratePropertyFile)
-
+task dropDBLast(type: com.softserveinc.trainee.gradle.tasks.DropDB)
 
 tasks.withType(Test) {
     testLogging {

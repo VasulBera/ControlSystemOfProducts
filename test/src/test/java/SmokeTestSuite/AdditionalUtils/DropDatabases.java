@@ -62,9 +62,8 @@ public class DropDatabases {
 
         try {
             statement = setupDBConnection(customTablesDB).createStatement();
-                String sql = "use master\n" +
-                        "IF EXISTS (SELECT name FROM master.dbo.sysdatabases WHERE name = N'CustomTables')\n" +
-                        "DROP DATABASE [CustomTables] ;";
+                String sql =
+                        "DROP DATABASE CUSTOMTABLES";
                 statement.executeQuery(sql);
             } catch (SQLException e) {
                 e.printStackTrace();
@@ -75,10 +74,10 @@ public class DropDatabases {
     public void dropEntityMetadataDB() {
         try {
             statement = setupDBConnection(entityMetadataDB).createStatement();
-            String sql = " use master\n" +
+            String sql =
 
-                        "IF EXISTS (SELECT name FROM master.dbo.sysdatabases WHERE name = N'EntityMetadata')\n" +
-                         "DROP DATABASE [EntityMetadata] ;";
+                        " DROP DATABASE EntityMetadata";
+         /* String sql = "DROP DATABASE EntityMetadata";*/
             statement.executeQuery(sql);
         } catch (SQLException e) {
             e.printStackTrace();
