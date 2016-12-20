@@ -14,15 +14,14 @@ import java.util.Properties;
 
 public class SqlRunner extends DefaultTask{
 
-  //  private static final String PATH_TO_STORED_PROCEDURE = "service/src/main/resources/SqlScripts";
-  private static final String PATH_TO_STORED_PROCEDURE = "service/src/main/resources/SqlScriptDropDB";
+    private static final String PATH_TO_STORED_PROCEDURE = "service/src/main/resources/SqlScripts";
     private static final String PATH_TO_DATABASE_PROPERTIES = "service/src/main/resources/database.properties";
-    private static final String MS_SQL_SERVER_ADDRES = "jdbc:sqlserver://localhost;";
+    private static final String MS_SQL_SERVER_ADDRES = "jdbc:sqlserver://52.34.34.95;";
     private static final String USERNAME_KEY_PROPERTIES = "javax.persistence.jdbc.user";
     private static final String PASSWORD_KEY_PROPERTIES = "javax.persistence.jdbc.password";
 
 
-    private static String readFile(File pathFile){
+    public static String readFile(File pathFile){
         StringBuilder stringBuilder = new StringBuilder();
         try (BufferedReader bufferedReader = new BufferedReader(new FileReader(pathFile))) {
             String line;
@@ -35,7 +34,7 @@ public class SqlRunner extends DefaultTask{
         return stringBuilder.toString();
     }
 
-    private static String getUsername(){
+    public static String getUsername(){
         Properties properties = new Properties();
         try(InputStream inputStream = new FileInputStream(PATH_TO_DATABASE_PROPERTIES)){
             properties.load(inputStream);
@@ -45,7 +44,7 @@ public class SqlRunner extends DefaultTask{
         return properties.getProperty(USERNAME_KEY_PROPERTIES);
     }
 
-    private static String getPassword(){
+    public static String getPassword(){
         Properties properties = new Properties();
         try(InputStream inputStream = new FileInputStream(PATH_TO_DATABASE_PROPERTIES)){
             properties.load(inputStream);
